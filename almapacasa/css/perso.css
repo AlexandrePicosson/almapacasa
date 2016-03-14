@@ -1,0 +1,87 @@
+html,body{
+	background:#DAE5F1
+}
+
+
+
+#logo{
+	float:right;
+	height:200px;
+}
+
+.row{
+	margin:0px;
+	margin-top:50px;
+}
+
+.page-header{
+	margin:0px 0px;
+	border-bottom:none;
+}
+
+.page-header .row{
+	background:#FFF;
+}
+
+header .row .col-xs-4 h1{
+	font-size:100px;
+	margin-top:45px;
+	color:#0174CF;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.container-fluid{
+	padding-left:0px;
+	padding-right:0px;
+	
+}
+
+#menu_horizontal .navbar.navbar-inverse{
+	border-radius: 0px;
+	background: #3F72A6;
+	border: none;
+	top: 0px;
+	position: fixed;
+	width: 100%;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+	color:#FFF;
+}
+
+#monmenu .nav.navbar-nav .active a{
+	background-color:#23405C
+}
+
+footer{
+    margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background:#3F72A6;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	color: #FFF;
+	height: 50px;
+}
+
+footer .infos{
+	font-size:15px;
+	margin-top:15px;
+	float:left;
+}
+
+footer .mentions{
+	float:right;
+	font-size: 15px;
+	margin-top: 15px;
+	margin-right: 15px;
+}
+
+footer .mentions a{
+	color:#FFF;
+	text-decoration:none;
+}

@@ -5,7 +5,7 @@ class page_base {
 	protected $left_sidebar;
 	protected $titre;
 	protected $js=array('jquery-2.1.4.min', 'bootstrap.min');
-	protected $css=array('perso', 'bootstrap.min');
+	protected $css=array('bootstrap.min','perso');
 	protected $page;
 	protected $metadescription="Bienvenue à  l'accueil périscolaire de l'école les Ptits-Bouts-De-Choux";
 	protected $metakeyword=array('Accueil périscolaire','Petits Bouts De Choux' );
@@ -92,18 +92,20 @@ class page_base {
 		echo'
 			<header class="page-header hidden-xs hidden-sm">
 				<div class="row">
-    				<div class="col-xs-3">
-    					<img class="img-responsive" src="./image/logo.jpg" alt="logo"/>
-					</div>
-    				<div class="col-xs-9">
-						<h1>
+    				<!--<div class="col-xs-4">
+    					<h1>
 							Kaliémie
 						</h1>
-						<h3>
-							
-						</h3>
+					</div>
+					<div class="col-xs-5">
+						<p>
+							Novo denique perniciosoque exemplo idem Gallus ausus est inire flagitium grave, quod Romae cum ultimo dedecore temptasse aliquando dicitur Gallienus, et adhibitis paucis clam ferro succinctis vesperi per tabernas palabatur et conpita quaeritando Graeco sermone, cuius erat inpendio gnarus, quid de Caesare quisque sentiret. et haec confidenter agebat in urbe ubi pernoctantium luminum claritudo dierum solet imitari fulgorem. postremo agnitus saepe iamque, si prodisset, conspicuum se fore contemplans, non nisi luce palam egrediens ad agenda quae putabat seria cernebatur. et haec quidem medullitus multis gementibus agebantur.
+						</p>
+					</div>
+    				<div class="col-xs-3">
+						<img class="img-responsive" id="logo" src="./image/logo.png" alt="logo"/>
  					</div>
-				</div>
+				</div>-->
 			</header>
 			<header class="page-header hidden-md hidden-lg">
 				<div class="row">
@@ -123,9 +125,10 @@ class page_base {
 	
 	protected function affiche_menu() {
 		echo '
-				<ul class="nav navbar-nav">
-					<li class="active"><a   href="index.php" >Accueil </a></li>
-					<li><a   href="reglement.php" >Le reglement</a></li>
+				<ul class="nav navbar-nav" onload="active();">
+					<li class="home" ><a href="index.php">Accueil</a></li>
+					<li class="equipe"><a href="equipe.php">Présentation de l\'équipe</a></li>
+					<li class="temoignage"><a href="temoignage.php" >Témoignages</a></li>
 				</ul>
 				';
 	}
@@ -198,7 +201,12 @@ class page_base {
 		echo '
 		<!-- Footer -->
 			<footer>
-				<p>PPE4 - almapacasa</p>
+				<div class="infos">
+					Projets Personnels Encadrés - Almapacasa
+				</div>
+				<div class="mentions">
+					<a href="mentions_legales">Mentions légales</a>
+				</div>
             </footer>
 		';
 	}
@@ -224,7 +232,15 @@ class page_base {
 					<!--[if lt IE 9]>
 					<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 					<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+					<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 					<![endif]-->
+					<script>
+				        $(document).ready(function active() {
+				            $('Accueil').addClass('active');
+				            $('Equipe').addClass('active');
+				            $('Temoignage').addClass('active');
+				        });
+				    </script>
 					
 					<?php $this->affiche_keyword(); ?>
 					<?php $this->affiche_javascript(); ?>
