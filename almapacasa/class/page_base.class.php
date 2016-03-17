@@ -134,7 +134,7 @@ class page_base {
 	}
 	protected function affiche_menu_connexion() {
 		
-		if(!(isset($_SESSION['id']) && isset($_SESSION['type'])))
+		if(!isset($_SESSION['id']))
 		{	
 			echo '
 					<ul class="nav navbar-nav navbar-right">
@@ -234,13 +234,6 @@ class page_base {
 					<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 					<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 					<![endif]-->
-					<script>
-				        $(document).ready(function active() {
-				            $('Accueil').addClass('active');
-				            $('Equipe').addClass('active');
-				            $('Temoignage').addClass('active');
-				        });
-				    </script>
 					
 					<?php $this->affiche_keyword(); ?>
 					<?php $this->affiche_javascript(); ?>

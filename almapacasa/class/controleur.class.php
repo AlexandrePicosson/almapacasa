@@ -237,9 +237,7 @@ class controleur {
 				<h3>Formulaire de connexion</h3>
 				<form id="login" method="post" class="login">
 					<input type="text" name="id" id="id" placeholder="Identifiant" required/>
-					<input type="password" name="mp" id="mp" placeholder="Mot de passe" required/></br>
-					<input type="radio" name="rblogin" id="rbf"  value="rbf" required/>Famille
-					<input type="radio" name="rblogin" id="rba" value="rba" required/>Administrateur</br></br>
+					<input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required/></br>
 					<input type="submit" name="send" class="button" value="Envoi login" />
 				</form>
 				<script>function hd(){ $(\'#modal\').hide();}</script>
@@ -275,14 +273,10 @@ class controleur {
 						
 		var $url="ajax/valide_connect.php";
 		if($("#login").valid())
-		{
-			$categ="famille";		
-			if($("input[type=radio][name=rblogin]:checked").attr("value")=="rbf"){$categ="famille";}
-			if($("input[type=radio][name=rblogin]:checked").attr("value")=="rba"){$categ="admin";}
+		{		
 			var formData = {
-			"id" 					: $("#id").val().toUpperCase(),
-   			"mp"					: $("#mp").val(),
-   			"categ"					: $categ												   		
+			"id" 					: $("#id").val(),
+   			"mdp"					: $("#mdp").val()								   		
 			};	
 							
 			var filterDataRequest = $.ajax(
@@ -295,6 +289,7 @@ class controleur {
         		data: formData,	
 
 			});
+				
 			filterDataRequest.done(function(data)
 			{
 				if ( ! data.success)
@@ -343,8 +338,7 @@ class controleur {
 		{
 													
 			"id": {required: true},
-			"mp": {required: true},
-			"rblogin": {required: true}
+			"mdp": {required: true}
 		},
 		messages:
 		{
@@ -352,13 +346,9 @@ class controleur {
           	{
             	required: "Vous devez saisir un identifiant valide"
           	},
-			"mp":
+			"mdp":
           	{
             	required: "Vous devez saisir un mot de passe valide"
-          	},			
-			"rblogin":
-			{
-            	required: "Vous devez choisir famille ou administrateur"
           	}
 		},
 		errorPlacement: function (error, element) {

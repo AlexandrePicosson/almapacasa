@@ -5,40 +5,33 @@ class page_base_securisee_admin extends page_base {
 		parent::__construct($p);
 	}
 	public function affiche() {
-		if(!isset($_SESSION['id']) || !isset($_SESSION['type']))
+		if(!isset($_SESSION['id']))
 		{
 			echo '<script>document.location.href="index.php"; </script>';
 		
-		}	
+		}
 		else
 		{
-			if($_SESSION['type']!='admin')
-			{
-				echo '<script>document.location.href="index.php"; </script>';
-			}
-			else 
-			{
-			parent::affiche();
-			}
+		parent::affiche();
+		echo "admin";
 		}
 	}
+
 	public function affiche_menu() {
 
 		parent::affiche_menu();
 		?>
 
-
+			<div class="MD">
 			<ul >
 			<li >
 			<a href="" >Administration</a>
 				<ul >
 					<li><a href="">Modifier mot de passe</a></li>
-					<li ></li>
-
 					<li ><a  href="#">Famille</a>
 						<ul >
-							<li><a href="ajout_famille.php">Inscrire une famille</a></li>
-							<li><a href="modif_famille.php">Modifier une famille</a></li>
+							<li><a href="">Inscrire une famille</a></li>
+							<li><a href="">Modifier une famille</a></li>
 							<li><a href="">Supprimer une famille</a></li>
 							<li><a href="">Choisir une famille</a></li>
 						</ul>
@@ -54,6 +47,7 @@ class page_base_securisee_admin extends page_base {
 				</ul>
 			</li>
 	</ul>
+	</div>
 		<?php 
 
 	}
