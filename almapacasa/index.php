@@ -5,5 +5,5 @@
 	$site = new page_base('Accueil');
 	
 	$site->affiche();
-
+	//hh
 ?>
