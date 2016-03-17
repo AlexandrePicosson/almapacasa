@@ -4,7 +4,7 @@ class mypdo extends PDO{
     private $PARAM_hote='localhost'; // le chemin vers le serveur
     private $PARAM_utilisateur='root'; // nom d'utilisateur pour se connecter
     private $PARAM_mot_passe=''; // mot de passe de l'utilisateur pour se connecter
-    private $PARAM_nom_bd='alae';
+    private $PARAM_nom_bd='almapacasa';
     private $connexion;
     public function __construct() {
     	try {
@@ -34,10 +34,10 @@ class mypdo extends PDO{
     public function connect($tab)
     {
     if($tab['categ']=='famille'){	
-    	$requete='select * from famille where identifiant="'.$tab['id'].'" and mp=MD5("'.$tab['mp'].'");';
+    	$requete='select * from famille where id="'.$tab['id'].'" and mdp=("'.$tab['mp'].'");';
     }
     else{
-    	$requete='select * from administrateur where identifiant="'.$tab['id'].'" and mp=MD5("'.$tab['mp'].'");';
+    	$requete='select * from administrateur where id="'.$tab['id'].'" and mdp=("'.$tab['mp'].'");';
     }
     	$result=$this->connexion ->query($requete);
     	if ($result)

@@ -7,8 +7,8 @@ class page_base {
 	protected $js=array('jquery-2.1.4.min', 'bootstrap.min');
 	protected $css=array('bootstrap.min','perso');
 	protected $page;
-	protected $metadescription="Bienvenue à  l'accueil périscolaire de l'école les Ptits-Bouts-De-Choux";
-	protected $metakeyword=array('Accueil périscolaire','Petits Bouts De Choux' );
+	protected $metadescription="Bienvenue sur le site d'Almapacasa";
+	protected $metakeyword=array('Accueil Almapacasa','Almapacasa' );
 
 	public function __construct($p) {
 				$this->titre = $p;
