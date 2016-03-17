@@ -10,6 +10,6 @@ $site->css='modal';
 $controleur=new controleur();
 $site-> left_sidebar=$controleur->retourne_formulaire_login();
 
-
+/* ajout d'un commentaire */
 $site->affiche();
 ?>
