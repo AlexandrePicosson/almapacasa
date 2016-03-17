@@ -2,8 +2,6 @@ html,body{
 	background:#DAE5F1
 }
 
-
-
 #logo{
 	float:right;
 	height:200px;
@@ -84,4 +82,24 @@ footer .mentions{
 footer .mentions a{
 	color:#FFF;
 	text-decoration:none;
+}
+
+
+#menu{
+	list-style-type: none;
+	position:absolute;
+}
+
+#menu li{
+	list-style-type: none;
+}
+
+#menu li a{
+    color: #fff;
+    background-color: transparent;
+}
+
+#menu ul li a{
+    color: #fff;
+    background-color: transparent;
 }

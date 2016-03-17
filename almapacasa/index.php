@@ -10,5 +10,4 @@
 	}
 
 	$site->affiche();
-	//hh
 ?>
