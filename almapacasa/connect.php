@@ -8,7 +8,6 @@ $site->js='jquery.tooltipster.min';
 $site->css='tooltipster';
 $site->css='modal';
 $controleur=new controleur();
-$site-> right_sidebar=$site->rempli_right_sidebar();
 $site-> left_sidebar=$controleur->retourne_formulaire_login();
 
 
