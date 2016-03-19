@@ -212,11 +212,49 @@ class controleur {
 						<img src="../almapacasa/images/avatar1.jpg">
 							<div class="lib">
 								<p>
-									Samantha Giraudeau<br>
+									Ninet Lanctot<br>
 									Infirmière
 								</p>
 							</div>
-						</div>
+					</div>
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar3.jpg">
+							<div class="lib">
+								<p>
+									Julie Grondin<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar4.jpg">
+							<div class="lib">
+								<p>
+									Laure Piedalue<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar5.jpg">
+							<div class="lib">
+								<p>
+									Romaine Talon<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
+				</div>
+				<div class="content_equipe">
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar6.jpg">
+							<div class="lib">
+								<p>
+									Elodie Couet<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
 				</div>
 				';
 	}

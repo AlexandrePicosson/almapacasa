@@ -41,6 +41,7 @@ header .row .col-xs-4 h1{
 	top: 0px;
 	position: fixed;
 	width: 100%;
+	z-index:1;
 }
 
 .navbar-inverse .navbar-nav > li > a{
@@ -60,7 +61,7 @@ footer{
 	vertical-align: baseline;
 	background:#3F72A6;
 	position: absolute;
-	bottom: 0;
+	bottom:0;
 	width: 100%;
 	color: #FFF;
 	height: 50px;
@@ -103,3 +104,21 @@ footer .mentions a{
     color: #fff;
     background-color: transparent;
 }
+
+.apercu_equipe .lib p{
+	width: 150px;
+	text-align:center;
+}
+
+.content_equipe{
+	display:inline-flex;
+	width:100%
+}
+
+.apercu_equipe{
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom:30px;
+}
+
+	
