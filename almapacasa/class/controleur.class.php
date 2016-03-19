@@ -198,89 +198,91 @@ class controleur {
 	
 	public function returnPageEquipe(){
 		return '
-				<div class="content_equipe">
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar2.jpg">
-						<div class="lib">
-							<p>
-								Alexandre Nossopic<br>
-								Administrateur du site
-							</p>
+				<div class="equipe_apercu">
+					<div class="content_equipe">
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar2.jpg">
+							<div class="lib">
+								<p>
+									Alexandre Nossopic<br>
+									Administrateur du site
+								</p>
+							</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar1.jpg">
+								<div class="lib">
+									<p>
+										Ninet Lanctot<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar3.jpg">
+								<div class="lib">
+									<p>
+										Julie Grondin<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar4.jpg">
+								<div class="lib">
+									<p>
+										Laure Piedalue<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar5.jpg">
+								<div class="lib">
+									<p>
+										Romaine Talon<br>
+										Infirmière
+									</p>
+								</div>
 						</div>
 					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar1.jpg">
-							<div class="lib">
-								<p>
-									Ninet Lanctot<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar3.jpg">
-							<div class="lib">
-								<p>
-									Julie Grondin<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar4.jpg">
-							<div class="lib">
-								<p>
-									Laure Piedalue<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar5.jpg">
-							<div class="lib">
-								<p>
-									Romaine Talon<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-				</div>
-				<div class="content_equipe">
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar6.jpg">
-							<div class="lib">
-								<p>
-									Elodie Couet<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar7.jpg">
-							<div class="lib">
-								<p>
-									Ambra Corbeil<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar8.jpg">
-							<div class="lib">
-								<p>
-									Rive Arpin<br>
-									Infirmière
-								</p>
-							</div>
-					</div>
-					<div class="apercu_equipe">
-						<img src="../almapacasa/images/avatar9.jpg">
-							<div class="lib">
-								<p>
-									Simone Coulomb<br>
-									Infirmière
-								</p>
-							</div>
+					<div class="content_equipe">
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar6.jpg">
+								<div class="lib">
+									<p>
+										Elodie Couet<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar7.jpg">
+								<div class="lib">
+									<p>
+										Ambra Corbeil<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar8.jpg">
+								<div class="lib">
+									<p>
+										Rive Arpin<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
+						<div class="apercu_equipe">
+							<img src="../almapacasa/images/avatar9.jpg">
+								<div class="lib">
+									<p>
+										Simone Coulomb<br>
+										Infirmière
+									</p>
+								</div>
+						</div>
 					</div>
 				</div>
 				';
@@ -310,6 +312,26 @@ class controleur {
 								<a href="#">Gestion des commentaires</a>
 							</li>
 					</div>
+				</div>
+				';
+	}
+	
+	public function AfficheInfosAcc(){
+		return '
+				<div class="top-acc">
+    				<div class="col-xs-4">
+    					<h1>
+							Kaliémie
+						</h1>
+					</div>
+					<div class="col-xs-5">
+						<p>
+							Novo denique perniciosoque exemplo idem Gallus ausus est inire flagitium grave, quod Romae cum ultimo dedecore temptasse aliquando dicitur Gallienus, et adhibitis paucis clam ferro succinctis vesperi per tabernas palabatur et conpita quaeritando Graeco sermone, cuius erat inpendio gnarus, quid de Caesare quisque sentiret. et haec confidenter agebat in urbe ubi pernoctantium luminum claritudo dierum solet imitari fulgorem. postremo agnitus saepe iamque, si prodisset, conspicuum se fore contemplans, non nisi luce palam egrediens ad agenda quae putabat seria cernebatur. et haec quidem medullitus multis gementibus agebantur.
+						</p>
+					</div>
+    				<div class="col-xs-3">
+						<img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/>
+ 					</div>
 				</div>
 				';
 	}

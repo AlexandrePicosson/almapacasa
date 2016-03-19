@@ -11,10 +11,16 @@ header .row{
 	min-height:initial;
 }
 
-.row{
-	margin:0px;
-	margin-top:50px;
-	min-height:76vh;
+.content{
+	width:100%
+}
+
+.top-acc{
+	margin-top:60px;
+}
+
+.equipe_apercu{
+	margin-top:100px;
 }
 
 .page-header{
@@ -23,7 +29,7 @@ header .row{
 }
 
 
-header .row .col-xs-4 h1{
+.content .col-xs-4 h1{
 	font-size:100px;
 	margin-top:45px;
 	color:#0174CF;
@@ -55,9 +61,8 @@ header .row .col-xs-4 h1{
 }
 
 footer{
-
 	background:#3F72A6;
-	position: relative;
+	position: absolute;
 	bottom:0;
 	width: 100%;
 	color: #FFF;
@@ -119,9 +124,9 @@ footer .mentions a{
 }
 
 .optionAdmin{
-    height: 90vh;
+    height: 100vh;
     position: absolute;
-    top: -59px;
+    top: 30px;
     left: -15px;
     line-height: 40px;
     background: #87CEFA;

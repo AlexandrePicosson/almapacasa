@@ -8,6 +8,7 @@
 	{
 		$site = new page_base('Accueil');
 	}
-
+	$controleur = new controleur();
+	$site-> all_sidebar=$controleur->AfficheInfosAcc();
 	$site->affiche();
 ?>

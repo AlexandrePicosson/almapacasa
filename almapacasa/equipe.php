@@ -9,7 +9,7 @@ session_start();
 		$site = new page_base('Equipe');
 	}
 	$controleur = new controleur();
-	$site-> left_sidebar=$controleur->returnPageEquipe();
+	$site-> all_sidebar=$controleur->returnPageEquipe();
 	$site->affiche();
 	
 ?>
