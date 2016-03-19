@@ -7,9 +7,14 @@ html,body{
 	height:200px;
 }
 
+header .row{
+	min-height:initial;
+}
+
 .row{
 	margin:0px;
 	margin-top:50px;
+	min-height:76vh;
 }
 
 .page-header{
@@ -17,9 +22,6 @@ html,body{
 	border-bottom:none;
 }
 
-.page-header .row{
-	background:#FFF;
-}
 
 header .row .col-xs-4 h1{
 	font-size:100px;
@@ -53,14 +55,9 @@ header .row .col-xs-4 h1{
 }
 
 footer{
-    margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
+
 	background:#3F72A6;
-	position: absolute;
+	position: relative;
 	bottom:0;
 	width: 100%;
 	color: #FFF;
@@ -116,8 +113,8 @@ footer .mentions a{
 }
 
 .apercu_equipe{
-    margin-right: 50px;
-    margin-left: 50px;
+    margin-right: 55px;
+    margin-left: 55px;
     margin-bottom:30px;
 }
 

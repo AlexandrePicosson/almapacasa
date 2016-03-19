@@ -8,6 +8,8 @@ session_start();
 	{
 		$site = new page_base('Administration');
 	}
-
+	$controleur = new controleur();
+	$site-> left_sidebar=$controleur->optionAdmin();
+	$site->affiche();
 	$site->affiche();
 ?>

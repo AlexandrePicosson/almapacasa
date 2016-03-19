@@ -255,6 +255,61 @@ class controleur {
 								</p>
 							</div>
 					</div>
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar7.jpg">
+							<div class="lib">
+								<p>
+									Ambra Corbeil<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar8.jpg">
+							<div class="lib">
+								<p>
+									Rive Arpin<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
+					<div class="apercu_equipe">
+						<img src="../almapacasa/images/avatar9.jpg">
+							<div class="lib">
+								<p>
+									Simone Coulomb<br>
+									Infirmière
+								</p>
+							</div>
+					</div>
+				</div>
+				';
+	}
+	
+	public function optionAdmin(){
+		return '
+				<div class="col-md-5">
+					<div class="optionAdmin">
+						<ul>
+							<li>
+								<a href="#">Modifier mes informations</a>
+							</li>
+							<li>
+								<a href="#">Gestion des patients</a>
+							</li>
+							<li>
+								<a href="#">Gestion des infirmières</a>
+							</li>
+							<li>
+								<a href="#">Gestion des personnes de confiance</a>
+							</li>
+							<li>
+								<a href="#">Ajouter du contenu au site</a>
+							</li>
+							<li>
+								<a href="#">Gestion des commentaires</a>
+							</li>
+					</div>
 				</div>
 				';
 	}
