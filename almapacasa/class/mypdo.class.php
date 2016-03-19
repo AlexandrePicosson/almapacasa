@@ -31,30 +31,27 @@ class mypdo extends PDO{
     	}
     }
     
-    public function connect($tab)
-    {
-    if($tab['categ']=='famille'){	
-    	$requete='select * from infirmiere where id="'.$tab['id'].'" and mdp=("'.$tab['mp'].'");';
-    }
-    else{
-    	$requete='select * from administrateur where id="'.$tab['id'].'" and mdp=("'.$tab['mp'].'");';
-    }
-    	$result=$this->connexion ->query($requete);
-    	if ($result)
-    
-    	{
-    		if ($result-> rowCount()==1)
-    		{
-    			return ($result);
-    		}
-    	}
-    	return null;
-    }
-    
     public function connecte_toi($tab)
     {
+    	//Requete administrateur
     	$requete = 'select * from administrateur where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	
+    	//Requete infirmiere
+    	$requete2 = 'select * from infirmiere where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	
+    	//Requete patient
+    	$requete3 = 'select * from patient where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	
+    	//Requete Personne de confiance
+    	$requete4 = 'select * from personne_de_confiance where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	
+    	//Réalisation des requetes
     	$result=$this->connexion->query($requete);
+    	$result2=$this->connexion->query($requete2);
+    	$result3=$this->connexion->query($requete3);
+    	$result4=$this->connexion->query($requete4);
+    	
+    	//Retour l'administrateur
     	if($result)
     	{
     		if($result->rowCount() == 1)
@@ -62,25 +59,32 @@ class mypdo extends PDO{
     			return ($result);
     		}
     	}
-    	return null;
-    }
-    
-    
-    public function trouve_famille($idfamille)
-    {
-    	$requete='select * from famille where id_famille='.$idfamille.';';
-    	$result=$this->connexion ->query($requete);
-    	if ($result)
-    
+    	//Retour l'infirmiere
+    	if($result2)
     	{
-    		if ($result-> rowCount()==1)
+    		if($result2->rowCount() == 1)
     		{
-    			return ($result->fetch(PDO::FETCH_OBJ));
+    			return ($result2);
+    		}
+    	}
+    	//Retour le patient
+    	if($result3)
+    	{
+    		if($result3->rowCount() == 1)
+    		{
+    			return ($result3);
+    		}
+    	}
+    	//Retour la personne de confiance
+    	if($result4)
+    	{
+    		if($result4->rowCount() == 1)
+    		{
+    			return ($result4);
     		}
     	}
     	return null;
     }
-    
 
 }
 ?>

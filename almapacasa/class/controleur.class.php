@@ -335,5 +335,9 @@ class controleur {
 				</div>
 				';
 	}
+	
+	public function AfficheDonnee(){
+		
+	}
 }
 	?>
