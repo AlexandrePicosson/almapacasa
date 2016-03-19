@@ -289,7 +289,7 @@ class controleur {
 	public function optionAdmin(){
 		return '
 				<div class="col-md-5">
-					<div class="optionAdmin">
+					<div class="optionAdmin"><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>

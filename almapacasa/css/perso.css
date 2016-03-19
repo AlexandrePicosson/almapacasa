@@ -118,4 +118,18 @@ footer .mentions a{
     margin-bottom:30px;
 }
 
+.optionAdmin{
+    height: 90vh;
+    position: absolute;
+    top: -59px;
+    left: -15px;
+    line-height: 40px;
+    background: #87CEFA;
+    padding-right: 20px;
+}
+
+.optionAdmin ul li{
+	list-style-type:none;
+}
+
 	

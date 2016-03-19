@@ -11,5 +11,4 @@ session_start();
 	$controleur = new controleur();
 	$site-> left_sidebar=$controleur->optionAdmin();
 	$site->affiche();
-	$site->affiche();
 ?>
