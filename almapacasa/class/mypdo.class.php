@@ -67,7 +67,7 @@ class mypdo extends PDO{
     		if($result->rowCount() == 1)
     		{
     			$reponse['result'] = $result;
-    			$reponse['type'] = 'personne de confiance';
+    			$reponse['type'] = 'personne_de_confiance';
     			return ($reponse);
     		}
     	}

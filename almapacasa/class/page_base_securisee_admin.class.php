@@ -22,7 +22,7 @@ class page_base_securisee_admin extends page_base {
 		?>
 			<ul class="nav navbar-nav">
 				<li>
-					<a href="administration.php">Administration</a>
+					<a href="admin.php">Administration</a>
 				</li>
 			</ul>
 		<?php 
