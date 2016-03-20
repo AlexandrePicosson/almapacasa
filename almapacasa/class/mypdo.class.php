@@ -33,54 +33,66 @@ class mypdo extends PDO{
     
     public function connecte_toi($tab)
     {
+		$reponse = array();
+    	//Requete patient
+    	$requetepatient = 'select * from patient where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	 
+    	//Requete Personne de confiance
+    	$requetepersonnedc = 'select * from personne_de_confiance where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	
     	//Requete administrateur
-    	$requete = 'select * from administrateur where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	$requeteadmin = 'select * from administrateur where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
     	
     	//Requete infirmiere
-    	$requete2 = 'select * from infirmiere where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
-    	
-    	//Requete patient
-    	$requete3 = 'select * from patient where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
-    	
-    	//Requete Personne de confiance
-    	$requete4 = 'select * from personne_de_confiance where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
-    	
+    	$requeteinfirmiere = 'select * from infirmiere where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+
     	//Réalisation des requetes
-    	$result=$this->connexion->query($requete);
-    	$result2=$this->connexion->query($requete2);
-    	$result3=$this->connexion->query($requete3);
-    	$result4=$this->connexion->query($requete4);
-    	
-    	//Retour l'administrateur
+    	$result=$this->connexion->query($requetepatient);
+		
+		//Retour l'administrateur
     	if($result)
     	{
     		if($result->rowCount() == 1)
     		{
-    			return ($result);
+    			$reponse['result'] = $result;
+    			$reponse['type'] = 'patient';
+    			return ($reponse);
     		}
     	}
+    	
+    	$result=$this->connexion->query($requetepersonnedc);
     	//Retour l'infirmiere
-    	if($result2)
+    	if($result)
     	{
-    		if($result2->rowCount() == 1)
+    		if($result->rowCount() == 1)
     		{
-    			return ($result2);
+    			$reponse['result'] = $result;
+    			$reponse['type'] = 'personne de confiance';
+    			return ($reponse);
     		}
     	}
+    	
+    	$result=$this->connexion->query($requeteinfirmiere);
     	//Retour le patient
-    	if($result3)
+    	if($result)
     	{
-    		if($result3->rowCount() == 1)
+    		if($result->rowCount() == 1)
     		{
-    			return ($result3);
+    			$reponse['result'] = $result;
+    			$reponse['type'] = 'infirmiere';
+    			return ($reponse);
     		}
     	}
+    	
+    	$result=$this->connexion->query($requeteadmin);
     	//Retour la personne de confiance
-    	if($result4)
+    	if($result)
     	{
-    		if($result4->rowCount() == 1)
+    		if($result->rowCount() == 1)
     		{
-    			return ($result4);
+    			$reponse['result'] = $result;
+    			$reponse['type'] = 'admin';
+    			return ($reponse);
     		}
     	}
     	return null;

@@ -5,7 +5,7 @@ class page_base_securisee_admin extends page_base {
 		parent::__construct($p);
 	}
 	public function affiche() {
-		if(!isset($_SESSION['id']))
+		if(!isset($_SESSION['id']) && $_SESSION['type'] != 'admin')
 		{
 			echo '<script>document.location.href="index.php"; </script>';
 		

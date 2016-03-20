@@ -22,6 +22,7 @@ $resultat = $mypdo->connecte_toi($tab);
 if(isset($resultat))
 {
 	$_SESSION['id']=$tab['id'];
+	$_SESSION['type']= $resultat['type'];
 	$data['success']=true;
 }
 else
@@ -41,18 +42,6 @@ else
 		$data['message'] = "vous �tes connect�";
 	}
 }
-
-
-/*if ( ! empty($errors)) {
-	$data['success'] = false;
-	$data['errors']  = $errors;
-} else {
-	if($data['success'])
-	{
-		$data['message'] = "erreur";
-		
-	}
-}*/
 
 echo json_encode($data);
 ?>
