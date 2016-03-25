@@ -31,7 +31,7 @@ class mypdo extends PDO{
     	}
     }
     
-    public function connecte_toi($tab)
+    public function connect($tab)
     {
 		$reponse = array();
     	//Requete patient

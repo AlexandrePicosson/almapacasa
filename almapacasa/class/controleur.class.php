@@ -291,7 +291,7 @@ class controleur {
 	public function optionAdmin(){
 		return '
 				<div class="col-md-5">
-					<div class="optionAdmin"><br>
+					<div class="optionAdmin"><br><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
@@ -310,6 +310,9 @@ class controleur {
 							</li>
 							<li>
 								<a href="#">Gestion des commentaires</a>
+							</li>
+							<li>
+								<a href="#">Validation des témoignages</a>
 							</li>
 					</div>
 				</div>
@@ -336,8 +339,16 @@ class controleur {
 				';
 	}
 	
-	public function AfficheDonnee(){
-		
+	public function mentionsLegales(){
+		return '
+				<br><br><br><br>
+					Société ALMAPACASA - Groupe de travail en BTS Services Informatiques aux Organisations<br>
+					Propriétaires : PICOSSON Alexandre - GIRAUDEAU Samantha - HERBERT Calvin - MALMEJEAN Paulin - MOREAU Maxime<br>
+					Adresse : 115 Boulevard du Massacre, 44100 Nantes, France<br>
+					Adresse de contact : almapacasa@yopmail.com<br>
+					Hébergement du site : <br>
+				
+				';
 	}
 }
 	?>

@@ -17,7 +17,7 @@ $tab['id']=$_POST['id'];
 $tab['mdp']=$_POST['mdp'];
 
 
-$resultat = $mypdo->connecte_toi($tab);
+$resultat = $mypdo->connect($tab);
 
 if(isset($resultat))
 {
@@ -39,7 +39,7 @@ else
 {
 	if ($data['success'])
 	{
-		$data['message'] = "vous �tes connect�";
+		$data['message'] = "vous êtes connecté";
 	}
 }
 

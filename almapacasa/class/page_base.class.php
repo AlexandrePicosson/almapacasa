@@ -188,7 +188,7 @@ class page_base {
 		<!-- Footer -->
 			<footer>
 				<div class="infos">
-					Projets Personnels Encadrés - Almapacasa
+					. ALMAPACASA©
 				</div>
 				<div class="mentions">
 					<a href="mentions_legales">Mentions légales</a>
