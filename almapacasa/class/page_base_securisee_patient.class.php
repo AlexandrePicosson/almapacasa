@@ -1,11 +1,11 @@
 <?php
-class page_base_securisee_infirmiere extends page_base {
+class page_base_securisee_patient extends page_base {
 
 	public function __construct($p) {
 		parent::__construct($p);
 	}
 	public function affiche() {
-		if(!isset($_SESSION['id']) && $_SESSION['type'] != 'infirmiere')
+		if(!isset($_SESSION['id']) && $_SESSION['type'] != 'patient')
 		{
 			echo '<script>document.location.href="index.php"; </script>';
 		
@@ -15,14 +15,13 @@ class page_base_securisee_infirmiere extends page_base {
 		parent::affiche();
 		}
 	}
-	
 	public function affiche_menu() {
 
 		parent::affiche_menu();
 		?>
 		<ul class="nav navbar-nav">
 				<li>
-					<a href="infirmiere.php">Mon Compte</a>
+					<a href="patient.php">Mon Compte</a>
 				</li>
 			</ul>
 		<?php 

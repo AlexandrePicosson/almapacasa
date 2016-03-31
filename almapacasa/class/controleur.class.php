@@ -314,6 +314,40 @@ class controleur {
 							<li>
 								<a href="#">Validation des témoignages</a>
 							</li>
+							<li>
+								<a href="#">Création de rendez-vous</a>
+							</li>
+					</div>
+				</div>
+				';
+	}
+	
+	public function optionPatient(){
+		return '
+				<div class="col-md-5">
+					<div class="optionadmin"><br><br>
+						<ul>
+							<li>
+								<a href="#">Modifier mes informations</a>
+							</li>
+							<li>
+								<a href="#">Gestion des patients</a>
+							</li>
+							<li>
+								<a href="#">Gestion des infirmières</a>
+							</li>
+							<li>
+								<a href="#">Gestion des personnes de confiance</a>
+							</li>
+							<li>
+								<a href="#">Ajouter du contenu au site</a>
+							</li>
+							<li>
+								<a href="#">Gestion des commentaires</a>
+							</li>
+							<li>
+								<a href="#">Validation des témoignages</a>
+							</li>
 					</div>
 				</div>
 				';
@@ -351,7 +385,7 @@ class controleur {
 				';
 	}
 	
-	public function nouveauFormulaire(){
+	public function nouveauFormulaireTemoignages(){
 		return '<br><br><br>
 				<form action="formTemoignage.php" method="post">
 					<p>
