@@ -21,7 +21,7 @@ class page_base_securisee_personneC extends page_base {
 		?>
 		<ul class="nav navbar-nav">
 				<li>
-					<a href="personne_de_confiance.php">Administration</a>
+					<a href="personne_de_confiance.php">Mon Compte</a>
 				</li>
 			</ul>
 		<?php 

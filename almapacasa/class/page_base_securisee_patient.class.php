@@ -21,7 +21,7 @@ class page_base_securisee_patient extends page_base {
 		?>
 		<ul class="nav navbar-nav">
 				<li>
-					<a href="patient.php">Administration</a>
+					<a href="patient.php">Mon Compte</a>
 				</li>
 			</ul>
 		<?php 

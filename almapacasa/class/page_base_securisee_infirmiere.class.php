@@ -22,7 +22,7 @@ class page_base_securisee_infirmiere extends page_base {
 		?>
 		<ul class="nav navbar-nav">
 				<li>
-					<a href="infirmiere.php">Administration</a>
+					<a href="infirmiere.php">Mon Compte</a>
 				</li>
 			</ul>
 		<?php 
