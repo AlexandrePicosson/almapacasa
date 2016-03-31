@@ -8,6 +8,6 @@ session_start();
 	{
 		$site = new page_base('Temoignage');
 	}
-
+	$controleur = new controleur();
 	$site->affiche();
 ?>

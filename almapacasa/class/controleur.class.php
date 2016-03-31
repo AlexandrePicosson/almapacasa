@@ -204,7 +204,7 @@ class controleur {
 							<img src="../almapacasa/images/avatar2.jpg">
 							<div class="lib">
 								<p>
-									Alexandre Nossopic<br>
+									Alexandre Nossocip<br>
 									Administrateur du site
 								</p>
 							</div>
@@ -333,7 +333,7 @@ class controleur {
 						</p>
 					</div>
     				<div class="col-xs-3">
-						<img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/>
+						<center><img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/></center>
  					</div>
 				</div>
 				';
@@ -348,6 +348,20 @@ class controleur {
 					Adresse de contact : almapacasa@yopmail.com<br>
 					Hébergement du site : <br>
 				
+				';
+	}
+	
+	public function nouveauFormulaire(){
+		return '<br><br><br>
+				<form action="formTemoignage.php" method="post">
+					<p>
+						<p>Prénom : <input type="text" name="prenom" /><br></p>
+					    <p>Nom : <input type="text" name="nom" /><br></p>
+						<p>Date de votre consultation : <input type="text" name="dateConsult" /><br></p>
+						<p>Votre consultation : <textarea type="text" name="temoignagePatient" ></textarea><br></p>
+					    <input type="submit" value="Valider" />
+					</p>
+				</form>
 				';
 	}
 }
