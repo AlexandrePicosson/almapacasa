@@ -328,22 +328,38 @@ class controleur {
 								<a href="#">Modifier mes informations</a>
 							</li>
 							<li>
-								<a href="#">Gestion des patients</a>
+								<a href="#">Rédaction d\'un témoignage</a>
 							</li>
 							<li>
-								<a href="#">Gestion des infirmières</a>
+								<a href="#">Consultation des rendez - vous</a>
 							</li>
 							<li>
-								<a href="#">Gestion des personnes de confiance</a>
+								<a href="#">Demande de rendez - vous</a>
+							</li>
+					</div>
+				</div>
+				';
+	}
+	
+	public function optionInfirmiere(){
+		return '
+				<div class="col-md-5">
+					<div class="optionAdmin"><br><br>
+						<ul>
+							<li>
+								<a href="#">Modifier mes informations</a>
 							</li>
 							<li>
-								<a href="#">Ajouter du contenu au site</a>
+								<a href="#">Rédaction d\'un commentaire</a>
 							</li>
 							<li>
-								<a href="#">Gestion des commentaires</a>
+								<a href="#">Modification d\'un commentaire</a>
 							</li>
 							<li>
-								<a href="#">Validation des témoignages</a>
+								<a href="#">Gestion des indisponibilités</a>
+							</li>
+							<li>
+								<a href="#">Demande d\'un nouveau mot de passe</a>
 							</li>
 					</div>
 				</div>
