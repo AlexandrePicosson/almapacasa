@@ -353,52 +353,28 @@ class controleur {
 				';
 	}
 	
-	public function optionPatient(){
-		return '
-				<div class="col-md-5">
-					<div class="optionAdmin"><br><br>
-						<ul>
-							<li>
-								<a href="#">Modifier mes informations</a>
-							</li>
-							<li>
-								<a href="#">Gestion des patients</a>
-							</li>
-							<li>
-								<a href="#">Gestion des infirmières</a>
-							</li>
-							<li>
-								<a href="#">Gestion des personnes de confiance</a>
-							</li>
-							<li>
-								<a href="#">Ajouter du contenu au site</a>
-							</li>
-							<li>
-								<a href="#">Gestion des commentaires</a>
-							</li>
-							<li>
-								<a href="#">Validation des témoignages</a>
-							</li>
-					</div>
-				</div>
-				';
-	}
 	
 	public function AfficheInfosAcc(){
 		return '
 				<div class="top-acc">
-    				<div class="col-xs-4">
+    				<div class="col-xs-2">
     					<h1>
+							<img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/>
+							
+						</h1>
+					</div>
+					<div class="col-xs-4">
+						<h1>
 							Kaliémie
 						</h1>
 					</div>
-					<div class="col-xs-5">
+    				<div class="col-xs-6">
 						<p>
-							Novo denique perniciosoque exemplo idem Gallus ausus est inire flagitium grave, quod Romae cum ultimo dedecore temptasse aliquando dicitur Gallienus, et adhibitis paucis clam ferro succinctis vesperi per tabernas palabatur et conpita quaeritando Graeco sermone, cuius erat inpendio gnarus, quid de Caesare quisque sentiret. et haec confidenter agebat in urbe ubi pernoctantium luminum claritudo dierum solet imitari fulgorem. postremo agnitus saepe iamque, si prodisset, conspicuum se fore contemplans, non nisi luce palam egrediens ad agenda quae putabat seria cernebatur. et haec quidem medullitus multis gementibus agebantur.
+							Bienvenue sur le site de Kaliémie.<br>
+							Ici sont présentés les actualités et les témoignages des patients sur leurs rendez-vous et 
+							la qualité de ceux-ci.<br>
+							Sur le site vous sera aussi présenté toutes les personnes faisant parties de notre équipe.
 						</p>
-					</div>
-    				<div class="col-xs-3">
-						<center><img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/></center>
  					</div>
 				</div>
 				';

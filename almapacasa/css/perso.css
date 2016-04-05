@@ -15,7 +15,7 @@ header .row{
 }
 
 .top-acc{
-	margin-top:60px;
+	margin-top:20px;
 }
 
 .equipe_apercu{
@@ -33,6 +33,11 @@ header .row{
 	margin-top:45px;
 	color:#0174CF;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin-top:110px;
+}
+
+.content .col-xs-6 p{
+	margin-top:45px;	
 }
 
 .container-fluid{
