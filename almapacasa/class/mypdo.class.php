@@ -98,5 +98,18 @@ class mypdo extends PDO{
     	return null;
     }
 
+    public function importAndroid()
+    {
+    	$requete = 'select * from patient limit 1;';
+    	$result = $this->connexion->query($requete);
+    	if($result)
+    	{
+    		if($result->rowCount() >= 1)
+    		{
+    			return ($result);
+    		}
+    	}
+    	return null;
+    }
 }
 ?>
