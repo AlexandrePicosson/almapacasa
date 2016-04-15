@@ -42,4 +42,21 @@ class ControleurAndroid{
 		echo json_encode($json);
 	}
 	
+	public function login($identifiant, $mdp)
+	{
+		$utf8Encode = function($n) { return (utf8_encode($n)); };
+		$json = array();
+		$result = $this->mypdo->loginAndroid($identifiant, $mdp);
+		
+		if($result && $result != null)
+		{
+			while($row = $result->fetch(PDO::FETCH_ASSOC))
+			{
+				$json[] = array_map($utf8Encode, $row);
+			}
+			echo json_encode($json);
+		}
+		echo json_encode(null);
+	}
+	
 }

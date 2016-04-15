@@ -111,5 +111,19 @@ class mypdo extends PDO{
     	}
     	return null;
     }
+    
+    public function loginAndroid($identifiant, $mdp)
+    {
+    	$requete = 'select * from infirmiere where login="'.$identifiant.'" and mdp="'.$mdp.'";';
+    	$result = $this->connexion->query($requete);
+    	if($result)
+    	{
+    		if($result->rowCount() >= 1)
+    		{
+    			return ($result);
+    		}
+    	}
+    	return null;
+    }
 }
 ?>
