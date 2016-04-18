@@ -238,10 +238,10 @@ class page_base {
   							<div class="col-md-12">
 						    	<?php echo $this->all_sidebar;?>
 						    </div>
-						    <div class="col-md-8">
+						    <div class="col-md-3">
 						    	<?php echo $this->left_sidebar; ?>
 						    </div>
-						    <div class="col-md-4">
+						    <div class="col-md-9">
 								<?php echo $this->right_sidebar;?>
 						    </div>
 						</div>

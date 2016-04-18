@@ -290,14 +290,14 @@ class controleur {
 	
 	public function optionAdmin(){
 		return '
-				<div class="col-md-5">
+				
 					<div class="optionAdmin"><br><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
 							</li>
 							<li>
-								<a href="#">Gestion des patients</a>
+								<a href="gestPatient.php">Gestion des patients</a>
 							</li>
 							<li>
 								<a href="#">Gestion des infirmières</a>
@@ -317,8 +317,11 @@ class controleur {
 							<li>
 								<a href="#">Création de rendez-vous</a>
 							</li>
+							<li>
+								<a href="ajouterTemoignage.php">Ajouter un témoignage</a>
+							</li>
 					</div>
-				</div>
+				
 				';
 	}
 	
@@ -396,13 +399,57 @@ class controleur {
 		return '<br><br><br>
 				<form action="formTemoignage.php" method="post">
 					<p>
-						<p>Prénom : <input type="text" name="prenom" /><br></p>
-					    <p>Nom : <input type="text" name="nom" /><br></p>
+						<p>Prénom : '.$_SESSION['prenom'].'<br></p>
+					    <p>Nom : '.$_SESSION['nom'].'<br></p>
 						<p>Date de votre consultation : <input type="text" name="dateConsult" /><br></p>
 						<p>Votre consultation : <textarea type="text" name="temoignagePatient" ></textarea><br></p>
 					    <input type="submit" value="Valider" />
 					</p>
 				</form>
+				';
+	}
+	
+	public function optionsModifsPatients(){
+		return '
+				<div class="col-md-5">
+					<div><br><br><br><br><br><br>
+						<ul>
+							<li>
+								<a href="ajoutPatientA.php">Ajouter un patient</a>
+							</li>
+							<li>
+								<a href="modifPatientA.php">Modifier un patient</a>
+							</li>
+							<li>
+								<a href="deletePatientA.php">Supprimer un patient</a>
+							</li>
+							
+					</div>
+				</div>';
+	}
+	
+	public function formAjoutPatient(){
+		return '<br><br><br>
+				<div class="formPatient">
+					<form action="formAddPatient.php" method="post">
+						<p>
+							<h1>Ajout d\' un nouveau patient: </h1>
+							<label>Prénom : </label><input type="text" name="prenom" /><br>
+						    <label>Nom : </label><input type="text" name="nom" /><br>
+							<label>Identifiant : </label><input type="text" name="login" /><br>
+							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
+							<label>Sexe : </label><input type="text" name="sexe" /><br>
+							<label>Rue : </label><input type="text" name="rue" /><br>
+							<label>Code postal : </label><input type="text" name="cp" /><br>
+							<label>Ville : </label><input type="text" name="ville" /><br>
+							<label>Téléphone : </label><input type="text" name="tel" /><br>
+						    <input type="submit" value="Valider" />
+					
+							<!-- Faire envoyer le 3 en droit !! -->
+						</p>
+					</form>
+				</div>
 				';
 	}
 }
