@@ -24,7 +24,7 @@ class mypdo extends PDO{
     public function __get($propriete) {
     	switch ($propriete) {
     		case 'connexion' :
-    			{
+    			{ 
     				return $this->connexion;
     				break;
     			}
