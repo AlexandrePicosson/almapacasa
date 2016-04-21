@@ -12,6 +12,7 @@ session_start();
 	}
 	elseif (isset($_SESSION['id']) && isset($_SESSION['type']) && $_SESSION['type'] == 'personne_de_confiance'){
 		$site = new page_base_securisee_personneC('Accueil');
+	}
 	else 
 	{
 		$site = new page_base('Equipe');

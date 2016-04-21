@@ -288,6 +288,7 @@ class controleur {
 				';
 	}
 	
+	//Menu des options de l'administrateur
 	public function optionAdmin(){
 		return '
 				
@@ -316,9 +317,6 @@ class controleur {
 							</li>
 							<li>
 								<a href="#">Création de rendez-vous</a>
-							</li>
-							<li>
-								<a href="ajouterTemoignage.php">Ajouter un témoignage</a>
 							</li>
 					</div>
 				
@@ -452,5 +450,12 @@ class controleur {
 				</div>
 				';
 	}
-}
+	
+	//Formulaire de modification des informations des patients
+	public function formModifPatient(){
+		return '
+				
+				';	
+		}
+	}
 	?>
