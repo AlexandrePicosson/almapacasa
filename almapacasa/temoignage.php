@@ -17,9 +17,7 @@ session_start();
 	{
 		$site = new page_base('Temoignage');
 	}
-<<<<<<< HEAD
-=======
+
 	
->>>>>>> branch 'master' of https://github.com/NewflyerAlex/almapacasa.git
 	$site->affiche();
 ?>
