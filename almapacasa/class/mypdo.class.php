@@ -24,7 +24,7 @@ class mypdo extends PDO{
     public function __get($propriete) {
     	switch ($propriete) {
     		case 'connexion' :
-    			{
+    			{ 
     				return $this->connexion;
     				break;
     			}
@@ -98,5 +98,32 @@ class mypdo extends PDO{
     	return null;
     }
 
+    public function importAndroid()
+    {
+    	$requete = 'select * from patient limit 1;';
+    	$result = $this->connexion->query($requete);
+    	if($result)
+    	{
+    		if($result->rowCount() >= 1)
+    		{
+    			return ($result);
+    		}
+    	}
+    	return null;
+    }
+    
+    public function loginAndroid($identifiant, $mdp)
+    {
+    	$requete = 'select * from infirmiere where login="'.$identifiant.'" and mdp="'.$mdp.'";';
+    	$result = $this->connexion->query($requete);
+    	if($result)
+    	{
+    		if($result->rowCount() >= 1)
+    		{
+    			return ($result);
+    		}
+    	}
+    	return null;
+    }
 }
 ?>

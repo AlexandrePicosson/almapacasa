@@ -288,16 +288,17 @@ class controleur {
 				';
 	}
 	
+	//Menu des options de l'administrateur
 	public function optionAdmin(){
 		return '
-				<div class="col-md-5">
+				
 					<div class="optionAdmin"><br><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
 							</li>
 							<li>
-								<a href="#">Gestion des patients</a>
+								<a href="gestPatient.php">Gestion des patients</a>
 							</li>
 							<li>
 								<a href="#">Gestion des infirmières</a>
@@ -314,73 +315,56 @@ class controleur {
 							<li>
 								<a href="#">Validation des témoignages</a>
 							</li>
+							<li>
+								<a href="#">Création de rendez-vous</a>
+							</li>
 					</div>
-				</div>
+				
 				';
 	}
 	
 	public function optionPatient(){
 		return '
-				<div class="col-md-5">
 					<div class="optionAdmin"><br><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
 							</li>
 							<li>
-								<a href="#">Rédaction d\'un témoignage</a>
+								<a href="#">Gestion de la personne de confiance</a>
 							</li>
 							<li>
-								<a href="#">Consultation des rendez - vous</a>
+								<a href="#">Ajouter un commentaire</a>
 							</li>
 							<li>
-								<a href="#">Demande de rendez - vous</a>
+								<a href="ajouterTemoignageP.php">Ajouter un témoignage</a>
 							</li>
 					</div>
-				</div>
 				';
 	}
 	
-	public function optionInfirmiere(){
-		return '
-				<div class="col-md-5">
-					<div class="optionAdmin"><br><br>
-						<ul>
-							<li>
-								<a href="#">Modifier mes informations</a>
-							</li>
-							<li>
-								<a href="#">Rédaction d\'un commentaire</a>
-							</li>
-							<li>
-								<a href="#">Modification d\'un commentaire</a>
-							</li>
-							<li>
-								<a href="#">Gestion des indisponibilités</a>
-							</li>
-							<li>
-								<a href="#">Demande d\'un nouveau mot de passe</a>
-							</li>
-					</div>
-				</div>
-				';
-	}
 	
 	public function AfficheInfosAcc(){
 		return '
 				<div class="top-acc">
-    				<div class="col-xs-4">
+    				<div class="col-xs-2">
     					<h1>
+							<img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/>
+							
+						</h1>
+					</div>
+					<div class="col-xs-4">
+						<h1>
 							Kaliémie
 						</h1>
 					</div>
-					<div class="col-xs-5">
+    				<div class="col-xs-6">
 						<p>
-							Novo denique perniciosoque exemplo idem Gallus ausus est inire flagitium grave, quod Romae cum ultimo dedecore temptasse aliquando dicitur Gallienus, et adhibitis paucis clam ferro succinctis vesperi per tabernas palabatur et conpita quaeritando Graeco sermone, cuius erat inpendio gnarus, quid de Caesare quisque sentiret. et haec confidenter agebat in urbe ubi pernoctantium luminum claritudo dierum solet imitari fulgorem. postremo agnitus saepe iamque, si prodisset, conspicuum se fore contemplans, non nisi luce palam egrediens ad agenda quae putabat seria cernebatur. et haec quidem medullitus multis gementibus agebantur.
+							Bienvenue sur le site de Kaliémie.<br>
+							Ici sont présentés les actualités et les témoignages des patients sur leurs rendez-vous et 
+							la qualité de ceux-ci.<br>
+							Sur le site vous sera aussi présenté toutes les personnes faisant parties de notre équipe.
 						</p>
-					</div>
-    				<div class="col-xs-3">
-						<center><img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/></center>
  					</div>
 				</div>
 				';
@@ -402,8 +386,8 @@ class controleur {
 		return '<br><br><br>
 				<form action="formTemoignage.php" method="post">
 					<p>
-						<p>Prénom : <input type="text" name="prenom" /><br></p>
-					    <p>Nom : <input type="text" name="nom" /><br></p>
+						<p>Prénom : '.$_SESSION['prenom'].'<br></p>
+					    <p>Nom : '.$_SESSION['nom'].'<br></p>
 						<p>Date de votre consultation : <input type="text" name="dateConsult" /><br></p>
 						<p>Votre consultation : <textarea type="text" name="temoignagePatient" ></textarea><br></p>
 					    <input type="submit" value="Valider" />
@@ -411,5 +395,81 @@ class controleur {
 				</form>
 				';
 	}
+	
+	public function optionsModifsPatients(){
+		return '
+				<div class="col-md-5">
+					<div><br><br><br><br><br><br>
+						<ul>
+							<li>
+								<a href="ajoutPatientA.php">Ajouter un patient</a>
+							</li>
+							<li>
+								<a href="modifPatientA.php">Modifier un patient</a>
+							</li>
+							<li>
+								<a href="deletePatientA.php">Supprimer un patient</a>
+							</li>
+							
+					</div>
+				</div>';
+	}
+	
+	public function formAjoutPatient(){
+		return '<br><br><br>
+				<div class="formPatient">
+					<form action="formAddPatient.php" method="post">
+						<p>
+							<h1>Ajout d\' un nouveau patient: </h1>
+							<label>Prénom : </label><input type="text" name="prenom" /><br>
+						    <label>Nom : </label><input type="text" name="nom" /><br>
+							<label>Identifiant : </label><input type="text" name="login" /><br>
+							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
+							<label>Sexe : </label><input type="text" name="sexe" /><br>
+							<label>Rue : </label><input type="text" name="rue" /><br>
+							<label>Code postal : </label><input type="text" name="cp" /><br>
+							<label>Ville : </label><input type="text" name="ville" /><br>
+							<label>Téléphone : </label><input type="text" name="tel" /><br>
+						    <input type="submit" value="Valider" />
+					
+							<!-- Faire envoyer le 3 en droit !! -->
+						</p>
+					</form>
+				</div>
+				';
+	}
+	
+<<<<<<< HEAD
+	//Modification des informations personnelles
+	public function modifMesInformations(){
+		return '<br><br><br>
+				<form action="formModifInfoPerso.php" method="post">
+				<p>
+					<label>Prénom : </label><input type="text" name="prenom" /><br>
+						    <label>Nom : </label><input type="text" name="nom" /><br>
+							<label>Identifiant : </label><input type="text" name="login" /><br>
+							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
+							<label>Sexe : </label><input type="text" name="sexe" /><br>
+							<label>Rue : </label><input type="text" name="rue" /><br>
+							<label>Code postal : </label><input type="text" name="cp" /><br>
+							<label>Ville : </label><input type="text" name="ville" /><br>
+							<label>Téléphone : </label><input type="text" name="tel" /><br>
+						    <input type="submit" value="Valider" />
+				</p>
+				</form>';
+	}
+	
 }
+?>
+=======
+	//Formulaire de modification des informations des patients
+	public function formModifPatient(){
+		return '
+				
+				';	
+		}
+	}
 	?>
+>>>>>>> branch 'master' of https://github.com/NewflyerAlex/almapacasa.git
