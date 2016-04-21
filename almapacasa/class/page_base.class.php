@@ -3,6 +3,7 @@
 class page_base {
 	protected $right_sidebar;
 	protected $left_sidebar;
+	protected $all_sidebar;
 	protected $titre;
 	protected $js=array('jquery-2.1.4.min', 'bootstrap.min');
 	protected $css=array('bootstrap.min','perso');
@@ -59,6 +60,9 @@ class page_base {
 				$this->left_sidebar = $this->left_sidebar.$valeur;
 				break;
 			}
+			case 'all_sidebar' : {
+				$this->all_sidebar = $this->all_sidebar.$valeur;
+			}
 
 		}
 	}
@@ -87,26 +91,8 @@ class page_base {
 		echo '" />';
 	}	
 	/****************************** Affichage de la partie entÃªte ***************************************/	
-	//TODO : faire le H3
 	protected function affiche_entete() {
 		echo'
-			<header class="page-header hidden-xs hidden-sm">
-				<div class="row">
-    				<!--<div class="col-xs-4">
-    					<h1>
-							Kaliémie
-						</h1>
-					</div>
-					<div class="col-xs-5">
-						<p>
-							Novo denique perniciosoque exemplo idem Gallus ausus est inire flagitium grave, quod Romae cum ultimo dedecore temptasse aliquando dicitur Gallienus, et adhibitis paucis clam ferro succinctis vesperi per tabernas palabatur et conpita quaeritando Graeco sermone, cuius erat inpendio gnarus, quid de Caesare quisque sentiret. et haec confidenter agebat in urbe ubi pernoctantium luminum claritudo dierum solet imitari fulgorem. postremo agnitus saepe iamque, si prodisset, conspicuum se fore contemplans, non nisi luce palam egrediens ad agenda quae putabat seria cernebatur. et haec quidem medullitus multis gementibus agebantur.
-						</p>
-					</div>
-    				<div class="col-xs-3">
-						<img class="img-responsive" id="logo" src="./image/logo.png" alt="logo"/>
- 					</div>
-				</div>-->
-			</header>
 			<header class="page-header hidden-md hidden-lg">
 				<div class="row">
 				    <div class="col-xs-12">
@@ -134,7 +120,7 @@ class page_base {
 	}
 	protected function affiche_menu_connexion() {
 		
-		if(!(isset($_SESSION['id']) && isset($_SESSION['type'])))
+		if(!isset($_SESSION['id']))
 		{	
 			echo '
 					<ul class="nav navbar-nav navbar-right">
@@ -202,7 +188,7 @@ class page_base {
 		<!-- Footer -->
 			<footer>
 				<div class="infos">
-					Projets Personnels Encadrés - Almapacasa
+					. ALMAPACASA©
 				</div>
 				<div class="mentions">
 					<a href="mentions_legales">Mentions légales</a>
@@ -234,13 +220,6 @@ class page_base {
 					<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 					<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 					<![endif]-->
-					<script>
-				        $(document).ready(function active() {
-				            $('Accueil').addClass('active');
-				            $('Equipe').addClass('active');
-				            $('Temoignage').addClass('active');
-				        });
-				    </script>
 					
 					<?php $this->affiche_keyword(); ?>
 					<?php $this->affiche_javascript(); ?>
@@ -255,14 +234,18 @@ class page_base {
 						<?php $this->affiche_menu_connexion(); ?>
 						<?php $this->affiche_footer_menu(); ?>
 						
-  						<div class="row">
-						    <div class="col-md-8">
+  						<div class="content">
+  							<div class="col-md-12">
+						    	<?php echo $this->all_sidebar;?>
+						    </div>
+						    <div class="col-md-3">
 						    	<?php echo $this->left_sidebar; ?>
 						    </div>
-						    <div class="col-md-4">
+						    <div class="col-md-9">
 								<?php echo $this->right_sidebar;?>
 						    </div>
 						</div>
+						
 						<?php $this->affiche_footer(); ?>
 					</div>
 				</body>

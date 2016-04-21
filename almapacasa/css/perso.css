@@ -2,16 +2,24 @@ html,body{
 	background:#DAE5F1
 }
 
-
-
 #logo{
-	float:right;
 	height:200px;
 }
 
-.row{
-	margin:0px;
-	margin-top:50px;
+header .row{
+	min-height:initial;
+}
+
+.content{
+	width:100%
+}
+
+.top-acc{
+	margin-top:20px;
+}
+
+.equipe_apercu{
+	margin-top:100px;
 }
 
 .page-header{
@@ -19,15 +27,17 @@ html,body{
 	border-bottom:none;
 }
 
-.page-header .row{
-	background:#FFF;
-}
 
-header .row .col-xs-4 h1{
+.content .col-xs-4 h1{
 	font-size:100px;
 	margin-top:45px;
 	color:#0174CF;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin-top:110px;
+}
+
+.content .col-xs-6 p{
+	margin-top:45px;	
 }
 
 .container-fluid{
@@ -43,6 +53,7 @@ header .row .col-xs-4 h1{
 	top: 0px;
 	position: fixed;
 	width: 100%;
+	z-index:1;
 }
 
 .navbar-inverse .navbar-nav > li > a{
@@ -54,15 +65,9 @@ header .row .col-xs-4 h1{
 }
 
 footer{
-    margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
 	background:#3F72A6;
 	position: absolute;
-	bottom: 0;
+	bottom:0;
 	width: 100%;
 	color: #FFF;
 	height: 50px;
@@ -85,3 +90,63 @@ footer .mentions a{
 	color:#FFF;
 	text-decoration:none;
 }
+
+
+#menu{
+	list-style-type: none;
+	position:absolute;
+}
+
+#menu li{
+	list-style-type: none;
+}
+
+#menu li a{
+    color: #fff;
+    background-color: transparent;
+}
+
+#menu ul li a{
+    color: #fff;
+    background-color: transparent;
+}
+
+.apercu_equipe .lib p{
+	width: 150px;
+	text-align:center;
+}
+
+.content_equipe{
+	display:inline-flex;
+	width:100%
+}
+
+.apercu_equipe{
+    margin-right: 55px;
+    margin-left: 55px;
+    margin-bottom:30px;
+}
+
+.optionAdmin{
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: -15px;
+    line-height: 40px;
+    background: #B0C4DE;
+    padding-right: 20px;
+}
+
+.optionAdmin ul li{
+	list-style-type:none;
+}
+
+.formPatient label{
+	display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 500;
+    width: 200px;
+}
+
+	

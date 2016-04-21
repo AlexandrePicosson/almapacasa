@@ -9,39 +9,42 @@ $data['success']=false;
 
 
 
-
 $tab=array();
 $mypdo=new mypdo();
 
 
 $tab['id']=$_POST['id'];
-$tab['mp']=$_POST['mp'];
-$tab['categ']=$_POST['categ'];
+$tab['mdp']=$_POST['mdp'];
 
 
 $resultat = $mypdo->connect($tab);
+
 if(isset($resultat))
 {
 	$_SESSION['id']=$tab['id'];
-	$_SESSION['type']=$tab['categ'];
+	$stuff = $resultat['result']->fetch(PDO::FETCH_ASSOC);
+	$_SESSION['type']= $resultat['type'];
+	$_SESSION['nom']= $stuff['NOM'];
+	$_SESSION['prenom']= $stuff['PRENOM'];
 	$data['success']=true;
 }
 else
 {
-	$errors['message']='Identifiant,mot de passe,catégorie invalide !';
+	$errors['message']="erreur";
 }
 
-
-
-if ( ! empty($errors)) {
+if( ! empty($errors))
+{
 	$data['success'] = false;
-	$data['errors']  = $errors;
-} else {
-	if($data['success'])
+	$data['errors'] = $errors;
+}
+else 
+{
+	if ($data['success'])
 	{
-		$data['message'] = "Vous êtes bien connecté  !";
-
+		$data['message'] = "vous êtes connecté";
 	}
 }
+
 echo json_encode($data);
 ?>
