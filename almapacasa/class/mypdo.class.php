@@ -125,5 +125,77 @@ class mypdo extends PDO{
     	}
     	return null;
     }
+    
+    public function AddPatientDB($tab1){
+    	$requete = 'INSERT INTO PATIENT (id,id_her_1,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone,droit) VALUES ('.$tab1['id'].','.$tab1['id_her'].',"'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'",'.$tab1['droit'].');';
+    	
+    	$nblignes=$this->connexion -> exec($requete);
+    	
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = header("location:../valideAjout.php");
+    	}
+    	return $data;
+    }
+    
+    public function AddInfirmiereDB($tab1){
+    	$requete = 'INSERT INTO INFIRMIERE (id,urlphoto,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone,droit) VALUES ('.$tab1['id'].',"'.$tab1['urlphoto'].'","'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'",'.$tab1['droit'].');';
+    	 var_dump($requete);
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    		echo 'marche pas';
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = header("location:../valideAjout.php");
+    	}
+    	return $data;
+    }
+    
+    public function AddPersonneCDB($tab1){
+    	$requete = 'INSERT INTO PERSONNE_DE_CONFIANCE (id,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone,droit) VALUES ('.$tab1['id'].',"'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'",'.$tab1['droit'].');';
+    	var_dump($requete);
+    	$nblignes=$this->connexion -> exec($requete);
+    	
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    		echo 'marche pas';
+    	}
+    	
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = header("location:../erreurAjout.php");
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = header("location:../valideAjout.php");
+    	}
+    	return $data;
+    }
 }
 ?>

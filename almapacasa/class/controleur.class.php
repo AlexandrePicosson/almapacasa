@@ -195,7 +195,7 @@ class controleur {
 		return $mdp;
 	}
 	
-	
+	//Affiche l'équipe de Kaliémie
 	public function returnPageEquipe(){
 		return '
 				<div class="equipe_apercu">
@@ -301,10 +301,10 @@ class controleur {
 								<a href="gestPatient.php">Gestion des patients</a>
 							</li>
 							<li>
-								<a href="#">Gestion des infirmières</a>
+								<a href="gestInfirmiere.php">Gestion des infirmières</a>
 							</li>
 							<li>
-								<a href="#">Gestion des personnes de confiance</a>
+								<a href="gestPersonneC.php">Gestion des personnes de confiance</a>
 							</li>
 							<li>
 								<a href="#">Ajouter du contenu au site</a>
@@ -343,7 +343,7 @@ class controleur {
 				';
 	}
 	
-	
+	// Affiche les informations en top de l'accueil
 	public function AfficheInfosAcc(){
 		return '
 				<div class="top-acc">
@@ -370,6 +370,7 @@ class controleur {
 				';
 	}
 	
+	//Affiche les mentions légales du site
 	public function mentionsLegales(){
 		return '
 				<br><br><br><br>
@@ -382,6 +383,7 @@ class controleur {
 				';
 	}
 	
+	//Affiche le formulaire d'ajout de témoignage
 	public function nouveauFormulaireTemoignages(){
 		return '<br><br><br>
 				<form action="formTemoignage.php" method="post">
@@ -396,6 +398,7 @@ class controleur {
 				';
 	}
 	
+	//Affiche les options de modification d'un patient
 	public function optionsModifsPatients(){
 		return '
 				<div class="col-md-5">
@@ -415,28 +418,135 @@ class controleur {
 				</div>';
 	}
 	
+	//Affiche les options de modification d'une infirmiere
+	public function optionsModifsInfirmiere(){
+		return '
+				<div class="col-md-5">
+					<div><br><br><br><br><br><br>
+						<ul>
+							<li>
+								<a href="ajoutInfirmiereA.php">Ajouter une infirmiere</a>
+							</li>
+							<li>
+								<a href="modifInfirmiereA.php">Modifier une infirmiere</a>
+							</li>
+							<li>
+								<a href="deleteInfirmiereA.php">Supprimer une infirmiere</a>
+							</li>
+				
+					</div>
+				</div>';
+	}
+	
+	//Affiche les options de modification d'une infirmiere
+	public function optionsModifsPersonneC(){
+		return '
+				<div class="col-md-5">
+					<div><br><br><br><br><br><br>
+						<ul>
+							<li>
+								<a href="ajoutPersonneCA.php">Ajouter une personne de confiance</a>
+							</li>
+							<li>
+								<a href="modifPersonneCA.php">Modifier une personne de confiance</a>
+							</li>
+							<li>
+								<a href="deletePersonneCA.php">Supprimer une personne de confiance</a>
+							</li>
+	
+					</div>
+				</div>';
+	}
+	
+	//Formulaire d'ajout d'un nouveau patient
 	public function formAjoutPatient(){
 		return '<br><br><br>
 				<div class="formPatient">
-					<form action="formAddPatient.php" method="post">
+					<form action="enregistrement/formAddPatient.php" method="post">
 						<p>
 							<h1>Ajout d\' un nouveau patient: </h1>
+							<label>Id : </label><input type="text" name="id" /><br>
+							<label>Id (personne de confiance) : </label><input type="text" name="id_her" /><br>
 							<label>Prénom : </label><input type="text" name="prenom" /><br>
 						    <label>Nom : </label><input type="text" name="nom" /><br>
 							<label>Identifiant : </label><input type="text" name="login" /><br>
 							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
 							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
-							<label>Sexe : </label><input type="text" name="sexe" /><br>
+							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
 							<label>Rue : </label><input type="text" name="rue" /><br>
 							<label>Code postal : </label><input type="text" name="cp" /><br>
 							<label>Ville : </label><input type="text" name="ville" /><br>
-							<label>Téléphone : </label><input type="text" name="tel" /><br>
+							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
+							<label><input type="hidden" name="droit" value="2"/>
 						    <input type="submit" value="Valider" />
-					
-							<!-- Faire envoyer le 3 en droit !! -->
 						</p>
 					</form>
 				</div>
+				';
+	}
+	
+	//Formulaire d'ajout d'une nouvelle infirmiere
+	public function formAjoutInfirmiere(){
+		return '<br><br><br>
+				<div class="formPatient">
+					<form action="enregistrement/formAddInfirmiere.php" method="post">
+						<p>
+							<h1>Ajout d\' une nouvelle infirmière: </h1>
+							<label>Id : </label><input type="text" name="id" /><br>
+							<label>Url Photo : </label><input type="text" name="urlphoto" /><br>
+							<label>Prénom : </label><input type="text" name="prenom" /><br>
+						    <label>Nom : </label><input type="text" name="nom" /><br>
+							<label>Identifiant : </label><input type="text" name="login" /><br>
+							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
+							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
+							<label>Rue : </label><input type="text" name="rue" /><br>
+							<label>Code postal : </label><input type="text" name="cp" /><br>
+							<label>Ville : </label><input type="text" name="ville" /><br>
+							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
+							<label><input type="hidden" name="droit" value="1"/>
+						    <input type="submit" value="Valider" />
+						</p>
+					</form>
+				</div>
+				';
+	}
+	
+	//Formulaire d'ajout d'une nouvelle personne de confiance
+	public function formAjoutPersonneC(){
+		return '<br><br><br>
+				<div class="formPatient">
+					<form action="enregistrement/formAddPersonneC.php" method="post">
+						<p>
+							<h1>Ajout d\' une personne de confiance: </h1>
+							<label>Id : </label><input type="text" name="id" /><br>
+							<label>Prénom : </label><input type="text" name="prenom" /><br>
+						    <label>Nom : </label><input type="text" name="nom" /><br>
+							<label>Identifiant : </label><input type="text" name="login" /><br>
+							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
+							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
+							<label>Rue : </label><input type="text" name="rue" /><br>
+							<label>Code postal : </label><input type="text" name="cp" /><br>
+							<label>Ville : </label><input type="text" name="ville" /><br>
+							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
+							<label><input type="hidden" name="droit" value="0"/>
+						    <input type="submit" value="Valider" />
+						</p>
+					</form>
+				</div>
+				';
+	}
+	
+	public function afficheValidAdd(){
+		return '<br><br><br><br>
+				Votre action est bien été effectué.
+				';
+	}
+	
+	public function afficheErreurAdd(){
+		return '<br><br><br><br>
+				Votre action n\'a pas fonctionnée, merci de bien vouloir réessayer.
 				';
 	}
 	
