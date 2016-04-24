@@ -197,5 +197,42 @@ class mypdo extends PDO{
     	}
     	return $data;
     }
+    
+    public function importDataAndroid(){
+    	
+    	$requete = 'select v.id, nom, prenom, rue, cp, ville, telephone as numero, heureDebut as heuredebut, heureFin as heurefin, dateV as date, c.libelle as commentaire
+		from visite v
+		inner join patient p on v.idPatient = p.id
+		inner join commentaire c on v.id = c.idVisite
+		where isNull(c.idPatient)
+		and v.dateV > CURDATE(); ';
+    	
+    	$reponse = $this->connexion->query($requete);
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+    }
+    
+    public function  importSoinVisite($id){
+    	
+    	$requete = 'select idSoin
+		from comprendre
+		where idVisite ='.$id.';';
+    	
+    	$reponse = $this->connexion->query($requete);
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+    }
 }
 ?>
