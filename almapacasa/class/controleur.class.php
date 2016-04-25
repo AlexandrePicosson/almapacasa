@@ -667,7 +667,7 @@ class controleur {
 					<input type="text" name="cp" id="cp" placeholder="44000" value"'.$cp.'" required />
 					<input type="text" name="ville" id="ville" placeholder="Nantes" value"'.$ville.'" required /></br>
 					<input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value"'.$telephone.'" required />
-					<input id="submit" type="submit" onclick="reload();" name="send" class="button" value="' . $lblBouton . '" />
+					<input id="submit" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
 					</form>
 					<script>function hd(){ $(\'#modal\').hide();}</script>
 					<script>function reload(){window.location.reload();}</script>

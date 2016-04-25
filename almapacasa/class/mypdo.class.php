@@ -180,7 +180,7 @@ class mypdo extends PDO{
     //Ajouter une personne de confiance
     public function AddPersonneCDB($tab1){
     	$requete = 'INSERT INTO personnedeconfiance (prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ("'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
-    	var_dump($requete);
+    	
     	$nblignes=$this->connexion -> exec($requete);
     	
     	$data = array();
@@ -252,6 +252,31 @@ class mypdo extends PDO{
     		}
     	}
     	return null;
+    }
+    
+    public function insert_patient_admin($tab)
+    {
+    	$requete = 'INSERT INTO `patient` (`id`, `idPersonneDeConf`, `nom`, `prenom`, `login`, `mdp`, `anNaiss`, `sexe`, `rue`, `cp`, `ville`, `telephone`) VALUES (NULL, \'1\',"'.$tab['nom'].'", "'.$tab['prenom'].'", "'.$tab['login'].'", "'.$tab['mdp'].'", "'.$tab['anNaiss'].'", "'.$tab['sexe'].'", "'.$tab['rue'].'", "'.$tab['cp'].'", "'.$tab['ville'].'", "'.$tab['telephone'].'");';
+    	
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "des erreurs sont présentes";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "c ok";
+    	}
+    	return $data;
     }
 }
 ?>
