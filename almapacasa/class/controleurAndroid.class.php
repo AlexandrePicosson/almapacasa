@@ -93,6 +93,35 @@ class ControleurAndroid{
 			}
 		}
 		
+		$result = $this->mypdo->importSoin();
+		
+		if($result && $result != null)
+		{
+			while($soin = $result->fetch(PDO::FETCH_ASSOC))
+			{
+				$id = $soin['id'];
+				$idTypeSoin = $soin['idTypeSoin'];
+				$libelle = $soin['libelle'];
+				$finalSoin = array('id' => $id, 'idTypeSoin' => $idTypeSoin, 'libelle' => $libelle);
+				$dataSoin[] = $finalSoin;
+			}
+		}
+		
+		$result = $this->mypdo->importTypeSoin();
+		
+		if($result && $result != null)
+		{
+			while($typeSoin = $result->fetch(PDO::FETCH_ASSOC))
+			{
+				$id = $typeSoin['id'];
+				$libelle = $typeSoin['libelle'];
+				$finalSoin = array('id' => $id, 'libelle' => $libelle);
+				$lesTypes[] = $finalSoin;
+			}
+		}
+		
+		
+		
 		$json[] = $data;
 		$json[] = $lesSoin;
 		$json[] = $lesTypes;
