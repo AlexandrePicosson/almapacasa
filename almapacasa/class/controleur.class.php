@@ -1,6 +1,6 @@
 <?php
 class controleur {
-
+	
 	private $vpdo;
 	private $db;
 	public function __construct() {
@@ -538,12 +538,20 @@ class controleur {
 				';
 	}
 	
+	//Modification des informations d'un patient
+	public function formModifPatient(){
+		$classe = new mypdo();
+		return '<br><br><br><br>"'.$classe->modifPatientRecupDB().'"';
+	}
+	
+	//Affiche si le traitement s'est bien réalisé
 	public function afficheValidAdd(){
 		return '<br><br><br><br>
 				Votre action est bien été effectué.
 				';
 	}
 	
+	//Affiche si le traitement n'a pas réussi
 	public function afficheErreurAdd(){
 		return '<br><br><br><br>
 				Votre action n\'a pas fonctionnée, merci de bien vouloir réessayer.
@@ -570,13 +578,6 @@ class controleur {
 				</p>
 				</form>';
 	}
-	
-	//Formulaire de modification des informations des patients
-	public function formModifPatient(){
-		return '
-				
-				';	
-		}
-	}
+}
 	?>
 

@@ -197,5 +197,18 @@ class mypdo extends PDO{
     	}
     	return $data;
     }
+    
+    public function modifPatientRecupDB(){
+    	$reponse = $this->connexion->query("SELECT nom FROM PATIENT")or die(mysql_error()); // Requête SQL
+    	 
+    	// On fait une boucle pour lister tout ce que contient la table :
+    	echo "<select name='nom_prenom_patient'>";
+    	
+    	while ($donnees = mysql_fetch_array($reponse) ) {
+    		echo "<option value='".$donnes['nom'].">".$donnes['prenom']."</option>";
+    	}
+    	var_dump($donnees);
+    	echo "</select>";
+    }
 }
 ?>
