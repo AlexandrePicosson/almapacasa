@@ -3,6 +3,6 @@
 	include_once('class/autoload.php');
 	$controleur = new ControleurAndroid();
 	
-	$controleur->import();
+	$controleur->importData();
 	
 	
