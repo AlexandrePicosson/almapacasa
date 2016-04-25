@@ -24,8 +24,8 @@ if(isset($resultat))
 	$_SESSION['id']=$tab['id'];
 	$stuff = $resultat['result']->fetch(PDO::FETCH_ASSOC);
 	$_SESSION['type']= $resultat['type'];
-	$_SESSION['nom']= $stuff['NOM'];
-	$_SESSION['prenom']= $stuff['PRENOM'];
+	$_SESSION['nom']= $stuff['nom'];
+	$_SESSION['prenom']= $stuff['prenom'];
 	$data['success']=true;
 }
 else

@@ -1,17 +1,18 @@
 <?php
 class controleur {
 	
-	private $vpdo;
+	private $mypdo;
 	private $db;
 	public function __construct() {
-		$this->vpdo = new mypdo ();
-		$this->db = $this->vpdo->connexion;
+		$this->mypdo = new mypdo();
+		$this->db = $this->mypdo->conexion;
 	}
+	
 	public function __get($propriete) {
 		switch ($propriete) {
-			case 'vpdo' :
+			case 'mypdo' :
 				{
-					return $this->vpdo;
+					return $this->mypdo;
 					break;
 				}
 			case 'db' :
@@ -465,20 +466,18 @@ class controleur {
 					<form action="enregistrement/formAddPatient.php" method="post">
 						<p>
 							<h1>Ajout d\' un nouveau patient: </h1>
-							<label>Id : </label><input type="text" name="id" /><br>
 							<label>Id (personne de confiance) : </label><input type="text" name="id_her" /><br>
 							<label>Prénom : </label><input type="text" name="prenom" /><br>
 						    <label>Nom : </label><input type="text" name="nom" /><br>
 							<label>Identifiant : </label><input type="text" name="login" /><br>
-							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Mot de passe : </label><input type="password" name="mdp" /><br>
 							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
 							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
 							<label>Rue : </label><input type="text" name="rue" /><br>
 							<label>Code postal : </label><input type="text" name="cp" /><br>
 							<label>Ville : </label><input type="text" name="ville" /><br>
 							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
-							<label><input type="hidden" name="droit" value="2"/>
-						    <input type="submit" value="Valider" />
+							<input type="submit" value="Valider" />
 						</p>
 					</form>
 				</div>
@@ -492,20 +491,18 @@ class controleur {
 					<form action="enregistrement/formAddInfirmiere.php" method="post">
 						<p>
 							<h1>Ajout d\' une nouvelle infirmière: </h1>
-							<label>Id : </label><input type="text" name="id" /><br>
 							<label>Url Photo : </label><input type="text" name="urlphoto" /><br>
 							<label>Prénom : </label><input type="text" name="prenom" /><br>
 						    <label>Nom : </label><input type="text" name="nom" /><br>
 							<label>Identifiant : </label><input type="text" name="login" /><br>
-							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Mot de passe : </label><input type="password" name="mdp" /><br>
 							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
 							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
 							<label>Rue : </label><input type="text" name="rue" /><br>
 							<label>Code postal : </label><input type="text" name="cp" /><br>
 							<label>Ville : </label><input type="text" name="ville" /><br>
 							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
-							<label><input type="hidden" name="droit" value="1"/>
-						    <input type="submit" value="Valider" />
+							<input type="submit" value="Valider" />
 						</p>
 					</form>
 				</div>
@@ -519,19 +516,17 @@ class controleur {
 					<form action="enregistrement/formAddPersonneC.php" method="post">
 						<p>
 							<h1>Ajout d\' une personne de confiance: </h1>
-							<label>Id : </label><input type="text" name="id" /><br>
 							<label>Prénom : </label><input type="text" name="prenom" /><br>
 						    <label>Nom : </label><input type="text" name="nom" /><br>
 							<label>Identifiant : </label><input type="text" name="login" /><br>
-							<label>Mot de passe : </label><input type="text" name="mdp" /><br>
+							<label>Mot de passe : </label><input type="password" name="mdp" /><br>
 							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
 							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
 							<label>Rue : </label><input type="text" name="rue" /><br>
 							<label>Code postal : </label><input type="text" name="cp" /><br>
 							<label>Ville : </label><input type="text" name="ville" /><br>
 							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
-							<label><input type="hidden" name="droit" value="0"/>
-						    <input type="submit" value="Valider" />
+							<input type="submit" value="Valider" />
 						</p>
 					</form>
 				</div>
@@ -540,8 +535,16 @@ class controleur {
 	
 	//Modification des informations d'un patient
 	public function formModifPatient(){
-		$classe = new mypdo();
-		return '<br><br><br><br>"'.$classe->modifPatientRecupDB().'"';
+		$tab = $this->mypdo->modifPatientRecupDB();
+		$return = '</br></br></br></br></br><select>';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>';
+		}
+		return $return;
 	}
 	
 	//Affiche si le traitement s'est bien réalisé
@@ -577,6 +580,244 @@ class controleur {
 				    <input type="submit" value="Valider" />
 				</p>
 				</form>';
+	}
+	
+	public function retourne_formulaire_patient($type, $id = ''){
+		$nom = '';
+		$prenom = '';
+		$login = '';
+		$mdp = '';
+		$dateNaiss = '';
+		$sexe='';
+		$rue='';
+		$cp='';
+		$ville='';
+		$telephone='';
+		$titreForm='';
+		$lblBouton = '';
+		$radioMchecked = '';
+		$radioFchecked = '';
+		
+		if($type == 'ajout')
+		{
+			$titreForm = "Ajout d'un patient";
+			$lblBouton = "Ajouter";
+		}
+		
+		if($type == 'modif')
+		{
+			$titreForm = "Modification d'un patient";
+			$lblBouton = "Modifier";
+		}
+		
+		if($type == 'suppr')
+		{
+			$titreForm = "Suppression d'un patient";
+			$lblBouton = "Supprimer";
+		}
+		
+		if($type == 'suppr' || $type == 'modif')
+		{
+			$result = $this->mypdo->trouvePatient($id);
+			if($result != null){
+				$nom = $result['nom'];
+				$prenom = $result['prenom'];
+				$login = $result['login'];
+				$mdp = $result['mdp'];
+				$dateNaiss = $result['anNaiss'];
+				$sexe=$result['sexe'];
+				if($sexe == 'M')
+				{
+					$radioMchecked = 'checked';
+					$radioFchecked = '';
+				}else{
+					$radioMchecked = '';
+					$radioFchecked = 'checked';
+				}
+				$rue=$result['rue'];
+				$cp=$result['cp'];
+				$ville=$result['ville'];
+				$telephone=$result['telephone'];
+			}
+		}
+		
+		$form = '<article> <h3>'.$titreForm.'</h3> <form id="formPatient" method ="post">';
+		
+		if($type = 'ajout')
+		{
+			$form = $form.'<div> 
+								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								Mot de Passe : <input type="password" name="mdp" id="mdp" value="" required /></br>
+						   </div>';
+		}else{
+			$form = $form.'<div style="visibility: hidden;">
+								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								Mot de Passe : <input type="password" name="mdp" id="mdp" value="123" required /></br>
+						   </div>';
+		}
+		
+		$form = $form.'
+					</br><h4>Patient</h4></br></br>
+					<input type="text" name="nom" id="nom" placeholder="votre nom" value"'.$nom.'" required />
+					<input type="text" name="prenom" id="prenom" placeholder="votre prenom" value"'.$prenom.'" required /></br>
+					<input type="date" name="annaiss" id="annaiss" value"'.$dateNaiss.'" required /></br>
+					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
+					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
+					<input type="text" name="rue" id="rue" placeholder="11 rue .." value"'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="44000" value"'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Nantes" value"'.$ville.'" required /></br>
+					<input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value"'.$telephone.'" required />
+					<input id="submit" type="submit" onclick="reload();" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<h1>Info</h1>
+							<div id="dialog"></div>
+							<a class="no" onclick="hd();">Ok</a>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formPatient :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+						
+						$(\'#formPatient\').submit(function(e){
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_patient.php";
+							if($(\'#submit\').prop("value")=="Modifier"){$url="ajax/valide_modif_patient.php";}
+							if($(\'#submit\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_patient.php";}
+							
+							if($("#formPatient").valid())
+							{
+								var $sexe="M";
+								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
+								var $mdp = "";
+								if($("#submit").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
+							
+								var formData = {
+									"login" : $("#login").val(),
+									"mdp" : $mdp,
+									"nom" : $("#nom").val(),
+									"prenom" : $("#prenom").val(),
+									"anNaiss" : $("#annaiss").val(),
+									"sexe" : $sexe,
+									"rue" : $("#rue").val(),
+									"cp" : $("#cp").val(),
+									"ville" : $("#ville").val(),
+									"telephone" : $("#telephone").val()
+								};
+								
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+							
+								filterDataRequest.done(function(data)
+								{
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+						
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+									}
+						
+										$("#dialog1").html($msg);$("#modal").show();
+								});
+								
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+						
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formfamille").validate({
+								rules:
+								{
+													
+									"nom": {required: true},
+									"prenom": {required: true},
+									"rue": {required: true},
+									"telephone": {required: true},
+									"cp":{required: true,regex:/^\d{5}$/},
+									"ville": {required: true},
+									"rue": {required: true},
+									"annaiss":{required: true},
+									"login": {required :true},
+									"mdp": {required : true}
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+							
+						';
+		return $form;
+		
 	}
 }
 	?>

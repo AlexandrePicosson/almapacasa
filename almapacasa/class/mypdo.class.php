@@ -126,8 +126,9 @@ class mypdo extends PDO{
     	return null;
     }
     
+    //Ajouter un patient
     public function AddPatientDB($tab1){
-    	$requete = 'INSERT INTO PATIENT (id,id_her_1,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone,droit) VALUES ('.$tab1['id'].','.$tab1['id_her'].',"'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'",'.$tab1['droit'].');';
+    	$requete = 'INSERT INTO PATIENT (idPersonneDeConf,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ('.$tab1['id_her'].',"'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
     	
     	$nblignes=$this->connexion -> exec($requete);
     	
@@ -142,6 +143,7 @@ class mypdo extends PDO{
     	if (count($errors) > 0) {
     		$data['success'] = false;
     		$data['errors']  = $errors;
+    		$data['message'] = header("location:../erreurAjout.php");
     	} else {
     		$data['success'] = true;
     		$data['message'] = header("location:../valideAjout.php");
@@ -149,8 +151,9 @@ class mypdo extends PDO{
     	return $data;
     }
     
+    //Ajouter une infirmiere
     public function AddInfirmiereDB($tab1){
-    	$requete = 'INSERT INTO INFIRMIERE (id,urlphoto,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone,droit) VALUES ('.$tab1['id'].',"'.$tab1['urlphoto'].'","'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'",'.$tab1['droit'].');';
+    	$requete = 'INSERT INTO INFIRMIERE (urlphoto,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ("'.$tab1['urlphoto'].'","'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
     	 var_dump($requete);
     	$nblignes=$this->connexion -> exec($requete);
     	 
@@ -166,6 +169,7 @@ class mypdo extends PDO{
     	if (count($errors) > 0) {
     		$data['success'] = false;
     		$data['errors']  = $errors;
+    		$data['message'] = header("location:../erreurAjout.php");
     	} else {
     		$data['success'] = true;
     		$data['message'] = header("location:../valideAjout.php");
@@ -173,8 +177,9 @@ class mypdo extends PDO{
     	return $data;
     }
     
+    //Ajouter une personne de confiance
     public function AddPersonneCDB($tab1){
-    	$requete = 'INSERT INTO PERSONNE_DE_CONFIANCE (id,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone,droit) VALUES ('.$tab1['id'].',"'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'",'.$tab1['droit'].');';
+    	$requete = 'INSERT INTO personnedeconfiance (prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ("'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
     	var_dump($requete);
     	$nblignes=$this->connexion -> exec($requete);
     	
@@ -184,7 +189,6 @@ class mypdo extends PDO{
     	if ($nblignes !=1)
     	{
     		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
-    		echo 'marche pas';
     	}
     	
     	if (count($errors) > 0) {
@@ -198,17 +202,19 @@ class mypdo extends PDO{
     	return $data;
     }
     
+    //Recupération du patient à modifier
     public function modifPatientRecupDB(){
-    	$reponse = $this->connexion->query("SELECT nom FROM PATIENT")or die(mysql_error()); // Requête SQL
-    	 
-    	// On fait une boucle pour lister tout ce que contient la table :
-    	echo "<select name='nom_prenom_patient'>";
     	
-    	while ($donnees = mysql_fetch_array($reponse) ) {
-    		echo "<option value='".$donnes['nom'].">".$donnes['prenom']."</option>";
+    	$requete = 'select id,nom,prenom from patient';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
     	}
-    	var_dump($donnees);
-    	echo "</select>";
+    	return null;
     }
     
     public function importDataAndroid(){

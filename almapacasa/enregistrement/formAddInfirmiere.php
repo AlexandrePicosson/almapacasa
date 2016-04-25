@@ -11,7 +11,6 @@ $tab=array();
 $mypdo=new mypdo();
 $tab1 = array();
 
-$tab1["id"] = $_POST["id"];
 $tab1["urlphoto"] = $_POST["urlphoto"];
 $tab1["prenom"] = $_POST["prenom"];
 $tab1["nom"] = $_POST["nom"];
@@ -23,7 +22,7 @@ $tab1["rue"] = $_POST["rue"];
 $tab1["cp"] = $_POST["cp"];
 $tab1["ville"] = $_POST["ville"];
 $tab1["tel"] = $_POST["tel"];
-$tab1["droit"] = $_POST["droit"];
+
 
 $mypdo->AddInfirmiereDB($tab1);
 
