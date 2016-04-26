@@ -35,16 +35,17 @@ class mypdo extends PDO{
     {
 		$reponse = array();
     	//Requete patient
-    	$requetepatient = 'select * from patient where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	$requetepatient = 'select * from patient where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
     	 
     	//Requete Personne de confiance
-    	$requetepersonnedc = 'select * from personne_de_confiance where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	$requetepersonnedc = 'select * from personne_de_confiance where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
     	
+   
     	//Requete administrateur
-    	$requeteadmin = 'select * from administrateur where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	$requeteadmin = 'select * from administrateur where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
     	
     	//Requete infirmiere
-    	$requeteinfirmiere = 'select * from infirmiere where login="'.$tab['id'].'" and mdp="'.$tab['mdp'].'";';
+    	$requeteinfirmiere = 'select * from infirmiere where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
 
     	//Réalisation des requetes
     	$result=$this->connexion->query($requetepatient);
