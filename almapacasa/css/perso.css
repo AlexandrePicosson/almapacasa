@@ -141,12 +141,21 @@ footer .mentions a{
 	list-style-type:none;
 }
 
-.formPatient label{
-	display: inline-block;
-    max-width: 100%;
-    margin-bottom: 5px;
-    font-weight: 500;
-    width: 200px;
+
+.formulairePatient{
+	padding-top:40px;
 }
 
+.formulairePatient label{
+	width: 100px;
+	font-weight: 400;
+}
+
+#selectPatient{
+	padding-top:50px;
+}
+
+#selectPatient label{
+	font-weight: 400;
+}
 	

@@ -11,7 +11,7 @@ $data['success'] = false;
 $tab = array();
 $mypdo = new mypdo();
 
-
+$tab['id'] = $_SESSION['idPatient'];
 $tab['login'] = $_POST['login'];
 $tab['mdp'] = md5($_POST['mdp']);
 $tab['nom'] = $_POST['nom'];
@@ -23,7 +23,7 @@ $tab['ville'] = $_POST['ville'];
 $tab['anNaiss'] = $_POST['anNaiss'];
 $tab['sexe'] = $_POST['sexe'];
 
-$data = $mypdo->insert_patient_admin($tab);
+$data = $mypdo->delete_patient_admin($tab);
 
 echo json_encode($data);
 

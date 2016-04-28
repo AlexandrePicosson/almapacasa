@@ -459,90 +459,19 @@ class controleur {
 				</div>';
 	}
 	
-	//Formulaire d'ajout d'un nouveau patient
-	public function formAjoutPatient(){
-		return '<br><br><br>
-				<div class="formPatient">
-					<form action="enregistrement/formAddPatient.php" method="post">
-						<p>
-							<h1>Ajout d\' un nouveau patient: </h1>
-							<label>Id (personne de confiance) : </label><input type="text" name="id_her" /><br>
-							<label>Prénom : </label><input type="text" name="prenom" /><br>
-						    <label>Nom : </label><input type="text" name="nom" /><br>
-							<label>Identifiant : </label><input type="text" name="login" /><br>
-							<label>Mot de passe : </label><input type="password" name="mdp" /><br>
-							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
-							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
-							<label>Rue : </label><input type="text" name="rue" /><br>
-							<label>Code postal : </label><input type="text" name="cp" /><br>
-							<label>Ville : </label><input type="text" name="ville" /><br>
-							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
-							<input type="submit" value="Valider" />
-						</p>
-					</form>
-				</div>
-				';
-	}
-	
-	//Formulaire d'ajout d'une nouvelle infirmiere
-	public function formAjoutInfirmiere(){
-		return '<br><br><br>
-				<div class="formPatient">
-					<form action="enregistrement/formAddInfirmiere.php" method="post">
-						<p>
-							<h1>Ajout d\' une nouvelle infirmière: </h1>
-							<label>Url Photo : </label><input type="text" name="urlphoto" /><br>
-							<label>Prénom : </label><input type="text" name="prenom" /><br>
-						    <label>Nom : </label><input type="text" name="nom" /><br>
-							<label>Identifiant : </label><input type="text" name="login" /><br>
-							<label>Mot de passe : </label><input type="password" name="mdp" /><br>
-							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
-							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
-							<label>Rue : </label><input type="text" name="rue" /><br>
-							<label>Code postal : </label><input type="text" name="cp" /><br>
-							<label>Ville : </label><input type="text" name="ville" /><br>
-							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
-							<input type="submit" value="Valider" />
-						</p>
-					</form>
-				</div>
-				';
-	}
-	
-	//Formulaire d'ajout d'une nouvelle personne de confiance
-	public function formAjoutPersonneC(){
-		return '<br><br><br>
-				<div class="formPatient">
-					<form action="enregistrement/formAddPersonneC.php" method="post">
-						<p>
-							<h1>Ajout d\' une personne de confiance: </h1>
-							<label>Prénom : </label><input type="text" name="prenom" /><br>
-						    <label>Nom : </label><input type="text" name="nom" /><br>
-							<label>Identifiant : </label><input type="text" name="login" /><br>
-							<label>Mot de passe : </label><input type="password" name="mdp" /><br>
-							<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
-							<label>Sexe : </label><input type="text" placeholder="M/F" name="sexe" /><br>
-							<label>Rue : </label><input type="text" name="rue" /><br>
-							<label>Code postal : </label><input type="text" name="cp" /><br>
-							<label>Ville : </label><input type="text" name="ville" /><br>
-							<label>Téléphone : </label><input type="text" placeholder="06.00.01.02.03" name="tel" /><br>
-							<input type="submit" value="Valider" />
-						</p>
-					</form>
-				</div>
-				';
-	}
-	
 	//Modification des informations d'un patient
 	public function formModifPatient(){
 		$tab = $this->mypdo->modifPatientRecupDB();
-		$return = '</br></br></br></br></br><select>';
+		$return = '<form id="selectPatient" method ="post"><br><br><label>Veuillez choisir le patient à modifier : </label><br><select name="id" id="id">';
 		if($tab && $tab != null)
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
 				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
 			}
-			$return = $return.'</select>';
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
 		}
 		return $return;
 	}
@@ -582,6 +511,8 @@ class controleur {
 				</form>';
 	}
 	
+	
+	//Retourne les formulaires d'ajout/modif/suppression des patients
 	public function retourne_formulaire_patient($type, $id = ''){
 		$nom = '';
 		$prenom = '';
@@ -600,25 +531,27 @@ class controleur {
 		
 		if($type == 'ajout')
 		{
-			$titreForm = "Ajout d'un patient";
+			$titreForm = "Ajout d'un patient :";
 			$lblBouton = "Ajouter";
 		}
 		
 		if($type == 'modif')
 		{
-			$titreForm = "Modification d'un patient";
+			$titreForm = "Modification d'un patient :";
 			$lblBouton = "Modifier";
 		}
 		
 		if($type == 'suppr')
 		{
-			$titreForm = "Suppression d'un patient";
+			$titreForm = "Suppression d'un patient :";
 			$lblBouton = "Supprimer";
 		}
 		
 		if($type == 'suppr' || $type == 'modif')
 		{
+			
 			$result = $this->mypdo->trouvePatient($id);
+			
 			if($result != null){
 				$nom = $result['nom'];
 				$prenom = $result['prenom'];
@@ -641,33 +574,34 @@ class controleur {
 			}
 		}
 		
-		$form = '<article> <h3>'.$titreForm.'</h3> <form id="formPatient" method ="post">';
+		$form = ' <form class="formulairePatient" id="formPatient" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
 		
-		if($type = 'ajout')
+		if($type == 'ajout')
 		{
-			$form = $form.'<div> 
-								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
-								Mot de Passe : <input type="password" name="mdp" id="mdp" value="" required /></br>
+			$form = $form.'<br><div> 
+								<label>Identifiant :</label><input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								<label>Mot de Passe :</label><input type="password" name="mdp" id="mdp" value="" required /></br>
 						   </div>';
 		}else{
-			$form = $form.'<div style="visibility: hidden;">
+			$form = $form.'<div style="display : none;">
 								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
 								Mot de Passe : <input type="password" name="mdp" id="mdp" value="123" required /></br>
 						   </div>';
 		}
 		
 		$form = $form.'
-					</br><h4>Patient</h4></br></br>
-					<input type="text" name="nom" id="nom" placeholder="votre nom" value"'.$nom.'" required />
-					<input type="text" name="prenom" id="prenom" placeholder="votre prenom" value"'.$prenom.'" required /></br>
-					<input type="date" name="annaiss" id="annaiss" value"'.$dateNaiss.'" required /></br>
+					</br><h4><u>Patient</u></h4>
+					<label>Nom : </label><input type="text" name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required /><br>
+					<label>Prénom : </label><input type="text" name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
+					<label>Date de naissance :</label><input type="date" name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
+					<label>Sexe :</label>
 					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
 					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
-					<input type="text" name="rue" id="rue" placeholder="11 rue .." value"'.$rue.'" required />
-					<input type="text" name="cp" id="cp" placeholder="44000" value"'.$cp.'" required />
-					<input type="text" name="ville" id="ville" placeholder="Nantes" value"'.$ville.'" required /></br>
-					<input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value"'.$telephone.'" required />
-					<input id="submit" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					<label>Adresse :</label><input type="text" name="rue" id="rue" placeholder="Nom de rue" value="'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="Code postal" value="'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Ville" value="'.$ville.'" required /></br>
+					<label>Téléphone : </label><input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value="'.$telephone.'" required /><br><br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
 					</form>
 					<script>function hd(){ $(\'#modal\').hide();}</script>
 					<script>function reload(){window.location.reload();}</script>
@@ -697,18 +631,19 @@ class controleur {
 						);
 						
 						$(\'#formPatient\').submit(function(e){
+							
 							e.preventDefault();
 							$(\'#modal\').hide();
 							var $url ="ajax/valide_ajout_patient.php";
-							if($(\'#submit\').prop("value")=="Modifier"){$url="ajax/valide_modif_patient.php";}
-							if($(\'#submit\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_patient.php";}
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modif_patient.php";}
+							if($(\'#submit1\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_patient.php";}
 							
 							if($("#formPatient").valid())
 							{
 								var $sexe="M";
 								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
 								var $mdp = "";
-								if($("#submit").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
+								if($("#submit1").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
 							
 								var formData = {
 									"login" : $("#login").val(),
@@ -722,6 +657,7 @@ class controleur {
 									"ville" : $("#ville").val(),
 									"telephone" : $("#telephone").val()
 								};
+							
 								
 								var filterDataRequest = $.ajax(
 								{
@@ -754,11 +690,11 @@ class controleur {
 									}
 									else
 									{
-											$msg="";
+											$msg="test ";
 											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
 									}
 						
-										$("#dialog1").html($msg);$("#modal").show();
+										$("#dialog").html($msg);$("#modal").show();
 								});
 								
 								filterDataRequest.fail(function(jqXHR, textStatus)

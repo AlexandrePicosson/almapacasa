@@ -223,7 +223,7 @@ class mypdo extends PDO{
     	$requete = 'select v.id, nom, prenom, rue, cp, ville, telephone as numero, heureDebut as heuredebut, heureFin as heurefin, dateV as date, c.libelle as commentaire
 		from visite v
 		inner join patient p on v.idPatient = p.id
-		inner join commentaire c on v.id = c.idVisite
+		left join commentaire c on v.id = c.idVisite
 		where isNull(c.idPatient)
 		and v.dateV > CURDATE(); ';
     	 
@@ -279,5 +279,117 @@ class mypdo extends PDO{
     	}
     	return $data;
     }
+    
+    public function trouvePatient($id)
+    {
+    	$requete = 'SELECT * from patient where id ='.$id.';';
+    	
+    	$result = $this->connexion->query($requete);
+    	
+	    if($result)
+	   	{
+	    	if($result->rowCount() == 1)
+	    	{
+	    		$retour = $result->fetch(PDO::FETCH_ASSOC);
+	    		return $retour;
+	    	}
+	    }
+	    return null;
+    }
+    
+    public function update_patient_admin($tab)
+    {
+    	$requete = 'UPDATE patient 
+    			SET nom = "'.$tab['nom'].'",
+    			prenom = "'.$tab['prenom'].'",
+    			anNaiss = "'.$tab['anNaiss'].'",
+    			sexe = "'.$tab['sexe'].'",
+    			rue = "'.$tab['rue'].'",
+    			cp = "'.$tab['cp'].'",
+    			ville = "'.$tab['ville'].'",
+    			telephone = "'.$tab['telephone'].'"
+    			WHERE id = "'.$tab['id'].'"';
+    	
+    	$nblignes=$this->connexion -> exec($requete);
+    	
+    	$data = array();
+    	$errors = array();
+
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont présentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "C'est ok---.";
+    	}
+    	
+    	return $requete;
+    }
+    
+    public function delete_patient_admin($tab){
+    	$requete = 'DELETE FROM PATIENT
+				WHERE id = '.$tab['id'].'';
+    	 
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont présentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "C'est ok---.";
+    	}
+    	 
+    	return $requete;
+    	}
+    	
+    	public function importSoin()
+    	{
+    		$requete = 'SELECT * from soin;';
+    	
+    		$reponse = $this->connexion->query($requete);
+    	
+    		if($reponse)
+    		{
+    			if($reponse->rowCount() >= 1)
+    			{
+    				return ($reponse);
+    			}
+    		}
+    	
+    		return null;
+    	}
+    	
+    	public function importTypeSoin()
+    	{
+    		$requete = 'select * from typesoin;';
+    	
+    		$reponse = $this->connexion->query($requete);
+    	
+    		if($reponse)
+    		{
+    			if($reponse->rowCount() >=1)
+    			{
+    				return ($reponse);
+    			}
+    		}
+    	
+    		return null;
+    	}
 }
 ?>

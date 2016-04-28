@@ -88,7 +88,7 @@ class ControleurAndroid{
 				$heurefin = $visite['heurefin'];
 				$commentaire = $visite['commentaire'];
 				$date = $visite['date'];
-				$finalObject = array('id' => $id, 'soins' => $dataSoin, 'patient' => $patient, 'heureDebut' => $heure, 'heureFin' => $heurefin, 'commentaire' => $commentaire);
+				$finalObject = array('id' => $id, 'soins' => $dataSoin, 'patient' => $patient, 'heureDebut' => $heure, 'heureFin' => $heurefin, 'commentaire' => $commentaire, 'date' => $date);
 				$data[] = $finalObject;
 			}
 		}
@@ -106,7 +106,7 @@ class ControleurAndroid{
 				$dataSoin[] = $finalSoin;
 			}
 		}
-		
+
 		$result = $this->mypdo->importTypeSoin();
 		
 		if($result && $result != null)
@@ -119,11 +119,9 @@ class ControleurAndroid{
 				$lesTypes[] = $finalSoin;
 			}
 		}
-		
-		
-		
+
 		$json[] = $data;
-		$json[] = $lesSoin;
+		$json[] = $dataSoin;
 		$json[] = $lesTypes;
 		echo json_encode($json);
 	}
