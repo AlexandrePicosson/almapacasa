@@ -331,5 +331,31 @@ class mypdo extends PDO{
     	
     	return $requete;
     }
+    
+    public function delete_patient_admin($tab){
+    	$requete = 'DELETE FROM PATIENT
+				WHERE id = '.$tab['id'].'';
+    	 
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont présentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "C'est ok---.";
+    	}
+    	 
+    	return $requete;
+    	}
 }
 ?>
