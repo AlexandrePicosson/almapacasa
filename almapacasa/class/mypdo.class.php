@@ -279,5 +279,57 @@ class mypdo extends PDO{
     	}
     	return $data;
     }
+    
+    public function trouvePatient($id)
+    {
+    	$requete = 'SELECT * from patient where id ='.$id.';';
+    	
+    	$result = $this->connexion->query($requete);
+    	
+	    if($result)
+	   	{
+	    	if($result->rowCount() == 1)
+	    	{
+	    		$retour = $result->fetch(PDO::FETCH_ASSOC);
+	    		return $retour;
+	    	}
+	    }
+	    return null;
+    }
+    
+    public function update_patient_admin($tab)
+    {
+    	$requete = 'UPDATE patient 
+    			SET nom = "'.$tab['nom'].'",
+    			prenom = "'.$tab['prenom'].'",
+    			anNaiss = "'.$tab['anNaiss'].'",
+    			sexe = "'.$tab['sexe'].'",
+    			rue = "'.$tab['rue'].'",
+    			cp = "'.$tab['cp'].'",
+    			ville = "'.$tab['ville'].'",
+    			telephone = "'.$tab['telephone'].'"
+    			WHERE id = "'.$tab['id'].'"';
+    	
+    	$nblignes=$this->connexion -> exec($requete);
+    	
+    	$data = array();
+    	$errors = array();
+
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont présentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "C'est ok---.";
+    	}
+    	
+    	return $requete;
+    }
 }
 ?>

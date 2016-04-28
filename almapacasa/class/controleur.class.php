@@ -536,13 +536,16 @@ class controleur {
 	//Modification des informations d'un patient
 	public function formModifPatient(){
 		$tab = $this->mypdo->modifPatientRecupDB();
-		$return = '</br></br></br></br></br><select>';
+		$return = '</br></br></br></br></br><form id="selectPatient" method ="post"><select name="id" id="id">';
 		if($tab && $tab != null)
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
 				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
 			}
-			$return = $return.'</select>';
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
 		}
 		return $return;
 	}
@@ -618,7 +621,9 @@ class controleur {
 		
 		if($type == 'suppr' || $type == 'modif')
 		{
+			
 			$result = $this->mypdo->trouvePatient($id);
+			
 			if($result != null){
 				$nom = $result['nom'];
 				$prenom = $result['prenom'];
@@ -643,14 +648,14 @@ class controleur {
 		
 		$form = '<article> <h3>'.$titreForm.'</h3> <form id="formPatient" method ="post">';
 		
-		if($type = 'ajout')
+		if($type == 'ajout')
 		{
 			$form = $form.'<div> 
 								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
 								Mot de Passe : <input type="password" name="mdp" id="mdp" value="" required /></br>
 						   </div>';
 		}else{
-			$form = $form.'<div style="visibility: hidden;">
+			$form = $form.'<div style="display : none;">
 								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
 								Mot de Passe : <input type="password" name="mdp" id="mdp" value="123" required /></br>
 						   </div>';
@@ -658,16 +663,16 @@ class controleur {
 		
 		$form = $form.'
 					</br><h4>Patient</h4></br></br>
-					<input type="text" name="nom" id="nom" placeholder="votre nom" value"'.$nom.'" required />
-					<input type="text" name="prenom" id="prenom" placeholder="votre prenom" value"'.$prenom.'" required /></br>
-					<input type="date" name="annaiss" id="annaiss" value"'.$dateNaiss.'" required /></br>
+					<input type="text" name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required />
+					<input type="text" name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
+					<input type="date" name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
 					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
 					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
-					<input type="text" name="rue" id="rue" placeholder="11 rue .." value"'.$rue.'" required />
-					<input type="text" name="cp" id="cp" placeholder="44000" value"'.$cp.'" required />
-					<input type="text" name="ville" id="ville" placeholder="Nantes" value"'.$ville.'" required /></br>
-					<input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value"'.$telephone.'" required />
-					<input id="submit" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					<input type="text" name="rue" id="rue" placeholder="11 rue .." value="'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="44000" value="'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Nantes" value="'.$ville.'" required /></br>
+					<input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value="'.$telephone.'" required />
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
 					</form>
 					<script>function hd(){ $(\'#modal\').hide();}</script>
 					<script>function reload(){window.location.reload();}</script>
@@ -697,18 +702,19 @@ class controleur {
 						);
 						
 						$(\'#formPatient\').submit(function(e){
+							
 							e.preventDefault();
 							$(\'#modal\').hide();
 							var $url ="ajax/valide_ajout_patient.php";
-							if($(\'#submit\').prop("value")=="Modifier"){$url="ajax/valide_modif_patient.php";}
-							if($(\'#submit\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_patient.php";}
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modif_patient.php";}
+							if($(\'#submit1\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_patient.php";}
 							
 							if($("#formPatient").valid())
 							{
 								var $sexe="M";
 								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
 								var $mdp = "";
-								if($("#submit").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
+								if($("#submit1").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
 							
 								var formData = {
 									"login" : $("#login").val(),
@@ -722,6 +728,7 @@ class controleur {
 									"ville" : $("#ville").val(),
 									"telephone" : $("#telephone").val()
 								};
+							
 								
 								var filterDataRequest = $.ajax(
 								{
@@ -754,11 +761,11 @@ class controleur {
 									}
 									else
 									{
-											$msg="";
+											$msg="test ";
 											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
 									}
 						
-										$("#dialog1").html($msg);$("#modal").show();
+										$("#dialog").html($msg);$("#modal").show();
 								});
 								
 								filterDataRequest.fail(function(jqXHR, textStatus)
@@ -774,7 +781,7 @@ class controleur {
 								});
 							}
 							});
-							$("#formfamille").validate({
+							$("#formPatient").validate({
 								rules:
 								{
 													
