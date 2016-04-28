@@ -11,7 +11,7 @@ $data['success'] = false;
 $tab = array();
 $mypdo = new mypdo();
 
-$tab['login'] = $_POST['mdp'];
+$tab['login'] = $_POST['login'];
 $tab['mdp'] = md5($_POST['mdp']);
 $tab['nom'] = $_POST['nom'];
 $tab['prenom'] = $_POST['prenom'];

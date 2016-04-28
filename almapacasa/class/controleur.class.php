@@ -326,7 +326,7 @@ class controleur {
 	
 	public function optionPatient(){
 		return '
-					<div class="optionadmin"><br><br>
+					<div class="optionAdmin"><br><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
@@ -674,7 +674,7 @@ class controleur {
 					<div id="modal">
 							<h1>Info</h1>
 							<div id="dialog"></div>
-							<a class="no" onclick="hd();">Ok</a>
+							<a class="no" onclick="hd(); reload();">Ok</a>
 					</div>
 					</article>
 					<script>
@@ -774,7 +774,7 @@ class controleur {
 								});
 							}
 							});
-							$("#formfamille").validate({
+							$("#formPatient").validate({
 								rules:
 								{
 													
