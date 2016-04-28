@@ -608,7 +608,7 @@ class controleur {
 					<div id="modal">
 							<h1>Info</h1>
 							<div id="dialog"></div>
-							<a class="no" onclick="hd();">Ok</a>
+							<a class="no" onclick="hd(); reload();">Ok</a>
 					</div>
 					</article>
 					<script>
