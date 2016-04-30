@@ -326,7 +326,7 @@ class controleur {
 	
 	public function optionPatient(){
 		return '
-					<div class="optionadmin"><br><br>
+					<div class="optionAdmin"><br><br>
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
