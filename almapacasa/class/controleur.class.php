@@ -476,39 +476,38 @@ class controleur {
 		return $return;
 	}
 	
-	//Affiche si le traitement s'est bien réalisé
-	public function afficheValidAdd(){
-		return '<br><br><br><br>
-				Votre action est bien été effectué.
-				';
+	//Modification des informations d'une infirmiere
+	public function formModifInfirmiere(){
+		$tab = $this->mypdo->modifInfirmiereRecupDB();
+		$return = '<form id="selectInfirmiere" method ="post"><br><br><label>Veuillez choisir l\'infirmiere à modifier : </label><br><select name="id" id="id">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
+		}
+		return $return;
 	}
 	
-	//Affiche si le traitement n'a pas réussi
-	public function afficheErreurAdd(){
-		return '<br><br><br><br>
-				Votre action n\'a pas fonctionnée, merci de bien vouloir réessayer.
-				';
-	}
-	
-
-	//Modification des informations personnelles
-	public function modifMesInformations(){
-		return '<br><br><br>
-				<form action="formModifInfoPerso.php" method="post">
-				<p>
-					<label>Prénom : </label><input type="text" name="prenom" /><br>
-				   	<label>Nom : </label><input type="text" name="nom" /><br>
-					<label>Identifiant : </label><input type="text" name="login" /><br>
-					<label>Mot de passe : </label><input type="text" name="mdp" /><br>
-					<label>Date de naissance : </label><input type="date" name="dateNaiss"><br>
-					<label>Sexe : </label><input type="text" name="sexe" /><br>
-					<label>Rue : </label><input type="text" name="rue" /><br>
-					<label>Code postal : </label><input type="text" name="cp" /><br>
-					<label>Ville : </label><input type="text" name="ville" /><br>
-					<label>Téléphone : </label><input type="text" name="tel" /><br>
-				    <input type="submit" value="Valider" />
-				</p>
-				</form>';
+	//Modification des informations d'une personne de confiance
+	public function formModifPersonneC(){
+		$tab = $this->mypdo->modifPersonneCRecupDB();
+		$return = '<form id="selectPersonneC" method ="post"><br><br><label>Veuillez choisir la personne de confiance à modifier : </label><br><select name="id" id="id">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
+		}
+		return $return;
 	}
 	
 	
@@ -754,6 +753,503 @@ class controleur {
 						';
 		return $form;
 		
+	}
+	
+	
+	//Retourne les formulaires d'ajout/modif/suppression des infirmieres
+	public function retourne_formulaire_infirmiere($type, $id = ''){
+		$nom = '';
+		$prenom = '';
+		$urlphoto = '';
+		$login = '';
+		$mdp = '';
+		$dateNaiss = '';
+		$sexe='';
+		$rue='';
+		$cp='';
+		$ville='';
+		$telephone='';
+		$titreForm='';
+		$lblBouton = '';
+		$radioMchecked = '';
+		$radioFchecked = '';
+	
+		if($type == 'ajout')
+		{
+			$titreForm = "Ajout d'une infirmiere :";
+			$lblBouton = "Ajouter";
+		}
+	
+		if($type == 'modif')
+		{
+			$titreForm = "Modification d'une infirmiere :";
+			$lblBouton = "Modifier";
+		}
+	
+		if($type == 'suppr')
+		{
+			$titreForm = "Suppression d'une infirmiere :";
+			$lblBouton = "Supprimer";
+		}
+	
+		if($type == 'suppr' || $type == 'modif')
+		{
+				
+			$result = $this->mypdo->trouveInfirmiere($id);
+				
+			if($result != null){
+				$nom = $result['nom'];
+				$prenom = $result['prenom'];
+				$urlphoto = $result['urlPhoto'];
+				$login = $result['login'];
+				$mdp = $result['mdp'];
+				$dateNaiss = $result['anNaiss'];
+				$sexe=$result['sexe'];
+				if($sexe == 'M')
+				{
+					$radioMchecked = 'checked';
+					$radioFchecked = '';
+				}else{
+					$radioMchecked = '';
+					$radioFchecked = 'checked';
+				}
+				$rue=$result['rue'];
+				$cp=$result['cp'];
+				$ville=$result['ville'];
+				$telephone=$result['telephone'];
+			}
+		}
+	
+		$form = ' <form class="formulaireInfirmiere" id="formInfirmiere" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+		if($type == 'ajout')
+		{
+			$form = $form.'<br><div>
+								<label>Identifiant :</label><input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								<label>Mot de Passe :</label><input type="password" name="mdp" id="mdp" value="" required /></br>
+						   </div>';
+		}else{
+			$form = $form.'<div style="display : none;">
+								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								Mot de Passe : <input type="password" name="mdp" id="mdp" value="123" required /></br>
+						   </div>';
+		}
+	
+		$form = $form.'
+					</br><h4><u>Infirmiere</u></h4>
+					<label>Nom : </label><input type="text" name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required /><br>
+					<label>Prénom : </label><input type="text" name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
+					<label>URL de la photo : </label><input type="text" name="urlphoto" id="urlphoto" placeholder="image.jpg" value="'.$urlphoto.'" required /></br>		
+					<label>Date de naissance :</label><input type="date" name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
+					<label>Sexe :</label>
+					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
+					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
+					<label>Adresse :</label><input type="text" name="rue" id="rue" placeholder="Nom de rue" value="'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="Code postal" value="'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Ville" value="'.$ville.'" required /></br>
+					<label>Téléphone : </label><input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value="'.$telephone.'" required /><br><br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Info</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formInfirmiere :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+	
+						$(\'#formInfirmiere\').submit(function(e){
+				
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_infirmiere.php";
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modif_infirmiere.php";}
+							if($(\'#submit1\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_infirmiere.php";}
+				
+							if($("#formInfirmiere").valid())
+							{
+								var $sexe="M";
+								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
+								var $mdp = "";
+								if($("#submit1").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
+				
+								var formData = {
+									"login" : $("#login").val(),
+									"mdp" : $mdp,
+									"urlphoto" : $("#urlphoto").val(),
+									"nom" : $("#nom").val(),
+									"prenom" : $("#prenom").val(),
+									"anNaiss" : $("#annaiss").val(),
+									"sexe" : $sexe,
+									"rue" : $("#rue").val(),
+									"cp" : $("#cp").val(),
+									"ville" : $("#ville").val(),
+									"telephone" : $("#telephone").val()
+								};
+				
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+				
+								filterDataRequest.done(function(data)
+								{
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formInfirmiere").validate({
+								rules:
+								{
+							
+									"nom": {required: true},
+									"prenom": {required: true},
+									"urlphoto": {required: true},
+									"rue": {required: true},
+									"telephone": {required: true},
+									"cp":{required: true,regex:/^\d{5}$/},
+									"ville": {required: true},
+									"rue": {required: true},
+									"annaiss":{required: true},
+									"login": {required :true},
+									"mdp": {required : true}
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+				
+						';
+		return $form;
+	
+	}
+	
+	//Retourne les formulaires d'ajout/modif/suppression des personnes de confiance
+	public function retourne_formulaire_personneC($type, $id = ''){
+		$nom = '';
+		$prenom = '';
+		$login = '';
+		$mdp = '';
+		$dateNaiss = '';
+		$sexe='';
+		$rue='';
+		$cp='';
+		$ville='';
+		$telephone='';
+		$titreForm='';
+		$lblBouton = '';
+		$radioMchecked = '';
+		$radioFchecked = '';
+	
+		if($type == 'ajout')
+		{
+			$titreForm = "Ajout d'une personne de confiance :";
+			$lblBouton = "Ajouter";
+		}
+	
+		if($type == 'modif')
+		{
+			$titreForm = "Modification d'ue personne de confiance :";
+			$lblBouton = "Modifier";
+		}
+	
+		if($type == 'suppr')
+		{
+			$titreForm = "Suppression d'une personne de confiance :";
+			$lblBouton = "Supprimer";
+		}
+	
+		if($type == 'suppr' || $type == 'modif')
+		{
+				
+			$result = $this->mypdo->trouvePersonneC($id);
+				
+			if($result != null){
+				$nom = $result['nom'];
+				$prenom = $result['prenom'];
+				$login = $result['login'];
+				$mdp = $result['mdp'];
+				$dateNaiss = $result['anNaiss'];
+				$sexe=$result['sexe'];
+				if($sexe == 'M')
+				{
+					$radioMchecked = 'checked';
+					$radioFchecked = '';
+				}else{
+					$radioMchecked = '';
+					$radioFchecked = 'checked';
+				}
+				$rue=$result['rue'];
+				$cp=$result['cp'];
+				$ville=$result['ville'];
+				$telephone=$result['telephone'];
+			}
+		}
+	
+		$form = ' <form class="formulairePersonneC" id="formPersonneC" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+		if($type == 'ajout')
+		{
+			$form = $form.'<br><div>
+								<label>Identifiant :</label><input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								<label>Mot de Passe :</label><input type="password" name="mdp" id="mdp" value="" required /></br>
+						   </div>';
+		}else{
+			$form = $form.'<div style="display : none;">
+								Identifiant : <input type="text" name="login" id="login" value="'.$login.'" required /> </br>
+								Mot de Passe : <input type="password" name="mdp" id="mdp" value="123" required /></br>
+						   </div>';
+		}
+	
+		$form = $form.'
+					</br><h4><u>Patient</u></h4>
+					<label>Nom : </label><input type="text" name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required /><br>
+					<label>Prénom : </label><input type="text" name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
+					<label>Date de naissance :</label><input type="date" name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
+					<label>Sexe :</label>
+					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
+					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
+					<label>Adresse :</label><input type="text" name="rue" id="rue" placeholder="Nom de rue" value="'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="Code postal" value="'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Ville" value="'.$ville.'" required /></br>
+					<label>Téléphone : </label><input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value="'.$telephone.'" required /><br><br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<h1>Info</h1>
+							<div id="dialog"></div>
+							<a class="no" onclick="hd(); reload();">Ok</a>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formPersonneC :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+	
+						$(\'#formPersonneC\').submit(function(e){
+				
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_personneC.php";
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modif_personneC.php";}
+							if($(\'#submit1\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_personneC.php";}
+				
+							if($("#formPersonneC").valid())
+							{
+								var $sexe="M";
+								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
+								var $mdp = "";
+								if($("#submit1").prop("value")=="Ajouter"){ $mdp = $("#mdp").val(); };
+				
+								var formData = {
+									"login" : $("#login").val(),
+									"mdp" : $mdp,
+									"nom" : $("#nom").val(),
+									"prenom" : $("#prenom").val(),
+									"anNaiss" : $("#annaiss").val(),
+									"sexe" : $sexe,
+									"rue" : $("#rue").val(),
+									"cp" : $("#cp").val(),
+									"ville" : $("#ville").val(),
+									"telephone" : $("#telephone").val()
+								};
+				
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+				
+								filterDataRequest.done(function(data)
+								{
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="test ";
+											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formPersonneC").validate({
+								rules:
+								{
+							
+									"nom": {required: true},
+									"prenom": {required: true},
+									"rue": {required: true},
+									"telephone": {required: true},
+									"cp":{required: true,regex:/^\d{5}$/},
+									"ville": {required: true},
+									"rue": {required: true},
+									"annaiss":{required: true},
+									"login": {required :true},
+									"mdp": {required : true}
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+				
+						';
+		return $form;
+	
 	}
 }
 	?>

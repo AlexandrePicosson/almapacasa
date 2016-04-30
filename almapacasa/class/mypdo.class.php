@@ -38,7 +38,7 @@ class mypdo extends PDO{
     	$requetepatient = 'select * from patient where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
     	 
     	//Requete Personne de confiance
-    	$requetepersonnedc = 'select * from personne_de_confiance where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
+    	$requetepersonnedc = 'select * from personnedeconfiance where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
     	
    
     	//Requete administrateur
@@ -127,86 +127,41 @@ class mypdo extends PDO{
     	return null;
     }
     
-    //Ajouter un patient
-    public function AddPatientDB($tab1){
-    	$requete = 'INSERT INTO PATIENT (idPersonneDeConf,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ('.$tab1['id_her'].',"'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
-    	
-    	$nblignes=$this->connexion -> exec($requete);
-    	
-    	$data = array();
-    	$errors = array();
-    	
-    	if ($nblignes !=1)
-    	{
-    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
-    	}
-    	
-    	if (count($errors) > 0) {
-    		$data['success'] = false;
-    		$data['errors']  = $errors;
-    		$data['message'] = header("location:../erreurAjout.php");
-    	} else {
-    		$data['success'] = true;
-    		$data['message'] = header("location:../valideAjout.php");
-    	}
-    	return $data;
-    }
     
-    //Ajouter une infirmiere
-    public function AddInfirmiereDB($tab1){
-    	$requete = 'INSERT INTO INFIRMIERE (urlphoto,prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ("'.$tab1['urlphoto'].'","'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
-    	 var_dump($requete);
-    	$nblignes=$this->connexion -> exec($requete);
-    	 
-    	$data = array();
-    	$errors = array();
-    	 
-    	if ($nblignes !=1)
-    	{
-    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
-    		echo 'marche pas';
-    	}
-    	 
-    	if (count($errors) > 0) {
-    		$data['success'] = false;
-    		$data['errors']  = $errors;
-    		$data['message'] = header("location:../erreurAjout.php");
-    	} else {
-    		$data['success'] = true;
-    		$data['message'] = header("location:../valideAjout.php");
-    	}
-    	return $data;
-    }
     
-    //Ajouter une personne de confiance
-    public function AddPersonneCDB($tab1){
-    	$requete = 'INSERT INTO personnedeconfiance (prenom,nom,login,mdp,annaiss,sexe,rue,cp,ville,telephone) VALUES ("'.$tab1['prenom'].'","'.$tab1['nom'].'","'.$tab1['login'].'","'.$tab1['mdp'].'","'.$tab1['dateNaiss'].'","'.$tab1['sexe'].'","'.$tab1['rue'].'",'.$tab1['cp'].',"'.$tab1['ville'].'","'.$tab1['tel'].'");';
-    	
-    	$nblignes=$this->connexion -> exec($requete);
-    	
-    	$data = array();
-    	$errors = array();
-    	
-    	if ($nblignes !=1)
-    	{
-    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
-    	}
-    	
-    	if (count($errors) > 0) {
-    		$data['success'] = false;
-    		$data['errors']  = $errors;
-    		$data['message'] = header("location:../erreurAjout.php");
-    	} else {
-    		$data['success'] = true;
-    		$data['message'] = header("location:../valideAjout.php");
-    	}
-    	return $data;
-    }
     
     //Recupération du patient à modifier
     public function modifPatientRecupDB(){
     	
     	$requete = 'select id,nom,prenom from patient';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+    }
+    
+    //Recupération de l'infirmiere à récuperer
+    public function modifInfirmiereRecupDB(){
+    	 
+    	$requete = 'select id,nom,prenom from infirmiere';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+    }
+    
+    public function modifPersonneCRecupDB(){
+    	$requete = 'select id,nom,prenom from personnedeconfiance';
     	$reponse = $this->connexion->query($requete);// Requête SQL
     	if($reponse)
     	{
@@ -255,6 +210,7 @@ class mypdo extends PDO{
     	return null;
     }
     
+    //Ajoute un patient
     public function insert_patient_admin($tab)
     {
     	$requete = 'INSERT INTO `patient` (`id`, `idPersonneDeConf`, `nom`, `prenom`, `login`, `mdp`, `anNaiss`, `sexe`, `rue`, `cp`, `ville`, `telephone`) VALUES (NULL, \'1\',"'.$tab['nom'].'", "'.$tab['prenom'].'", "'.$tab['login'].'", "'.$tab['mdp'].'", "'.$tab['anNaiss'].'", "'.$tab['sexe'].'", "'.$tab['rue'].'", "'.$tab['cp'].'", "'.$tab['ville'].'", "'.$tab['telephone'].'");';
@@ -275,11 +231,12 @@ class mypdo extends PDO{
     		$data['message'] = "des erreurs sont présentes";
     	} else {
     		$data['success'] = true;
-    		$data['message'] = "c ok";
+    		$data['message'] = "Votre ajout a bien été effectué.";
     	}
     	return $data;
     }
     
+    //Trouve les patients
     public function trouvePatient($id)
     {
     	$requete = 'SELECT * from patient where id ='.$id.';';
@@ -297,6 +254,7 @@ class mypdo extends PDO{
 	    return null;
     }
     
+    //Modifie un patient
     public function update_patient_admin($tab)
     {
     	$requete = 'UPDATE patient 
@@ -323,15 +281,16 @@ class mypdo extends PDO{
     	if (count($errors) > 0) {
     		$data['success'] = false;
     		$data['errors']  = $errors;
-    		$data['message'] = "Des erreurs sont présentes.";
+    		$data['message'] = "Des erreurs sont presentes.";
     	} else {
     		$data['success'] = true;
-    		$data['message'] = "C'est ok---.";
+    		$data['message'] = "Votre mise à jour a bien ete effectue.";
     	}
     	
     	return $requete;
     }
     
+    //Supprime un patient
     public function delete_patient_admin($tab){
     	$requete = 'DELETE FROM PATIENT
 				WHERE id = '.$tab['id'].'';
@@ -352,44 +311,252 @@ class mypdo extends PDO{
     		$data['message'] = "Des erreurs sont présentes.";
     	} else {
     		$data['success'] = true;
-    		$data['message'] = "C'est ok---.";
+    		$data['message'] = "Votre suppression a bien été effectué.";
     	}
     	 
-    	return $requete;
-    	}
+    	return $data;
+    }
+    
+    //Ajoute une infirmiere
+    public function insert_infirmiere_admin($tab){
+    	$requete = 'INSERT INTO `infirmiere` (`id`, `urlPhoto` , `nom`, `prenom`, `login`, `mdp`, `anNaiss`, `sexe`, `rue`, `cp`, `ville`, `telephone`) VALUES (NULL, "'.$tab['urlphoto'].'","'.$tab['nom'].'", "'.$tab['prenom'].'", "'.$tab['login'].'", "'.$tab['mdp'].'", "'.$tab['anNaiss'].'", "'.$tab['sexe'].'", "'.$tab['rue'].'", "'.$tab['cp'].'", "'.$tab['ville'].'", "'.$tab['telephone'].'");';
+    	 
+    	$nblignes=$this->connexion -> exec($requete);
     	
-    	public function importSoin()
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
     	{
-    		$requete = 'SELECT * from soin;';
-    	
-    		$reponse = $this->connexion->query($requete);
-    	
-    		if($reponse)
-    		{
-    			if($reponse->rowCount() >= 1)
-    			{
-    				return ($reponse);
-    			}
-    		}
-    	
-    		return null;
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
     	}
     	
-    	public function importTypeSoin()
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "des erreurs sont présentes";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre ajout a bien été effectué.";
+    	}
+    	return $data;
+    }
+    
+    //Trouve les infirmieres
+    public function trouveInfirmiere($id){
+    	$requete = 'SELECT * from infirmiere where id ='.$id.';';
+    	 
+    	$result = $this->connexion->query($requete);
+    	 
+    	if($result)
     	{
-    		$requete = 'select * from typesoin;';
-    	
-    		$reponse = $this->connexion->query($requete);
-    	
-    		if($reponse)
+    		if($result->rowCount() == 1)
     		{
-    			if($reponse->rowCount() >=1)
-    			{
-    				return ($reponse);
-    			}
+    			$retour = $result->fetch(PDO::FETCH_ASSOC);
+    			return $retour;
     		}
-    	
-    		return null;
     	}
+    }
+    
+    //Modifie une infirmiere
+    public function update_infirmiere_admin($tab){
+    	$requete = 'UPDATE infirmiere
+    			SET nom = "'.$tab['nom'].'",
+    			urlPhoto = "'.$tab['urlphoto'].'",
+    			prenom = "'.$tab['prenom'].'",
+    			anNaiss = "'.$tab['anNaiss'].'",
+    			sexe = "'.$tab['sexe'].'",
+    			rue = "'.$tab['rue'].'",
+    			cp = "'.$tab['cp'].'",
+    			ville = "'.$tab['ville'].'",
+    			telephone = "'.$tab['telephone'].'"
+    			WHERE id = "'.$tab['id'].'"';
+    	 
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont presentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre mise à jour a bien ete effectue.";
+    	}
+    	 	
+    	return $data;
+    }
+    
+    //Supprimer une infirmiere
+    public function delete_infirmiere_admin($tab){
+    	$requete = 'DELETE FROM INFIRMIERE
+				WHERE id = '.$tab['id'].'';
+    	
+    	$nblignes=$this->connexion -> exec($requete);
+    	
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont présentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre suppression a bien été effectué.";
+    	}
+    	
+    	return $data;
+    }
+    
+    //Trouve les personnes de confiance
+    public function trouvePersonneC($id){
+    	$requete = 'SELECT * from personnedeconfiance where id ='.$id.';';
+    
+    	$result = $this->connexion->query($requete);
+    
+    	if($result)
+    	{
+    		if($result->rowCount() == 1)
+    		{
+    			$retour = $result->fetch(PDO::FETCH_ASSOC);
+    			return $retour;
+    		}
+    	}
+    }
+    
+    
+    //Ajout d'une personne de confiance
+    public function insert_personneC_admin($tab){
+    	$requete = 'INSERT INTO `personnedeconfiance` (`id`, `nom`, `prenom`, `login`, `mdp`, `anNaiss`, `sexe`, `rue`, `cp`, `ville`, `telephone`) VALUES (NULL,"'.$tab['nom'].'", "'.$tab['prenom'].'", "'.$tab['login'].'", "'.$tab['mdp'].'", "'.$tab['anNaiss'].'", "'.$tab['sexe'].'", "'.$tab['rue'].'", "'.$tab['cp'].'", "'.$tab['ville'].'", "'.$tab['telephone'].'");';
+    
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "des erreurs sont présentes";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre ajout a bien été effectué.";
+    	}
+    	return $data;
+    }
+    
+    //Modifie une personne de confiance
+    public function update_personneC_admin($tab){
+    	$requete = 'UPDATE personnedeconfiance
+    			SET nom = "'.$tab['nom'].'",
+    			prenom = "'.$tab['prenom'].'",
+    			anNaiss = "'.$tab['anNaiss'].'",
+    			sexe = "'.$tab['sexe'].'",
+    			rue = "'.$tab['rue'].'",
+    			cp = "'.$tab['cp'].'",
+    			ville = "'.$tab['ville'].'",
+    			telephone = "'.$tab['telephone'].'"
+    			WHERE id = "'.$tab['id'].'"';
+    
+    	$nblignes=$this->connexion -> exec($requete);
+    
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont presentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre mise à jour a bien ete effectue.";
+    	}
+    	 
+    	return $data;
+    }
+    
+    //Supprimer une personne de confiance
+    public function delete_personneC_admin($tab){
+    	$requete = 'DELETE FROM personnedeconfiance
+				WHERE id = '.$tab['id'].'';
+    	 
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont présentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre suppression a bien été effectué.";
+    	}
+    	 
+    	return $data;
+    }
+    
+    public function importSoin()
+    {
+    	$requete = 'SELECT * from soin;';
+    	
+    	$reponse = $this->connexion->query($requete);
+    	
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	
+    	return null;
+    }
+    	
+    public function importTypeSoin()
+    {
+    	$requete = 'select * from typesoin;';
+    	
+    	$reponse = $this->connexion->query($requete);
+    	
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >=1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	
+    	return null;
+    }
 }
 ?>

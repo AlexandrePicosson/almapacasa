@@ -14,10 +14,10 @@ session_start();
 	}
 	$controleur = new controleur();
 	$site-> left_sidebar=$controleur->optionAdmin();
-	$site-> right_sidebar=$controleur->formModifPatient();
+	$site-> right_sidebar=$controleur->formModifPersonneC();
 	if(isset($_POST["id"])){
-			$site->right_sidebar=$controleur->retourne_formulaire_patient('suppr', $_POST["id"]);
-			$_SESSION['idPatient'] = $_POST['id'];
+			$site->right_sidebar=$controleur->retourne_formulaire_personneC('suppr', $_POST["id"]);
+			$_SESSION['idPersonneC'] = $_POST['id'];
 	}
 	$site->affiche();
 ?>

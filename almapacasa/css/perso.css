@@ -141,7 +141,7 @@ footer .mentions a{
 	list-style-type:none;
 }
 
-
+/* CSS des formulaires des patients */
 .formulairePatient{
 	padding-top:40px;
 }
@@ -156,6 +156,42 @@ footer .mentions a{
 }
 
 #selectPatient label{
+	font-weight: 400;
+}
+
+/* CSS des formulaires des infirmieres */
+.formulaireInfirmiere{
+	padding-top:40px;
+}
+
+.formulaireInfirmiere label{
+	width: 100px;
+	font-weight: 400;
+}
+
+#selectInfirmiere{
+	padding-top:50px;
+}
+
+#selectInfirmiere label{
+	font-weight: 400;
+}
+
+/* CSS des formulaires des personnes de confiance */
+.formulairePersonneC{
+	padding-top:40px;
+}
+
+.formulairePersonneC label{
+	width: 100px;
+	font-weight: 400;
+}
+
+#selectPersonneC{
+	padding-top:50px;
+}
+
+#selectPersonneC label{
 	font-weight: 400;
 }
 	

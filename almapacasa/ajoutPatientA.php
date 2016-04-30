@@ -2,7 +2,7 @@
 session_start();
 	include_once('class/autoload.php');
 	if(isset($_SESSION['id'])){
-			$site = new page_base_securisee_admin('Temoignage');
+			$site = new page_base_securisee_admin('Patient');
 			$site->js='jquery.tooltipster.min';
 			$site->js='jquery.validate.min';
 			$site->js='messages_fr';
@@ -10,7 +10,7 @@ session_start();
 	}
 	else 
 	{
-		$site = new page_base('Temoignage');
+		$site = new page_base('Patient');
 	}
 	$controleur = new controleur();
 	$site-> left_sidebar=$controleur->optionAdmin();

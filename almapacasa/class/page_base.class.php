@@ -211,6 +211,7 @@ class page_base {
 					<title><?php echo $this->titre; ?></title>
 					<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 					<meta name="description" content="<?php echo $this->metadescription; ?>" />
+					<link rel="shortcut icon" href="images/logo.png">
 					<meta http-equiv="X-UA-Compatible" content="IE=edge">
 					<meta name="viewport" content="width=device-width, initial-scale=1">
 					<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
