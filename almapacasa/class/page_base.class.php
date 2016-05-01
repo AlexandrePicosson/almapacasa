@@ -115,6 +115,7 @@ class page_base {
 					<li class="home" ><a href="index.php">Accueil</a></li>
 					<li class="equipe"><a href="equipe.php">Présentation de l\'équipe</a></li>
 					<li class="temoignage"><a href="temoignage.php" >Témoignages</a></li>
+					<li class="mentions"><a href="mentions_legales">Mentions légales</a></li>
 				</ul>
 				';
 	}
@@ -183,7 +184,7 @@ class page_base {
 	}
 	
 	/****************************************** Affichage du pied de la page ***************************/
-	private function affiche_footer() {
+	private function afficher_footer() {
 		echo '
 		<!-- Footer -->
 			<footer>
@@ -247,7 +248,7 @@ class page_base {
 						    </div>
 						</div>
 						
-						<?php $this->affiche_footer(); ?>
+						
 					</div>
 				</body>
 			</html>

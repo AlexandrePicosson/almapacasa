@@ -51,9 +51,10 @@ header .row{
 	background: #3F72A6;
 	border: none;
 	top: 0px;
-	position: fixed;
 	width: 100%;
 	z-index:1;
+	min-height:0px;
+	margin-bottom:0px;
 }
 
 .navbar-inverse .navbar-nav > li > a{
@@ -135,15 +136,15 @@ footer .mentions a{
     line-height: 40px;
     background: #B0C4DE;
     padding-right: 20px;
+    padding-top:20px;
 }
-
 .optionAdmin ul li{
 	list-style-type:none;
 }
 
 /* CSS des formulaires des patients */
 .formulairePatient{
-	padding-top:40px;
+	padding-top:20px;
 }
 
 .formulairePatient label{
@@ -152,7 +153,7 @@ footer .mentions a{
 }
 
 #selectPatient{
-	padding-top:50px;
+	padding-top:20px;
 }
 
 #selectPatient label{
@@ -161,7 +162,7 @@ footer .mentions a{
 
 /* CSS des formulaires des infirmieres */
 .formulaireInfirmiere{
-	padding-top:40px;
+	padding-top:20px;
 }
 
 .formulaireInfirmiere label{
@@ -170,7 +171,7 @@ footer .mentions a{
 }
 
 #selectInfirmiere{
-	padding-top:50px;
+	padding-top:20px;
 }
 
 #selectInfirmiere label{
@@ -179,7 +180,7 @@ footer .mentions a{
 
 /* CSS des formulaires des personnes de confiance */
 .formulairePersonneC{
-	padding-top:40px;
+	padding-top:20px;
 }
 
 .formulairePersonneC label{
@@ -188,10 +189,21 @@ footer .mentions a{
 }
 
 #selectPersonneC{
-	padding-top:50px;
+	padding-top:20px;
 }
 
 #selectPersonneC label{
 	font-weight: 400;
 }
-	
+
+.optPersonneC{
+	padding-top:20px;
+}
+
+.optPatient{
+	padding-top:20px;
+}	
+
+.optInfirmiere{
+	padding-top:20px;
+}		

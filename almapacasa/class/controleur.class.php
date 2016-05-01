@@ -293,7 +293,7 @@ class controleur {
 	public function optionAdmin(){
 		return '
 				
-					<div class="optionAdmin"><br><br>
+					<div class="optionAdmin">
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
@@ -374,7 +374,7 @@ class controleur {
 	//Affiche les mentions légales du site
 	public function mentionsLegales(){
 		return '
-				<br><br><br><br>
+				<br>
 					Société ALMAPACASA - Groupe de travail en BTS Services Informatiques aux Organisations<br>
 					Propriétaires : PICOSSON Alexandre - GIRAUDEAU Samantha - HERBERT Calvin - MALMEJEAN Paulin - MOREAU Maxime<br>
 					Adresse : 115 Boulevard du Massacre, 44100 Nantes, France<br>
@@ -403,7 +403,7 @@ class controleur {
 	public function optionsModifsPatients(){
 		return '
 				<div class="col-md-5">
-					<div><br><br><br><br><br><br>
+					<div class="optPatient">
 						<ul>
 							<li>
 								<a href="ajoutPatientA.php">Ajouter un patient</a>
@@ -423,7 +423,7 @@ class controleur {
 	public function optionsModifsInfirmiere(){
 		return '
 				<div class="col-md-5">
-					<div><br><br><br><br><br><br>
+					<div class="optInfirmiere">
 						<ul>
 							<li>
 								<a href="ajoutInfirmiereA.php">Ajouter une infirmiere</a>
@@ -443,7 +443,7 @@ class controleur {
 	public function optionsModifsPersonneC(){
 		return '
 				<div class="col-md-5">
-					<div><br><br><br><br><br><br>
+					<div class="optPersonnesC">
 						<ul>
 							<li>
 								<a href="ajoutPersonneCA.php">Ajouter une personne de confiance</a>
@@ -462,7 +462,7 @@ class controleur {
 	//Modification des informations d'un patient
 	public function formModifPatient(){
 		$tab = $this->mypdo->modifPatientRecupDB();
-		$return = '<form id="selectPatient" method ="post"><br><br><label>Veuillez choisir le patient à modifier : </label><br><select name="id" id="id">';
+		$return = '<form id="selectPatient" method ="post"><label>Veuillez choisir le patient à modifier : </label><br><select name="id" id="id">';
 		if($tab && $tab != null)
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
@@ -479,7 +479,7 @@ class controleur {
 	//Modification des informations d'une infirmiere
 	public function formModifInfirmiere(){
 		$tab = $this->mypdo->modifInfirmiereRecupDB();
-		$return = '<form id="selectInfirmiere" method ="post"><br><br><label>Veuillez choisir l\'infirmiere à modifier : </label><br><select name="id" id="id">';
+		$return = '<form id="selectInfirmiere" method ="post"><label>Veuillez choisir l\'infirmiere à modifier : </label><br><select name="id" id="id">';
 		if($tab && $tab != null)
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
@@ -496,7 +496,7 @@ class controleur {
 	//Modification des informations d'une personne de confiance
 	public function formModifPersonneC(){
 		$tab = $this->mypdo->modifPersonneCRecupDB();
-		$return = '<form id="selectPersonneC" method ="post"><br><br><label>Veuillez choisir la personne de confiance à modifier : </label><br><select name="id" id="id">';
+		$return = '<form id="selectPersonneC" method ="post"><label>Veuillez choisir la personne de confiance à modifier : </label><br><select name="id" id="id">';
 		if($tab && $tab != null)
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
@@ -689,8 +689,8 @@ class controleur {
 									}
 									else
 									{
-											$msg="test ";
-											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+											$msg="";
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
 									}
 						
 										$("#dialog").html($msg);$("#modal").show();
@@ -942,7 +942,7 @@ class controleur {
 									else
 									{
 											$msg="";
-											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
 									}
 	
 										$("#dialog").html($msg);$("#modal").show();
@@ -1186,7 +1186,7 @@ class controleur {
 									}
 									else
 									{
-											$msg="test ";
+											$msg="";
 											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
 									}
 	
