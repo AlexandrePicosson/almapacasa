@@ -271,6 +271,15 @@
 		list-style:none;
 	    background-color: white;
 	}
+	
+	.formulaireTem{
+		padding-top:20px
+	}
+	
+	.formulaireTem label{
+		width: 150px;
+		font-weight: 400;
+	}
 
 
 /********** MODAL ***********/

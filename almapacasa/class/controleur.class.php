@@ -312,7 +312,7 @@ class controleur {
 								<a href="#">Validation des commentaires</a>
 							</li>
 							<li>
-								<a href="#">Validation des témoignages</a>
+								<a href="upTemoignage.php">Validation des témoignages</a>
 							</li>
 							<li>
 								<a href="gestRDVA.php">Gestion des rendez-vous</a>
@@ -333,6 +333,23 @@ class controleur {
 					$return = $return.'<div id="lesTemoignages"><li value = "'.$var['id'].'"><label><u>Identifiant du patient :</u></label>'.$var['idPatient']."<br><label><u>Son témoignage :</u></label>".$var['libelle'].'</li><br></div>';
 				}
 				
+		}
+		return $return;
+	}
+	
+	//SELECT des temoignages non validées
+	public function selectTem(){
+		$tab = $this->mypdo->selectTem();
+		$return = '<form id="selectTemoignage" method ="post"><label>Veuillez choisir le témoignage à ajouter :</label><br><select name="id" id="id">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['id'].'</option>';
+			}
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
 		}
 		return $return;
 	}
@@ -1974,6 +1991,168 @@ class controleur {
 	
 	}
 	
-}
-	?>
+	//Validation d'un témoignage
+	public function retourne_formulaire_temoignage($id = ''){
+		$idPatient = '';
+		$idAdmin = '';
+		$libelle = '';
+		$titreForm = 'Validation d\'un témoignage';
+		$lblBouton = 'Ajouter';
+	
+		$result = $this->mypdo->trouveTemoignage($id);
+		if($result != null){
+			$id = $result['id'];
+			$idPatient = $result['idPatient'];
+			$idAdmin = $result['idAdmin'];
+			$libelle = $result['libelle'];
+	
+			
+		$form = ' <form class="formulaireTem" id="formulaireTem" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+		$form = $form.'
+					</br><h4><u>Validation du témoignage</u></h4>
+					<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" placeholder="id patient" value="'.$idPatient.'" required /><br>
+					<label>Identifiant de l\'administrateur : </label><input type="text" name="idAdmin" id="idAdmin" placeholder="id admin" style="background-color:darkgray;" value="1" required /></br>
+					<label>Libelle :</label><textarea name="libelle" id="libelle" rows="10" cols="22" required />'.$libelle.'</textarea></br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formulaireTem :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+	
+						$(\'#formulaireTem\').submit(function(e){
+				
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_tem.php";
+							
+				
+							if($("#formulaireTem").valid())
+							{
+								var formData = {
+									
+									"idPatient" : $("#idPatient").val(),
+									"idAdmin" : $("#idAdmin").val(),
+									"libelle" : $("#libelle").val()									
+								};
+				
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+				
+								filterDataRequest.done(function(data)
+								{
+				
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message){
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formulaireTem").validate({
+								rules:
+								{
+									"idPatient" :{required: true},
+									"idAdmin" : {required: true},
+									"libelle" : {required: true}
+								},
+							
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+				
+						';
+		return $form;
+	
+	}
 
+	}}
+?>

@@ -200,19 +200,81 @@ class mypdo extends PDO{
     	return null;
     }
 
-    
-public function afficheTemoignageDB(){
-	$requete = 'select * from temoignage where idAdmin IS NOT NULL;';
-	$reponse = $this->connexion->query($requete);
-	if($reponse)
-	{
-		if($reponse->rowCount() >= 1)
+  
+///////////// TEMOIGNAGE ////////////////    
+	public function afficheTemoignageDB(){
+		$requete = 'select * from temoignage where idAdmin IS NOT NULL;';
+		$reponse = $this->connexion->query($requete);
+		if($reponse)
 		{
-			return ($reponse);
+			if($reponse->rowCount() >= 1)
+			{
+				return ($reponse);
+			}
 		}
+		return null;
 	}
-	return null;
-}
+	
+	//Liste des témoignages
+	public function selectTem(){
+		$requete = 'select id from temoignage WHERE idAdmin IS NULL;';
+		$reponse = $this->connexion->query($requete);// Requête SQL
+		if($reponse)
+		{
+			if($reponse->rowCount() >= 1)
+			{
+				return ($reponse);
+			}
+		}
+		return null;
+	}
+	
+	//Trouve les patients
+	public function trouveTemoignage($id)
+	{
+		$requete = 'SELECT * from temoignage where id ='.$id.';';
+		 
+		$result = $this->connexion->query($requete);
+		 
+		if($result)
+		{
+			if($result->rowCount() == 1)
+			{
+				$retour = $result->fetch(PDO::FETCH_ASSOC);
+				return $retour;
+			}
+		}
+		return null;
+	}
+	
+	public function valide_tem($tab){
+		$requete = 'UPDATE temoignage
+    			SET idPatient = "'.$tab['idPatient'].'",
+    			idAdmin = "'.$tab['idAdmin'].'",
+    			libelle = "'.$tab['libelle'].'"
+    			WHERE id = "'.$tab['id'].'";';
+		 
+		$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "des erreurs sont présentes";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre ajout a bien été effectué.";
+    	}
+    		return $data;
+	}
+	
     
     
 ///////////// PATIENT ////////////////    
