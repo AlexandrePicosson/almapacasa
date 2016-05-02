@@ -1,117 +1,122 @@
-html,body{
-	background:#DAE5F1
-}
-
-#logo{
-	height:200px;
-}
-
-header .row{
-	min-height:initial;
-}
-
-.content{
-	width:100%
-}
-
-.top-acc{
-	margin-top:20px;
-}
-
-.equipe_apercu{
-	margin-top:100px;
-}
-
-.page-header{
-	margin:0px 0px;
-	border-bottom:none;
-}
-
-
-.content .col-xs-4 h1{
-	font-size:100px;
-	margin-top:45px;
-	color:#0174CF;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	margin-top:110px;
-}
-
-.content .col-xs-6 p{
-	margin-top:45px;	
-}
-
-.container-fluid{
-	padding-left:0px;
-	padding-right:0px;
+/******************************/
+/********** CSS ***********/
+/******************************/
+	html,body{
+		background:#DAE5F1
+	}
 	
-}
+	#logo{
+		height:200px;
+	}
 
-#menu_horizontal .navbar.navbar-inverse{
-	border-radius: 0px;
-	background: #3F72A6;
-	border: none;
-	top: 0px;
-	width: 100%;
-	z-index:1;
-	min-height:0px;
-	margin-bottom:0px;
-}
-
-.navbar-inverse .navbar-nav > li > a{
-	color:#FFF;
-}
-
-#monmenu .nav.navbar-nav .active a{
-	background-color:#23405C
-}
-
-footer{
-	background:#3F72A6;
-	position: absolute;
-	bottom:0;
-	width: 100%;
-	color: #FFF;
-	height: 50px;
-}
-
-footer .infos{
-	font-size:15px;
-	margin-top:15px;
-	float:left;
-}
-
-footer .mentions{
-	float:right;
-	font-size: 15px;
-	margin-top: 15px;
-	margin-right: 15px;
-}
-
-footer .mentions a{
-	color:#FFF;
-	text-decoration:none;
-}
+/********** ACCUEIL ***********/
+	.top-acc{
+		margin-top:20px;
+	}
 
 
-#menu{
-	list-style-type: none;
-	position:absolute;
-}
+/********** HEADER ***********/
+	header .row{
+		min-height:initial;
+	}
+	
+	.page-header{
+		margin:0px 0px;
+		border-bottom:none;
+	}
 
-#menu li{
-	list-style-type: none;
-}
+/********** CONTENT ***********/
+	.content{
+		width:100%
+	}
+	
+	.content .col-xs-4 h1{
+		font-size:100px;
+		margin-top:45px;
+		color:#0174CF;
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		margin-top:110px;
+	}
+	
+	.content .col-xs-6 p{
+		margin-top:45px;	
+	}
+	
+	.container-fluid{
+		padding-left:0px;
+		padding-right:0px;
+	}
 
-#menu li a{
-    color: #fff;
-    background-color: transparent;
-}
 
-#menu ul li a{
-    color: #fff;
-    background-color: transparent;
-}
+/********** MENU ***********/
+	#menu{
+		list-style-type: none;
+		position:absolute;
+	}
+	
+	#menu li{
+		list-style-type: none;
+	}
+	
+	#menu li a{
+	    color: #fff;
+	    background-color: transparent;
+	}
+	
+	#menu ul li a{
+	    color: #fff;
+	    background-color: transparent;
+	}
+	#menu_horizontal .navbar.navbar-inverse{
+		border-radius: 0px;
+		background: #3F72A6;
+		border: none;
+		top: 0px;
+		width: 100%;
+		z-index:1;
+		min-height:0px;
+		margin-bottom:0px;
+	}
+	
+	.navbar-inverse .navbar-nav > li > a{
+		color:#FFF;
+	}
+	
+	#monmenu .nav.navbar-nav .active a{
+		background-color:#23405C
+	}
 
+
+/********** FOOTER ***********/
+	footer{
+		background:#3F72A6;
+		position: absolute;
+		bottom:0;
+		width: 100%;
+		color: #FFF;
+		height: 50px;
+	}
+	
+	footer .infos{
+		font-size:15px;
+		margin-top:15px;
+		float:left;
+	}
+	
+	footer .mentions{
+		float:right;
+		font-size: 15px;
+		margin-top: 15px;
+		margin-right: 15px;
+	}
+	
+	footer .mentions a{
+		color:#FFF;
+		text-decoration:none;
+	}
+
+
+/********** EQUIPE ***********/
 .apercu_equipe .lib p{
 	width: 150px;
 	text-align:center;
@@ -128,163 +133,170 @@ footer .mentions a{
     margin-bottom:30px;
 }
 
-.optionAdmin{
-    height: 100vh;
-    position: absolute;
-    top: 0px;
-    left: -15px;
-    line-height: 40px;
-    background: #B0C4DE;
-    padding-right: 20px;
-    padding-top:20px;
-}
-.optionAdmin ul li{
-	list-style-type:none;
+.equipe_apercu{
+	margin-top:100px;
 }
 
-/* CSS des formulaires des patients */
-.formulairePatient{
-	padding-top:20px;
-}
+/********** ASPECT DU MENU ***********/
+	.optionAdmin{
+	    height: 100vh;
+	    position: absolute;
+	    top: 0px;
+	    left: -15px;
+	    line-height: 40px;
+	    background: #B0C4DE;
+	    padding-right: 20px;
+	    padding-top:20px;
+	}
+	.optionAdmin ul li{
+		list-style-type:none;
+	}
 
-.formulairePatient label{
-	width: 100px;
-	font-weight: 400;
-}
 
-#selectPatient{
-	padding-top:20px;
-}
-
-#selectPatient label{
-	font-weight: 400;
-}
-
-/* CSS des formulaires des infirmieres */
-.formulaireInfirmiere{
-	padding-top:20px;
-}
-
-.formulaireInfirmiere label{
-	width: 100px;
-	font-weight: 400;
-}
-
-#selectInfirmiere{
-	padding-top:20px;
-}
-
-#selectInfirmiere label{
-	font-weight: 400;
-}
-
-/* CSS des formulaires des personnes de confiance */
-.formulairePersonneC{
-	padding-top:20px;
-}
-
-.formulairePersonneC label{
-	width: 100px;
-	font-weight: 400;
-}
-
-#selectPersonneC{
-	padding-top:20px;
-}
-
-#selectPersonneC label{
-	font-weight: 400;
-}
-
-/* Liste déroulante des PC/P/I */
-.optPersonneC{
-	padding-top:20px;
-}
-
-.optPatient{
-	padding-top:20px;
-}	
-
-.optInfirmiere{
-	padding-top:20px;
-}
-
-/* CSS des formulaires d'admin */
-.formulaireModifAdmin{
-	padding-top:20px;
-}
-
-.formulaireModifAdmin label{
-	width: 100px;
-	font-weight: 400;
-}
-
-/* CSS des formulaires des personnes de confiance */
-.formulaireModifPersonneC{
-	padding-top:20px;
-}
-
-.formulaireModifPersonneC label{
-	width: 100px;
-	font-weight: 400;
-}
-
-.formulaireRDV{
+/********** FORMULAIRES ***********/
+	/* CSS des formulaires des patients */
+	.formulairePatient{
 		padding-top:20px;
-}
+	}
+	
+	.formulairePatient label{
+		width: 100px;
+		font-weight: 400;
+	}
+	
+	#selectPatient{
+		padding-top:20px;
+	}
+	
+	#selectPatient label{
+		font-weight: 400;
+	}
+	
+	/* CSS des formulaires des infirmieres */
+	.formulaireInfirmiere{
+		padding-top:20px;
+	}
+	
+	.formulaireInfirmiere label{
+		width: 100px;
+		font-weight: 400;
+	}
+	
+	#selectInfirmiere{
+		padding-top:20px;
+	}
+	
+	#selectInfirmiere label{
+		font-weight: 400;
+	}
+	
+	/* CSS des formulaires des personnes de confiance */
+	.formulairePersonneC{
+		padding-top:20px;
+	}
+	
+	.formulairePersonneC label{
+		width: 100px;
+		font-weight: 400;
+	}
+	
+	#selectPersonneC{
+		padding-top:20px;
+	}
+	
+	#selectPersonneC label{
+		font-weight: 400;
+	}
+	
+	/* Liste déroulante des PC/P/I */
+	.optPersonneC{
+		padding-top:20px;
+	}
+	
+	.optPatient{
+		padding-top:20px;
+	}	
+	
+	.optInfirmiere{
+		padding-top:20px;
+	}
+	
+	/* CSS des formulaires d'admin */
+	.formulaireModifAdmin{
+		padding-top:20px;
+	}
+	
+	.formulaireModifAdmin label{
+		width: 100px;
+		font-weight: 400;
+	}
+	
+	/* CSS des formulaires des personnes de confiance */
+	.formulaireModifPersonneC{
+		padding-top:20px;
+	}
+	
+	.formulaireModifPersonneC label{
+		width: 100px;
+		font-weight: 400;
+	}
+	
+	.formulaireRDV{
+			padding-top:20px;
+	}
+	
+	.formulaireRDV label{
+			width: 150px;
+		font-weight: 400;
+	}
+	
+	#selectRDV{
+		padding-top:20px;
+	}
+	
+	#selectRDV label{
+		font-weight: 400;
+	}
 
-.formulaireRDV label{
-		width: 150px;
-	font-weight: 400;
-}
 
-#selectRDV{
-	padding-top:20px;
-}
-
-#selectRDV label{
-	font-weight: 400;
-}
-
-
-
-#modal {
-	/* basic */
-	background-color: #fff;
-	width:305px;
-	padding: 30px;
-	margin-top:10px;
-	/* border-radius */
-	border-radius: 12px;
-	color: white;
-	/* box-shadow */
-	-webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-	-moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-	box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
-	background: #7d7e7d;
-	background: -moz-linear-gradient(top, #7d7e7d, #0e0e0e);
-	background: -webkit-linear-gradient(top, #7d7e7d, #0e0e0e);
-	background: -ms-linear-gradient(top, #7d7e7d, #0e0e0e);
-	background: -o-linear-gradient(top, #7d7e7d, #0e0e0e);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
-	background: linear-gradient(to bottom, #7d7e7d, #0e0e0e);
-	border-top: 1px solid #666;
-	overflow: hidden;
-}
-
-#modal h1 {
-	text-align:left;
-	margin:0;
-	font-size:25px;
-	letter-spacing:-1px;
-	margin-bottom:4px;
-	text-shadow: 0 -1px 1px #000, 0 0px 5px rgba(0,0,0,.25);
-}
-
-#modal p {
-	margin-top: 7px 0 25px;
-	color: #ccc;
-	font-size:13px;
-	text-align:left;
-	text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
-}
+/********** MODAL ***********/
+	#modal {
+		/* basic */
+		background-color: #fff;
+		width:305px;
+		padding: 30px;
+		margin-top:10px;
+		/* border-radius */
+		border-radius: 12px;
+		color: white;
+		/* box-shadow */
+		-webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+		-moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+		box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+		background: #7d7e7d;
+		background: -moz-linear-gradient(top, #7d7e7d, #0e0e0e);
+		background: -webkit-linear-gradient(top, #7d7e7d, #0e0e0e);
+		background: -ms-linear-gradient(top, #7d7e7d, #0e0e0e);
+		background: -o-linear-gradient(top, #7d7e7d, #0e0e0e);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
+		background: linear-gradient(to bottom, #7d7e7d, #0e0e0e);
+		border-top: 1px solid #666;
+		overflow: hidden;
+	}
+	
+	#modal h1 {
+		text-align:left;
+		margin:0;
+		font-size:25px;
+		letter-spacing:-1px;
+		margin-bottom:4px;
+		text-shadow: 0 -1px 1px #000, 0 0px 5px rgba(0,0,0,.25);
+	}
+	
+	#modal p {
+		margin-top: 7px 0 25px;
+		color: #ccc;
+		font-size:13px;
+		text-align:left;
+		text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+	}
