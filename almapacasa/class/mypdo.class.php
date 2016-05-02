@@ -199,6 +199,21 @@ class mypdo extends PDO{
     	}
     	return null;
     }
+
+    
+public function afficheTemoignageDB(){
+	$requete = 'select * from temoignage where idAdmin IS NOT NULL;';
+	$reponse = $this->connexion->query($requete);
+	if($reponse)
+	{
+		if($reponse->rowCount() >= 1)
+		{
+			return ($reponse);
+		}
+	}
+	return null;
+}
+    
     
 ///////////// PATIENT ////////////////    
     

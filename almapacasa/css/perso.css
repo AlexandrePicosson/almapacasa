@@ -257,6 +257,20 @@
 	#selectRDV label{
 		font-weight: 400;
 	}
+	
+	#lesTemoignages{
+		padding-top:20px;
+	}
+	
+	#lesTemoignages label{
+		width: 150px;
+		font-weight: 400;
+	}
+	
+	#lesTemoignages li{
+		list-style:none;
+	    background-color: white;
+	}
 
 
 /********** MODAL ***********/

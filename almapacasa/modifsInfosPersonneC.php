@@ -2,7 +2,7 @@
 session_start();
 	include_once('class/autoload.php');
 	if(isset($_SESSION['id'])){
-			$site = new page_base_securisee_personneC('Mes informations');
+			$site = new page_base_securisee_personneC('Informations personnelles');
 			$site->js='jquery.tooltipster.min';
 			$site->js='jquery.validate.min';
 			$site->js='messages_fr';
@@ -10,7 +10,7 @@ session_start();
 	}
 	else 
 	{
-		$site = new page_base('Mes informations');
+		$site = new page_base('Informations personnelles');
 	}
 	$controleur = new controleur();
 	

@@ -309,17 +309,32 @@ class controleur {
 								<a href="gestPersonneC.php">Gestion des personnes de confiance</a>
 							</li>
 							<li>
-								<a href="#">Gestion des commentaires</a>
+								<a href="#">Validation des commentaires</a>
 							</li>
 							<li>
 								<a href="#">Validation des témoignages</a>
 							</li>
 							<li>
-								<a href="createRDVA.php">Gestion des rendez-vous</a>
+								<a href="gestRDVA.php">Gestion des rendez-vous</a>
 							</li>
 					</div>
 				
 				';
+	}
+	
+	//Affiche les témoignages
+	public function afficheTemoignage(){
+		
+				$tem = $this->mypdo->afficheTemoignageDB();
+				$return = '<h1><u>Témoignages récents :</u></h1>';
+				if($tem && $tem != null)
+				{
+				while ($var = $tem->fetch(PDO::FETCH_ASSOC)){
+					$return = $return.'<div id="lesTemoignages"><li value = "'.$var['id'].'"><label><u>Identifiant du patient :</u></label>'.$var['idPatient']."<br><label><u>Son témoignage :</u></label>".$var['libelle'].'</li><br></div>';
+				}
+				
+		}
+		return $return;
 	}
 	
 	//Menu des options de la personne de confiance
