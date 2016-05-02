@@ -31,6 +31,7 @@ class mypdo extends PDO{
     	}
     }
     
+    //Fonction de connexion
     public function connect($tab)
     {
 		$reponse = array();
@@ -98,6 +99,8 @@ class mypdo extends PDO{
     	return null;
     }
 
+///////////// ANDROID - IMPORT - EXPORT ////////////////
+    
     public function importAndroid()
     {
     	$requete = 'select * from patient limit 1;';
@@ -126,29 +129,12 @@ class mypdo extends PDO{
     	return null;
     }
     
-    
-    
-    
-    //Recupération du patient à modifier
-    public function modifPatientRecupDB(){
-    	
-    	$requete = 'select id,nom,prenom from patient';
-    	$reponse = $this->connexion->query($requete);// Requête SQL
-    	if($reponse)
-    	{
-    		if($reponse->rowCount() >= 1)
-    		{
-    			return ($reponse);
-    		}
-    	}
-    	return null;
-    }
-    
-    //Recupération de l'infirmiere à récuperer
-    public function modifInfirmiereRecupDB(){
+    public function importSoin()
+    {
+    	$requete = 'SELECT * from soin;';
     	 
-    	$requete = 'select id,nom,prenom from infirmiere';
-    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	$reponse = $this->connexion->query($requete);
+    	 
     	if($reponse)
     	{
     		if($reponse->rowCount() >= 1)
@@ -156,25 +142,25 @@ class mypdo extends PDO{
     			return ($reponse);
     		}
     	}
+    	 
     	return null;
     }
-    
-    //Récupere la liste des personnes de confiance
-    public function modifPersonneCRecupDB(){
-    	$requete = 'select id,nom,prenom from personnedeconfiance';
-    	$reponse = $this->connexion->query($requete);// Requête SQL
+     
+    public function importTypeSoin()
+    {
+    	$requete = 'select * from typesoin;';
+    	 
+    	$reponse = $this->connexion->query($requete);
+    	 
     	if($reponse)
     	{
-    		if($reponse->rowCount() >= 1)
+    		if($reponse->rowCount() >=1)
     		{
     			return ($reponse);
     		}
     	}
+    	 
     	return null;
-    }
-    
-    public function modifInfosPersoAdmin(){
-    	
     }
     
     public function importDataAndroid(){
@@ -214,6 +200,8 @@ class mypdo extends PDO{
     	return null;
     }
     
+///////////// PATIENT ////////////////    
+    
     //Ajoute un patient
     public function insert_patient_admin($tab)
     {
@@ -238,6 +226,21 @@ class mypdo extends PDO{
     		$data['message'] = "Votre ajout a bien été effectué.";
     	}
     	return $data;
+    }
+    
+    //Recupération du patient à modifier
+    public function modifPatientRecupDB(){
+    	 
+    	$requete = 'select id,nom,prenom from patient';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
     }
     
     //Trouve les patients
@@ -321,6 +324,8 @@ class mypdo extends PDO{
     	return $data;
     }
     
+///////////// INFIRMIERE ////////////////
+    
     //Ajoute une infirmiere
     public function insert_infirmiere_admin($tab){
     	$requete = 'INSERT INTO `infirmiere` (`id`, `urlPhoto` , `nom`, `prenom`, `login`, `mdp`, `anNaiss`, `sexe`, `rue`, `cp`, `ville`, `telephone`) VALUES (NULL, "'.$tab['urlphoto'].'","'.$tab['nom'].'", "'.$tab['prenom'].'", "'.$tab['login'].'", "'.$tab['mdp'].'", "'.$tab['anNaiss'].'", "'.$tab['sexe'].'", "'.$tab['rue'].'", "'.$tab['cp'].'", "'.$tab['ville'].'", "'.$tab['telephone'].'");';
@@ -344,6 +349,21 @@ class mypdo extends PDO{
     		$data['message'] = "Votre ajout a bien été effectué.";
     	}
     	return $data;
+    }
+    
+    //Recupération de l'infirmiere à récuperer
+    public function modifInfirmiereRecupDB(){
+    
+    	$requete = 'select id,nom,prenom from infirmiere';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
     }
     
     //Trouve les infirmieres
@@ -425,12 +445,16 @@ class mypdo extends PDO{
     	return $data;
     }
     
-    //Trouve les personnes de confiance
-    public function trouvePersonneC($id){
-    	$requete = 'SELECT * from personnedeconfiance where id ='.$id.';';
     
+    
+///////////// ADMINISTRATEUR ////////////////    
+    
+    //Recupere les informations personnelles d'un administrateur
+    public function trouveModifAdmin($id){
+    	$requete = 'SELECT * from administrateur where id ='.$id.';';
+    	
     	$result = $this->connexion->query($requete);
-    
+    	
     	if($result)
     	{
     		if($result->rowCount() == 1)
@@ -441,11 +465,44 @@ class mypdo extends PDO{
     	}
     }
     
-    public function trouveModifAdmin($id){
-    	$requete = 'SELECT * from administrateur where id ='.$id.';';
-    	
+///////////// PERSONNE DE CONFIANCE ////////////////    
+    
+    //Recupere les informations personnelles d'une personne de confiance
+    public function trouveModifPersonneC($id){
+    	$requete = 'SELECT * from personnedeconfiance where id ='.$id.';';
+    	 
     	$result = $this->connexion->query($requete);
-    	
+    	 
+    	if($result)
+    	{
+    		if($result->rowCount() == 1)
+    		{
+    			$retour = $result->fetch(PDO::FETCH_ASSOC);
+    			return $retour;
+    		}
+    	}
+    }
+    
+    //Récupere la liste des personnes de confiance
+    public function modifPersonneCRecupDB(){
+    	$requete = 'select id,nom,prenom from personnedeconfiance';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+    }
+    
+    //Trouve les personnes de confiance
+    public function trouvePersonneC($id){
+    	$requete = 'SELECT * from personnedeconfiance where id ='.$id.';';
+    
+    	$result = $this->connexion->query($requete);
+    
     	if($result)
     	{
     		if($result->rowCount() == 1)
@@ -543,6 +600,8 @@ class mypdo extends PDO{
     	 
     	return $data;
     }
+
+///////////// INFORMATIONS PERSONNELLES ////////////////    
     
     //Modifier mes informations personnelles ( admin )
     public function modif_infosperso_admin($tab){
@@ -579,12 +638,63 @@ class mypdo extends PDO{
     	return $data;
     }
     
-    public function importSoin()
-    {
-    	$requete = 'SELECT * from soin;';
-    	
-    	$reponse = $this->connexion->query($requete);
-    	
+    //Modifier infos perso personne de confiance
+    public function modif_infosperso_personneC($tab){
+    	$requete = 'UPDATE personnedeconfiance
+    			SET nom = "'.$tab['nom'].'",
+    			prenom = "'.$tab['prenom'].'",
+    			anNaiss = "'.$tab['anNaiss'].'",
+    			sexe = "'.$tab['sexe'].'",
+    			rue = "'.$tab['rue'].'",
+    			cp = "'.$tab['cp'].'",
+    			ville = "'.$tab['ville'].'",
+    			telephone = "'.$tab['telephone'].'"
+    			WHERE id = "'.$tab['id'].'"';
+    
+    	$nblignes=$this->connexion -> exec($requete);
+    
+    	$data = array();
+    	$errors = array();
+    
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont presentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre mise à jour a bien ete effectue.";
+    	}
+    
+    	return $data;
+    }
+ 
+///////////// RENDEZ - VOUS //////////////// 
+    
+    //Trouve les rendez_vous
+    public function trouveRDV($id){
+    	$requete = 'SELECT * from visite where id ='.$id.';';
+    
+    	$result = $this->connexion->query($requete);
+    
+    	if($result)
+    	{
+    		if($result->rowCount() == 1)
+    		{
+    			$retour = $result->fetch(PDO::FETCH_ASSOC);
+    			return $retour;
+    		}
+    	}
+    }
+    
+    //Affiche tout les id des rendez - vous
+    public function selectRDV(){
+    	$requete = 'select id from visite';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
     	if($reponse)
     	{
     		if($reponse->rowCount() >= 1)
@@ -592,25 +702,91 @@ class mypdo extends PDO{
     			return ($reponse);
     		}
     	}
-    	
     	return null;
     }
+    
+    //Ajoute un rendez-vous
+    public function insert_RDV_admin($tab){
+    	$requete = 'INSERT INTO `visite` (`id`, `idPatient`, `idInfirmiere`, `dateV`, `heureDebut`, `heureFin`) VALUES (NULL,"'.$tab['idPatient'].'", "'.$tab['idInfirmiere'].'", "'.$tab['dateVisite'].'", "'.$tab['heureDeb'].'", "'.$tab['heureFin'].'");';
     	
-    public function importTypeSoin()
-    {
-    	$requete = 'select * from typesoin;';
+    	$nblignes=$this->connexion -> exec($requete);
     	
-    	$reponse = $this->connexion->query($requete);
+    	$data = array();
+    	$errors = array();
     	
-    	if($reponse)
+    	if ($nblignes !=1)
     	{
-    		if($reponse->rowCount() >=1)
-    		{
-    			return ($reponse);
-    		}
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
     	}
     	
-    	return null;
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "des erreurs sont présentes";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre ajout a bien été effectué.";
+    	}
+    	return $data;
     }
+    
+    //Modifie un RDV
+    public function update_RDV_admin($tab){
+    	$requete = 'UPDATE visite
+    			SET idPatient = "'.$tab['idPatient'].'",
+    			idInfirmiere = "'.$tab['idInfirmiere'].'",
+    			dateV = "'.$tab['dateVisite'].'",
+    			heureDebut = "'.$tab['heureDeb'].'",
+    			heureFin = "'.$tab['heureFin'].'"
+    			WHERE id="'.$tab['id'].'"';
+    	 
+    	$nblignes=$this->connexion -> exec($requete);
+    	 
+    	$data = array();
+    	$errors = array();
+    	 
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	 
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont presentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre mise à jour a bien ete effectue.";
+    	}
+    	 
+    	return $data;
+    	}
+    
+   	//Supprime un RDV
+   	public function delete_RDV_admin($tab){
+   		$requete = 'DELETE FROM visite
+				WHERE id = '.$tab['id'].'';
+   		
+   		$nblignes=$this->connexion -> exec($requete);
+   		
+   		$data = array();
+   		$errors = array();
+   		
+   		if ($nblignes !=1)
+   		{
+   			$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+   		}
+   		
+   		if (count($errors) > 0) {
+   			$data['success'] = false;
+   			$data['errors']  = $errors;
+   			$data['message'] = "Des erreurs sont présentes.";
+   		} else {
+   			$data['success'] = true;
+   			$data['message'] = "Votre suppression a bien été effectué.";
+   		}
+   		
+   		return $data;
+   	}
 }
 ?>

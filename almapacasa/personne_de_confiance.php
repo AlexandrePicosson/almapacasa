@@ -9,5 +9,6 @@ else
 	$site = new page_base('Administration');
 }
 $controleur = new controleur();
+$site-> all_sidebar=$controleur->optionPersonneC();
 $site->affiche();
 ?>

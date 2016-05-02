@@ -209,7 +209,7 @@ footer .mentions a{
 	padding-top:20px;
 }
 
-/* CSS des formulaires des personnes de confiance */
+/* CSS des formulaires d'admin */
 .formulaireModifAdmin{
 	padding-top:20px;
 }
@@ -218,6 +218,34 @@ footer .mentions a{
 	width: 100px;
 	font-weight: 400;
 }
+
+/* CSS des formulaires des personnes de confiance */
+.formulaireModifPersonneC{
+	padding-top:20px;
+}
+
+.formulaireModifPersonneC label{
+	width: 100px;
+	font-weight: 400;
+}
+
+.formulaireRDV{
+		padding-top:20px;
+}
+
+.formulaireRDV label{
+		width: 150px;
+	font-weight: 400;
+}
+
+#selectRDV{
+	padding-top:20px;
+}
+
+#selectRDV label{
+	font-weight: 400;
+}
+
 
 
 #modal {
@@ -260,4 +288,3 @@ footer .mentions a{
 	text-align:left;
 	text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
 }
-		

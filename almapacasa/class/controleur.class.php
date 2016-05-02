@@ -24,7 +24,8 @@ class controleur {
 		}
 	}
 	
-
+	
+	//Affiche le formulaire de connexion
 	public function retourne_formulaire_login() {
 		return '
 			<article >
@@ -308,25 +309,38 @@ class controleur {
 								<a href="gestPersonneC.php">Gestion des personnes de confiance</a>
 							</li>
 							<li>
-								<a href="#">Ajouter du contenu au site</a>
-							</li>
-							<li>
 								<a href="#">Gestion des commentaires</a>
 							</li>
 							<li>
 								<a href="#">Validation des témoignages</a>
 							</li>
 							<li>
-								<a href="#">Création de rendez-vous</a>
+								<a href="createRDVA.php">Gestion des rendez-vous</a>
 							</li>
 					</div>
 				
 				';
 	}
 	
+	//Menu des options de la personne de confiance
+	public function optionPersonneC(){
+		return '
+	
+					<div class="optionAdmin">
+						<ul>
+							<li>
+								<a href="modifsInfosPersonneC.php">Modifier mes informations</a>
+							</li>
+					</div>
+	
+				';
+	}
+	
+	
+	//Menu des options du patient
 	public function optionPatient(){
 		return '
-					<div class="optionAdmin"><br><br>
+					<div class="optionAdmin">
 						<ul>
 							<li>
 								<a href="#">Modifier mes informations</a>
@@ -380,7 +394,7 @@ class controleur {
 					Adresse : 115 Boulevard du Massacre, 44100 Nantes, France<br>
 					Adresse de contact : almapacasa@yopmail.com<br>
 					Hébergement du site : <br>
-				
+					<br><br><br><br><br><br><br>CNNNNNNNIIIIIIIILLLLLLLLLLLLL
 				';
 	}
 	
@@ -399,7 +413,7 @@ class controleur {
 				';
 	}
 	
-	//Affiche les options de modification d'un patient
+	//Affiche les options de "Gestion des patients"
 	public function optionsModifsPatients(){
 		return '
 				<div class="col-md-5">
@@ -419,7 +433,7 @@ class controleur {
 				</div>';
 	}
 	
-	//Affiche les options de modification d'une infirmiere
+	//Affiche les options de "Gestion des infirmieres"
 	public function optionsModifsInfirmiere(){
 		return '
 				<div class="col-md-5">
@@ -439,7 +453,7 @@ class controleur {
 				</div>';
 	}
 	
-	//Affiche les options de modification d'une infirmiere
+	//Affiche les options de "Gestion des personnes de confiance"
 	public function optionsModifsPersonneC(){
 		return '
 				<div class="col-md-5">
@@ -454,7 +468,7 @@ class controleur {
 							<li>
 								<a href="deletePersonneCA.php">Supprimer une personne de confiance</a>
 							</li>
-	
+						</ul>
 					</div>
 				</div>';
 	}
@@ -476,7 +490,7 @@ class controleur {
 		return $return;
 	}
 	
-	//Modification des informations d'une infirmiere
+	//Affiche la liste des infirmieres
 	public function formModifInfirmiere(){
 		$tab = $this->mypdo->modifInfirmiereRecupDB();
 		$return = '<form id="selectInfirmiere" method ="post"><label>Veuillez choisir l\'infirmiere à modifier : </label><br><select name="id" id="id">';
@@ -493,7 +507,7 @@ class controleur {
 		return $return;
 	}
 	
-	//Modification des informations d'une personne de confiance
+	//Affiche la liste des personnes de confiance
 	public function formModifPersonneC(){
 		$tab = $this->mypdo->modifPersonneCRecupDB();
 		$return = '<form id="selectPersonneC" method ="post"><label>Veuillez choisir la personne de confiance à modifier : </label><br><select name="id" id="id">';
@@ -1089,7 +1103,7 @@ class controleur {
 		}
 	
 		$form = $form.'
-					</br><h4><u>Patient</u></h4>
+					</br><h4><u>Personne de confiance</u></h4>
 					<label>Nom : </label><input type="text" name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required /><br>
 					<label>Prénom : </label><input type="text" name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
 					<label>Date de naissance :</label><input type="date" name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
@@ -1258,7 +1272,7 @@ class controleur {
 	
 	}
 	
-	//Retourne les formulaires d'ajout/modif/suppression des personnes de confiance
+	//Retourne les informations personnelles d'un administrateur
 	public function retourne_formulaire_modifsInfos_admin($type, $id = ''){
 		$nom = '';
 		$prenom = '';
@@ -1433,7 +1447,7 @@ class controleur {
 								});
 							}
 							});
-							$("#formPersonneC").validate({
+							$("#formulaireModifAdmin").validate({
 								rules:
 								{
 				
@@ -1479,6 +1493,472 @@ class controleur {
 	
 	}
 
+	//Retourne les formulaires d'ajout/modif/suppression des personnes de confiance
+	public function retourne_formulaire_modifsInfos_personneC($type, $id = ''){
+		$nom = '';
+		$prenom = '';
+		$login = '';
+		$mdp = '';
+		$dateNaiss = '';
+		$sexe='';
+		$rue='';
+		$cp='';
+		$ville='';
+		$telephone='';
+		$titreForm='';
+		$lblBouton = '';
+		$radioMchecked = '';
+		$radioFchecked = '';
+	
+	
+		if($type == 'modif')
+		{
+			$titreForm = "Modification de mes informations personnelles :";
+			$lblBouton = "Modifier";
+		}
+	
+		if($type == 'modif')
+		{
+	
+			$result = $this->mypdo->trouveModifPersonneC($id);
+	
+			if($result != null){
+				$nom = $result['nom'];
+				$prenom = $result['prenom'];
+				$login = $result['login'];
+				$mdp = $result['mdp'];
+				$dateNaiss = $result['anNaiss'];
+				$sexe=$result['sexe'];
+				if($sexe == 'M')
+				{
+					$radioMchecked = 'checked';
+					$radioFchecked = '';
+				}else{
+					$radioMchecked = '';
+					$radioFchecked = 'checked';
+				}
+				$rue=$result['rue'];
+				$cp=$result['cp'];
+				$ville=$result['ville'];
+				$telephone=$result['telephone'];
+			}
+		}
+	
+		$form = ' <form class="formulaireModifPersonneC" id="formulaireModifPersonneC" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+		$form = $form.'
+					</br><h4><u>Mes informations personnelles</u></h4>
+					<label>Nom : </label><input type="text"  name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required /><br>
+					<label>Prénom : </label><input type="text" style="background-color:darkgray;" readonly name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
+					<label>Date de naissance :</label><input type="date" style="background-color:darkgray;" readonly name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
+					<label>Sexe :</label>
+					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
+					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
+					<label>Adresse :</label><input type="text" name="rue" id="rue" placeholder="Nom de rue" value="'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="Code postal" value="'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Ville" value="'.$ville.'" required /></br>
+					<label>Téléphone : </label><input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value="'.$telephone.'" required /><br><br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formulaireModifPersonneC :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+	
+						$(\'#formulaireModifPersonneC\').submit(function(e){
+	
+							e.preventDefault();
+							$(\'#modal\').hide();
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modifInfos_personneC.php";}
+	
+							if($("#formulaireModifPersonneC").valid())
+							{
+								var $sexe="M";
+								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
+								var $mdp = "";
+	
+	
+								var formData = {
+									"login" : $("#login").val(),
+									"mdp" : $mdp,
+									"nom" : $("#nom").val(),
+									"prenom" : $("#prenom").val(),
+									"anNaiss" : $("#annaiss").val(),
+									"sexe" : $sexe,
+									"rue" : $("#rue").val(),
+									"cp" : $("#cp").val(),
+									"ville" : $("#ville").val(),
+									"telephone" : $("#telephone").val()
+								};
+	
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+	
+								filterDataRequest.done(function(data)
+								{
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formulaireModifPersonneC").validate({
+								rules:
+								{
+	
+									"nom": {required: true},
+									"prenom": {required: true},
+									"rue": {required: true},
+									"telephone": {required: true},
+									"cp":{required: true,regex:/^\d{5}$/},
+									"ville": {required: true},
+									"rue": {required: true},
+									"annaiss":{required: true},
+									"login": {required :true},
+									"mdp": {required : true}
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+	
+						';
+		return $form;
+	
+	}
+	
+	//Affiche les options de "Gestion des rendez-vous"
+	public function optionsRDVA(){
+		return '
+				<div class="col-md-5">
+					<div class="optInfirmiere">
+						<ul>
+							<li>
+								<a href="ajoutRDVA.php">Ajouter un rendez-vous</a>
+							</li>
+							<li>
+								<a href="modifRDVA.php">Modifier un rendez-vous</a>
+							</li>
+							<li>
+								<a href="deleteRDVA.php">Supprimer un rendez-vous</a>
+							</li>
+							<br><br>
+							<li>
+								<a href="#">Affecter un soin à un rendez-vous</a>
+							</li>
+							<li>
+								<a href="#">Modifier un soin lors d\'un rendez-vous</a>
+							</li>
+							<li>
+								<a href="#">Supprimer un soin lors d\'un rendez-vous</a>
+							</li>
+					</div>
+				</div>';
+				
+	}
+	
+	//Affiche la liste des id des visites
+	public function formRDV(){
+		$tab = $this->mypdo->selectRDV();
+		$return = '<form id="selectRDV" method ="post"><label>Veuillez choisir l\'id du rendez-vous à modifier : </label><br><select name="id" id="id">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['id'].'</option>';
+			}
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
+		}
+		return $return;
+	}
+	
+	//Ajout/modif/suppression d'un rendez-vous
+	public function retourne_formulaire_RDV($type, $id = ''){
+		$idPatient = '';
+		$idInfirmiere = '';
+		$dateVisite = '';
+		$heureDeb = '';
+		$heureFin = '';
+		$titreForm = '';
+		$lblBouton = '';
+		
+		if($type == 'ajout')
+		{
+			$titreForm = "Création d'un rendez-vous :";
+			$lblBouton = "Ajouter";
+		}
+		
+		if($type == 'modif')
+		{
+			$titreForm = "Modification d'un rendez-vous :";
+			$lblBouton = "Modifier";
+		}
+		
+		if($type == 'suppr')
+		{
+			$titreForm = "Suppression d'un rendez-vous :";
+			$lblBouton = "Supprimer";
+		}
+		
+		if($type == 'suppr' || $type == 'modif')
+		{
+			
+			$result = $this->mypdo->trouveRDV($id);
+			if($result != null){
+				$id = $result['id'];
+				$idPatient = $result['idPatient'];
+				$idInfirmiere = $result['idInfirmiere'];
+				$dateVisite = $result['dateV'];
+				$heureDeb = $result['heureDebut'];
+				$heureFin = $result['heureFin'];
+				
+			}
+		}
+		
+		$form = ' <form class="formulaireRDV" id="formulaireRDV" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+		
+		$form = $form.'
+					</br><h4><u>Rendez-vous</u></h4>
+					<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" placeholder="id patient" value="'.$idPatient.'" required /><br>
+					<label>Identifiant de l\'infirmiere : </label><input type="text" name="idInfirmiere" id="idInfirmiere" placeholder="id infirmiere" value="'.$idInfirmiere.'" required /></br>
+					<label>Date de la visite :</label><input type="date" name="dateVisite" id="dateVisite" value="'.$dateVisite.'" required /></br>
+					<label>Heure de début :</label><input type="time" name="heureDeb" id="heureDeb"  value="'.$heureDeb.'" required /></br>
+					<label>Heure de fin :</label><input type="time" name="heureFin" id="heureFin"  value="'.$heureFin.'" required /></br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formulaireRDV :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+						
+						$(\'#formulaireRDV\').submit(function(e){
+							
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_RDV.php";
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modif_RDV.php";}
+							if($(\'#submit1\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_RDV.php";}
+							
+							if($("#formulaireRDV").valid())
+							{
+								var formData = {
+									
+									"idPatient" : $("#idPatient").val(),
+									"idInfirmiere" : $("#idInfirmiere").val(),
+									"dateVisite" : $("#dateVisite").val(),
+									"heureDeb" : $("#heureDeb").val(),
+									"heureFin" : $("#heureFin").val()
+								};
+							
+								
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+							
+								filterDataRequest.done(function(data)
+								{
+							
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+						
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
+									}
+						
+										$("#dialog").html($msg);$("#modal").show();
+								});
+								
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+						
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formulaireRDV").validate({
+								rules:
+								{
+													
+									"idVisiteur": {required: true},
+									"idInfirmiere": {required: true},
+									"dateVisite": {required: true},
+									"heureDeb": {required: true},
+									"heureFin":{required: true}
+									
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+							
+						';
+		return $form;
+	
+	}
+	
 }
 	?>
 
