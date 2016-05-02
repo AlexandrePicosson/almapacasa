@@ -21,11 +21,11 @@ $resultat = $mypdo->connect($tab);
 
 if(isset($resultat))
 {
-	$_SESSION['id']=$tab['id'];
 	$stuff = $resultat['result']->fetch(PDO::FETCH_ASSOC);
 	$_SESSION['type']= $resultat['type'];
 	$_SESSION['nom']= $stuff['nom'];
 	$_SESSION['prenom']= $stuff['prenom'];
+	$_SESSION['id']= $stuff['id'];
 	$data['success']=true;
 }
 else

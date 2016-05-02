@@ -196,6 +196,7 @@ footer .mentions a{
 	font-weight: 400;
 }
 
+/* Liste déroulante des PC/P/I */
 .optPersonneC{
 	padding-top:20px;
 }
@@ -206,4 +207,57 @@ footer .mentions a{
 
 .optInfirmiere{
 	padding-top:20px;
-}		
+}
+
+/* CSS des formulaires des personnes de confiance */
+.formulaireModifAdmin{
+	padding-top:20px;
+}
+
+.formulaireModifAdmin label{
+	width: 100px;
+	font-weight: 400;
+}
+
+
+#modal {
+	/* basic */
+	background-color: #fff;
+	width:305px;
+	padding: 30px;
+	margin-top:10px;
+	/* border-radius */
+	border-radius: 12px;
+	color: white;
+	/* box-shadow */
+	-webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+	-moz-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+	box-shadow: rgba(0,0,0,0.5) 0px 3px 10px, rgba(0,0,0,.75) 0 0 70px inset;
+	background: #7d7e7d;
+	background: -moz-linear-gradient(top, #7d7e7d, #0e0e0e);
+	background: -webkit-linear-gradient(top, #7d7e7d, #0e0e0e);
+	background: -ms-linear-gradient(top, #7d7e7d, #0e0e0e);
+	background: -o-linear-gradient(top, #7d7e7d, #0e0e0e);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
+	background: linear-gradient(to bottom, #7d7e7d, #0e0e0e);
+	border-top: 1px solid #666;
+	overflow: hidden;
+}
+
+#modal h1 {
+	text-align:left;
+	margin:0;
+	font-size:25px;
+	letter-spacing:-1px;
+	margin-bottom:4px;
+	text-shadow: 0 -1px 1px #000, 0 0px 5px rgba(0,0,0,.25);
+}
+
+#modal p {
+	margin-top: 7px 0 25px;
+	color: #ccc;
+	font-size:13px;
+	text-align:left;
+	text-shadow: 0 0px 5px rgba(0,0,0,.25), 0 -1px 1px #000;
+}
+		

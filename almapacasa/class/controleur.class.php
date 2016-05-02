@@ -296,7 +296,7 @@ class controleur {
 					<div class="optionAdmin">
 						<ul>
 							<li>
-								<a href="#">Modifier mes informations</a>
+								<a href="modifsInfosAdmin.php">Modifier mes informations</a>
 							</li>
 							<li>
 								<a href="gestPatient.php">Gestion des patients</a>
@@ -605,9 +605,12 @@ class controleur {
 					<script>function hd(){ $(\'#modal\').hide();}</script>
 					<script>function reload(){window.location.reload();}</script>
 					<div id="modal">
-							<h1>Info</h1>
+							<form id="formModale">
+							<h1>Informations !</h1>
 							<div id="dialog"></div>
-							<a class="no" onclick="hd(); reload();">Ok</a>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
 					</div>
 					</article>
 					<script>
@@ -854,7 +857,7 @@ class controleur {
 					<script>function reload(){window.location.reload();}</script>
 					<div id="modal">
 							<form id="formModale">
-							<h1>Info</h1>
+							<h1>Informations !</h1>
 							<div id="dialog"></div>
 							<input type="text" name="id" value="" style="display:none;"/>
 							<input type="submit" value="Ok"/>
@@ -1102,9 +1105,12 @@ class controleur {
 					<script>function hd(){ $(\'#modal\').hide();}</script>
 					<script>function reload(){window.location.reload();}</script>
 					<div id="modal">
-							<h1>Info</h1>
+							<form id="formModale">
+							<h1>Informations !</h1>
 							<div id="dialog"></div>
-							<a class="no" onclick="hd(); reload();">Ok</a>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
 					</div>
 					</article>
 					<script>
@@ -1251,6 +1257,228 @@ class controleur {
 		return $form;
 	
 	}
+	
+	//Retourne les formulaires d'ajout/modif/suppression des personnes de confiance
+	public function retourne_formulaire_modifsInfos_admin($type, $id = ''){
+		$nom = '';
+		$prenom = '';
+		$login = '';
+		$mdp = '';
+		$dateNaiss = '';
+		$sexe='';
+		$rue='';
+		$cp='';
+		$ville='';
+		$telephone='';
+		$titreForm='';
+		$lblBouton = '';
+		$radioMchecked = '';
+		$radioFchecked = '';
+	
+		
+		if($type == 'modif')
+		{
+			$titreForm = "Modification de mes informations personnelles :";
+			$lblBouton = "Modifier";
+		}
+	
+		if($type == 'modif')
+		{
+		
+			$result = $this->mypdo->trouveModifAdmin($id);
+		
+			if($result != null){
+				$nom = $result['nom'];
+				$prenom = $result['prenom'];
+				$login = $result['login'];
+				$mdp = $result['mdp'];
+				$dateNaiss = $result['anNaiss'];
+				$sexe=$result['sexe'];
+				if($sexe == 'M')
+				{
+					$radioMchecked = 'checked';
+					$radioFchecked = '';
+				}else{
+					$radioMchecked = '';
+					$radioFchecked = 'checked';
+				}
+				$rue=$result['rue'];
+				$cp=$result['cp'];
+				$ville=$result['ville'];
+				$telephone=$result['telephone'];
+			}
+		}
+	
+		$form = ' <form class="formulaireModifAdmin" id="formulaireModifAdmin" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+		$form = $form.'
+					</br><h4><u>Mes informations personnelles</u></h4>
+					<label>Nom : </label><input type="text"  name="nom" id="nom" placeholder="votre nom" value="'.$nom.'" required /><br>
+					<label>Prénom : </label><input type="text" style="background-color:darkgray;" readonly name="prenom" id="prenom" placeholder="votre prenom" value="'.$prenom.'" required /></br>
+					<label>Date de naissance :</label><input type="date" style="background-color:darkgray;" readonly name="annaiss" id="annaiss" value="'.$dateNaiss.'" required /></br>
+					<label>Sexe :</label>
+					<input type="radio" name="sexe" id="Masculin" value="Masculin"' .$radioMchecked.' required /> Homme
+					<input type="radio" name="sexe" id="Feminin" value="Feminin"' .$radioFchecked.' required /> Femme</br>
+					<label>Adresse :</label><input type="text" name="rue" id="rue" placeholder="Nom de rue" value="'.$rue.'" required />
+					<input type="text" name="cp" id="cp" placeholder="Code postal" value="'.$cp.'" required />
+					<input type="text" name="ville" id="ville" placeholder="Ville" value="'.$ville.'" required /></br>
+					<label>Téléphone : </label><input type="text" name="telephone" id="telephone" placeholder="06.01.02.03.04" value="'.$telephone.'" required /><br><br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formulaireModifAdmin :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+	
+						$(\'#formulaireModifAdmin\').submit(function(e){
+	
+							e.preventDefault();
+							$(\'#modal\').hide();
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modifInfos_admin.php";}
+	
+							if($("#formulaireModifAdmin").valid())
+							{
+								var $sexe="M";
+								if($("input[type=radio][name=sexe]:checked").attr("value")=="Feminin"){$sexe = "F";}
+								var $mdp = "";
+								
+	
+								var formData = {
+									"login" : $("#login").val(),
+									"mdp" : $mdp,
+									"nom" : $("#nom").val(),
+									"prenom" : $("#prenom").val(),
+									"anNaiss" : $("#annaiss").val(),
+									"sexe" : $sexe,
+									"rue" : $("#rue").val(),
+									"cp" : $("#cp").val(),
+									"ville" : $("#ville").val(),
+									"telephone" : $("#telephone").val()
+								};
+	
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+	
+								filterDataRequest.done(function(data)
+								{
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formPersonneC").validate({
+								rules:
+								{
+				
+									"nom": {required: true},
+									"prenom": {required: true},
+									"rue": {required: true},
+									"telephone": {required: true},
+									"cp":{required: true,regex:/^\d{5}$/},
+									"ville": {required: true},
+									"rue": {required: true},
+									"annaiss":{required: true},
+									"login": {required :true},
+									"mdp": {required : true}
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+	
+						';
+		return $form;
+	
+	}
+
 }
 	?>
 

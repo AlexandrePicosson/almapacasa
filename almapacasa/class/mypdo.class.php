@@ -39,7 +39,6 @@ class mypdo extends PDO{
     	 
     	//Requete Personne de confiance
     	$requetepersonnedc = 'select * from personnedeconfiance where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
-    	
    
     	//Requete administrateur
     	$requeteadmin = 'select * from administrateur where login="'.$tab['id'].'" and mdp=MD5("'.$tab['mdp'].'");';
@@ -160,6 +159,7 @@ class mypdo extends PDO{
     	return null;
     }
     
+    //Récupere la liste des personnes de confiance
     public function modifPersonneCRecupDB(){
     	$requete = 'select id,nom,prenom from personnedeconfiance';
     	$reponse = $this->connexion->query($requete);// Requête SQL
@@ -171,6 +171,10 @@ class mypdo extends PDO{
     		}
     	}
     	return null;
+    }
+    
+    public function modifInfosPersoAdmin(){
+    	
     }
     
     public function importDataAndroid(){
@@ -437,6 +441,21 @@ class mypdo extends PDO{
     	}
     }
     
+    public function trouveModifAdmin($id){
+    	$requete = 'SELECT * from administrateur where id ='.$id.';';
+    	
+    	$result = $this->connexion->query($requete);
+    	
+    	if($result)
+    	{
+    		if($result->rowCount() == 1)
+    		{
+    			$retour = $result->fetch(PDO::FETCH_ASSOC);
+    			return $retour;
+    		}
+    	}
+    }
+    
     
     //Ajout d'une personne de confiance
     public function insert_personneC_admin($tab){
@@ -522,6 +541,41 @@ class mypdo extends PDO{
     		$data['message'] = "Votre suppression a bien été effectué.";
     	}
     	 
+    	return $data;
+    }
+    
+    //Modifier mes informations personnelles ( admin )
+    public function modif_infosperso_admin($tab){
+    	$requete = 'UPDATE administrateur
+    			SET nom = "'.$tab['nom'].'",
+    			prenom = "'.$tab['prenom'].'",
+    			anNaiss = "'.$tab['anNaiss'].'",
+    			sexe = "'.$tab['sexe'].'",
+    			rue = "'.$tab['rue'].'",
+    			cp = "'.$tab['cp'].'",
+    			ville = "'.$tab['ville'].'",
+    			telephone = "'.$tab['telephone'].'"
+    			WHERE id = "'.$tab['id'].'"';
+    	
+    	$nblignes=$this->connexion -> exec($requete);
+    	
+    	$data = array();
+    	$errors = array();
+    	
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    	
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "Des erreurs sont presentes.";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre mise à jour a bien ete effectue.";
+    	}
+    	
     	return $data;
     }
     
