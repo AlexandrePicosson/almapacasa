@@ -28,134 +28,159 @@ class controleur {
 	//Affiche le formulaire de connexion
 	public function retourne_formulaire_login() {
 		return '
-			<article >
-				<h3>Formulaire de connexion</h3>
-				<form id="login" method="post" class="login">
-					<input type="text" name="id" id="id" placeholder="Identifiant" required/>
-					<input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required/></br>
-					<input type="submit" name="send" class="button" value="Envoi login" />
-				</form>
-				<script>function hd(){ $(\'#modal\').hide();}</script>
-				<script>function home(){ document.location.href="index.php";}</script>
-				<div  id="modal" >
-										<h1>Informations !</h1>
-										<div id="dialog1" ></div>
-										<a class="no" onclick="hd();home();">OK</a>
-				</div>
-			<article >
-	<script>
-	$("#modal").hide();
-	//Initialize the tooltips
-	$("#login :input").tooltipster({
-				         trigger: "custom",
-				         onlyOne: false,
-				         position: "bottom",
-				         multiple:true,
-				         autoClose:false});
-		jQuery.validator.addMethod(
-			  "regex",
-			   function(value, element, regexp) {
-			       if (regexp.constructor != RegExp)
-			          regexp = new RegExp(regexp);
-			       else if (regexp.global)
-			          regexp.lastIndex = 0;
-			          return this.optional(element) || regexp.test(value);
-			   },"erreur champs non valide"
-			);	
-	$("#login").submit(function( e ){
+<article>
+    <script>$(document).ready(function(){$("#maModale1").modal();});</script>
+    <div class="modal fade" id="maModale1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal" onclick="hd1();home();">&times;</button>
+                    <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                </div>
+                <div class="modal-body" style="padding: 40px 50px;">
+                    <form id="login" method="post" class="login">
+                        <div class="form-group">
+                            <label for="username"><span class="glyphicon glyphicon-user"></span> Utilisateur</label>
+                            <input type="text" name="id" id="username" placeholder="Identifiant" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
+                            <input type="password" name="mdp" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="maModale2" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal" onclick="hd1();home();">&times;</button>
+                    <h4>Connexion</h4>
+                    <div id="dialog1"></div>
+                    <button type="submit" class="btn btn-danger btn-default pull-left" onclick="hd2();" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>function hd1(){$("#maModale1").hide();}</script>
+    <script>function hd2(){$("#maModale2").hide();}</script>
+    <script>function home(){document.location.href="index.php";}</script>
+</article>
+
+<script>
+    $("#modal").hide();
+    //Tootipster part
+    $("#login :input").tooltipster({
+        trigger:"custom", 
+        onlyOne:false,
+        position:"bottom",
+        multiple:true,
+        autoClose:false});
+    jQuery.validator.addMethod("regex", function(value, element, regexp) {
+                if (regexp.constructor != RegExp)
+                    regexp = new RegExp(regexp);
+                else if (regexp.global)
+                    regexp.lastIndex = 0;
+                return this.optional(element) || regexp.test(value);
+            },"erreur champs non valide"
+    );
+    
+    $("#login").submit(function(e){
         e.preventDefault();
-		$("#modal").hide();
-						
-		var $url="ajax/valide_connect.php";
-		if($("#login").valid())
-		{		
-			var formData = {
-			"id" 					: $("#id").val(),
-   			"mdp"					: $("#mdp").val()								   		
-			};	
-							
-			var filterDataRequest = $.ajax(
-    		{
-												
-        		type: "POST", 
-        		url: $url,
-        		dataType: "json",
-				encode          : true,
-        		data: formData,	
-
-			});
-				
-			filterDataRequest.done(function(data)
-			{
-				if ( ! data.success)
-				{		
-						var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
-						if (data.errors.message) {
-							$x=data.errors.message;
-							$msg+="<li>";
-							$msg+=$x;
-							$msg+="</li>";
-							}
-						if (data.errors.requete) {
-							$x=data.errors.requete;
-							$msg+="<li>";
-							$msg+=$x;
-							$msg+="</li>";
-							}
-						
-						$msg+="</ul>";
-				}
-				else
-				{
-						$msg="";
-						if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
-				}
-				
-					$("#dialog1").html($msg);$("#modal").show();
-
-				});
-			filterDataRequest.fail(function(jqXHR, textStatus)
-			{
-				
-     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
-    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
-				else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
-				else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
-				else if (textStatus === "timeout"){alert("Time out error.");}
-				else if (textStatus === "abort"){alert("Ajax request aborted.");}
-				else{alert("Uncaught Error.n" + jqXHR.responseText);}
-			});
-		}
-	});
-   
-	$("#login").validate({
-		rules:
-		{
-													
-			"id": {required: true},
-			"mdp": {required: true}
-		},
-		messages:
-		{
-        	"id":
-          	{
-            	required: "Vous devez saisir un identifiant valide"
-          	},
-			"mdp":
-          	{
-            	required: "Vous devez saisir un mot de passe valide"
-          	}
-		},
-		errorPlacement: function (error, element) {
-			$(element).tooltipster("update", $(error).text());
-			$(element).tooltipster("show");
-		},
-		success: function (label, element)
-		{
-			$(element).tooltipster("hide");
-		}
-   	});
-	</script>					
+        $("#modal").hide();
+        var $url = "ajax/valide_connect.php";
+        if($("#login").valid())
+        {
+            var formData = { 
+                "id" : $("#username").val(),
+                "mdp" : $("#password").val()
+            };
+            var filterDataRequest = $.ajax(
+                    {
+                        type: "POST",
+                        url: $url,
+                        dataType: "json",
+                        encode : true,
+                        data: formData
+                    }
+            );
+            filterDataRequest.done(
+                    function(data){
+                        if(! data.success)
+                        {
+                            var $msg="Erreur : </br><ul style=&#34;list-style-type : decimal; padding:0 5%;&#34;>";
+                            if(data.errors.message) {
+                                $x=data.errors.message;
+                                $msg+="<li>";
+                                $msg+=$x;
+                                $msg+="</li>";
+                            }
+                            if(data.errors.requete)
+                            {
+                                $x=data.errors.requete;
+                                $msg+="<li>";
+                                $msg+=$x;
+                                $msg+="</li>";
+                            }
+                            $msg+="</ul>";
+                            $("#dialog1").html($msg);
+                        	$("#maModale2").modal({backdrop:true});
+                        }
+                        else
+                        {
+                            home();
+                        }
+                        
+                    }
+            );
+            filterDataRequest.fail(function(jqXHR, textStatus)
+            {
+                if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+                else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+                else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+                else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+                else if (textStatus === "timeout"){alert("Time out error.");}
+                else if (textStatus === "abort"){alert("Ajax request aborted.");}
+                else{alert("Uncaught Error.n" + jqXHR.responseText);}
+            });
+            
+        }
+    });
+    
+    $("#login").validate({
+        rules :
+        {
+            "username": {required: true},
+            "password": {required: true}
+        },
+        messages:
+        {
+            "username":
+            {
+                required : "Vous devez saisir un identifiant"
+            },
+            "password":
+            {
+                required : "Vous devez saisir un mot de passe"
+            }
+        },
+        errorPlacement: function (error, element) {
+            $(element).tooltipster("update", $(error).text());
+            $(element).tooltipster("show");
+        },
+        success: function (label, element)
+        {
+            $(element).tooltipster("hide");
+        }
+    });
+    
+</script>
 		
 		';
 	
