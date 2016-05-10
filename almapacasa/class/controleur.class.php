@@ -475,12 +475,27 @@ class controleur {
 	public function mentionsLegales(){
 		return '
 				<br>
+				<h1>Informations légales de la société </h1>
 					Société ALMAPACASA - Groupe de travail en BTS Services Informatiques aux Organisations<br>
 					Propriétaires : PICOSSON Alexandre - GIRAUDEAU Samantha - HERBERT Calvin - MALMEJEAN Paulin - MOREAU Maxime<br>
 					Adresse : 115 Boulevard du Massacre, 44100 Nantes, France<br>
 					Adresse de contact : almapacasa@yopmail.com<br>
-					Hébergement du site : <br>
-					<br><br><br><br><br><br><br>CNNNNNNNIIIIIIIILLLLLLLLLLLLL
+					Hébergement du site : OVH - <i>http://www.almapacasa.laboiteduweb.fr</i><br>
+					<br><br><br><br><br><br>
+				
+					
+					<h1>Informatique et libertés</h1>
+					Ce service hospitalier dispose d’un système informatique destiné à faciliter la gestion
+				des dossiers des patients et à réaliser, le cas échéant, des travaux statistiques à usage du service.<br>
+					Les informations recueillies lors de votre consultation ou de votre hospitalisation, feront l’objet,
+				sauf opposition justifiée de votre part, d’un enregistrement informatique. Ces informations sont 
+				réservées à l’équipe médicale qui vous suit ainsi que pour les données administratives, au service
+				de facturation.<br>
+				Conformément aux dispositions de la loi Informatique et Libertés*, vous pouvez obtenir
+				communication des données vous concernant en vous adressant au responsable de cet établissement
+				ou (indiquer le service concerné ou la personne désignée à cet effet).<br>
+				Tout médecin désigné par vous peut également prendre connaissance de l’ensemble de votre dossier médical.<br>
+				*Loi n°78-17 du 6 janvier 1978 modifiée en 2004 relative à l’informatique, aux fichiers et aux libertés<br>
 				';
 	}
 	
