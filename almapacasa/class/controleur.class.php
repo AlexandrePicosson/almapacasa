@@ -1828,6 +1828,36 @@ class controleur {
 		return $return;
 	}
 	
+	//Liste déroulante des patients pour RDV
+	public function formPatientRDV(){
+		$tab = $this->mypdo->modifPatientRecupDB();
+		$return = '<select name="idPatient" id="idPatient">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>
+					';
+		}
+		return $return;
+	}
+	
+	//Liste déroulante des infirmieres pour RDV
+	public function formInfirmiereRDV(){
+		$tab = $this->mypdo->modifInfirmiereRecupDB();
+		$return = '<select name="idInfirmiere" id="idInfirmiere">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>
+					';
+		}
+		return $return;
+	}
+	
 	//Ajout/modif/suppression d'un rendez-vous
 	public function retourne_formulaire_RDV($type, $id = ''){
 		$idPatient = '';
@@ -1873,10 +1903,19 @@ class controleur {
 		
 		$form = ' <form class="formulaireRDV" id="formulaireRDV" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
 		
+		if($type == 'ajout')
+		{
+			$form = $form.'<label>Identifiant du patient : </label>'.$this->formPatientRDV().'<br>
+					<label>Identifiant de l\'infirmiere : </label>'.$this->formInfirmiereRDV().'</br>';
+		}
+		elseif($type == 'suppr' || $type == 'modif')
+		{
+			$form = $form.'<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" value="'.$idPatient.'"/><br>
+					<label>Identifiant de l\'infirmiere : </label><input type="text" name="idInfirmiere" id="idInfirmiere" value="'.$idInfirmiere.'"/></br>';
+		}	
 		$form = $form.'
 					</br><h4><u>Rendez-vous</u></h4>
-					<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" placeholder="id patient" value="'.$idPatient.'" required /><br>
-					<label>Identifiant de l\'infirmiere : </label><input type="text" name="idInfirmiere" id="idInfirmiere" placeholder="id infirmiere" value="'.$idInfirmiere.'" required /></br>
+					
 					<label>Date de la visite :</label><input type="date" name="dateVisite" id="dateVisite" value="'.$dateVisite.'" required /></br>
 					<label>Heure de début :</label><input type="time" name="heureDeb" id="heureDeb"  value="'.$heureDeb.'" required /></br>
 					<label>Heure de fin :</label><input type="time" name="heureFin" id="heureFin"  value="'.$heureFin.'" required /></br>
