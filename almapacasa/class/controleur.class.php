@@ -225,8 +225,10 @@ class controleur {
 	//Affiche l'équipe de Kaliémie
 	public function returnPageEquipe(){
 		return '
-				<div class="equipe_apercu">
-					<div class="content_equipe">
+				
+				<div class="space"></div>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar2.jpg">
 							<div class="lib">
@@ -236,6 +238,10 @@ class controleur {
 								</p>
 							</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar1.jpg">
 								<div class="lib">
@@ -245,6 +251,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar3.jpg">
 								<div class="lib">
@@ -254,6 +264,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar4.jpg">
 								<div class="lib">
@@ -263,6 +277,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar5.jpg">
 								<div class="lib">
@@ -273,7 +291,9 @@ class controleur {
 								</div>
 						</div>
 					</div>
-					<div class="content_equipe">
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar6.jpg">
 								<div class="lib">
@@ -283,6 +303,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar7.jpg">
 								<div class="lib">
@@ -292,6 +316,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">	
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar8.jpg">
 								<div class="lib">
@@ -301,17 +329,8 @@ class controleur {
 									</p>
 								</div>
 						</div>
-						<div class="apercu_equipe">
-							<img src="../almapacasa/images/avatar9.jpg">
-								<div class="lib">
-									<p>
-										Simone Coulomb<br>
-										Infirmière
-									</p>
-								</div>
-						</div>
 					</div>
-				</div>
+				</center>
 				';
 	}
 	

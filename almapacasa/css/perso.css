@@ -9,6 +9,9 @@
 		height:200px;
 	}
 
+	.space{
+		padding-top:40px;
+	}
 /********** HEADER ***********/
 	header .row{
 		min-height:initial;
@@ -109,27 +112,6 @@
 		text-decoration:none;
 	}
 
-
-/********** EQUIPE ***********/
-.apercu_equipe .lib p{
-	width: 150px;
-	text-align:center;
-}
-
-.content_equipe{
-	display:inline-flex;
-	width:100%
-}
-
-.apercu_equipe{
-    margin-right: 4%;
-    margin-left: 4%;
-    margin-bottom: 3%;
-}
-
-.equipe_apercu{
-	margin-top:100px;
-}
 
 /********** ASPECT DU MENU ***********/
 	.optionAdmin{
