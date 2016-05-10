@@ -28,134 +28,159 @@ class controleur {
 	//Affiche le formulaire de connexion
 	public function retourne_formulaire_login() {
 		return '
-			<article >
-				<h3>Formulaire de connexion</h3>
-				<form id="login" method="post" class="login">
-					<input type="text" name="id" id="id" placeholder="Identifiant" required/>
-					<input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required/></br>
-					<input type="submit" name="send" class="button" value="Envoi login" />
-				</form>
-				<script>function hd(){ $(\'#modal\').hide();}</script>
-				<script>function home(){ document.location.href="index.php";}</script>
-				<div  id="modal" >
-										<h1>Informations !</h1>
-										<div id="dialog1" ></div>
-										<a class="no" onclick="hd();home();">OK</a>
-				</div>
-			<article >
-	<script>
-	$("#modal").hide();
-	//Initialize the tooltips
-	$("#login :input").tooltipster({
-				         trigger: "custom",
-				         onlyOne: false,
-				         position: "bottom",
-				         multiple:true,
-				         autoClose:false});
-		jQuery.validator.addMethod(
-			  "regex",
-			   function(value, element, regexp) {
-			       if (regexp.constructor != RegExp)
-			          regexp = new RegExp(regexp);
-			       else if (regexp.global)
-			          regexp.lastIndex = 0;
-			          return this.optional(element) || regexp.test(value);
-			   },"erreur champs non valide"
-			);	
-	$("#login").submit(function( e ){
+<article>
+    <script>$(document).ready(function(){$("#maModale1").modal();});</script>
+    <div class="modal fade" id="maModale1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal" onclick="hd1();home();">&times;</button>
+                    <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                </div>
+                <div class="modal-body" style="padding: 40px 50px;">
+                    <form id="login" method="post" class="login">
+                        <div class="form-group">
+                            <label for="username"><span class="glyphicon glyphicon-user"></span> Utilisateur</label>
+                            <input type="text" name="id" id="username" placeholder="Identifiant" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
+                            <input type="password" name="mdp" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="maModale2" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal" onclick="hd1();home();">&times;</button>
+                    <h4>Connexion</h4>
+                    <div id="dialog1"></div>
+                    <button type="submit" class="btn btn-danger btn-default pull-left" onclick="hd2();" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>function hd1(){$("#maModale1").hide();}</script>
+    <script>function hd2(){$("#maModale2").hide();}</script>
+    <script>function home(){document.location.href="index.php";}</script>
+</article>
+
+<script>
+    $("#modal").hide();
+    //Tootipster part
+    $("#login :input").tooltipster({
+        trigger:"custom", 
+        onlyOne:false,
+        position:"bottom",
+        multiple:true,
+        autoClose:false});
+    jQuery.validator.addMethod("regex", function(value, element, regexp) {
+                if (regexp.constructor != RegExp)
+                    regexp = new RegExp(regexp);
+                else if (regexp.global)
+                    regexp.lastIndex = 0;
+                return this.optional(element) || regexp.test(value);
+            },"erreur champs non valide"
+    );
+    
+    $("#login").submit(function(e){
         e.preventDefault();
-		$("#modal").hide();
-						
-		var $url="ajax/valide_connect.php";
-		if($("#login").valid())
-		{		
-			var formData = {
-			"id" 					: $("#id").val(),
-   			"mdp"					: $("#mdp").val()								   		
-			};	
-							
-			var filterDataRequest = $.ajax(
-    		{
-												
-        		type: "POST", 
-        		url: $url,
-        		dataType: "json",
-				encode          : true,
-        		data: formData,	
-
-			});
-				
-			filterDataRequest.done(function(data)
-			{
-				if ( ! data.success)
-				{		
-						var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
-						if (data.errors.message) {
-							$x=data.errors.message;
-							$msg+="<li>";
-							$msg+=$x;
-							$msg+="</li>";
-							}
-						if (data.errors.requete) {
-							$x=data.errors.requete;
-							$msg+="<li>";
-							$msg+=$x;
-							$msg+="</li>";
-							}
-						
-						$msg+="</ul>";
-				}
-				else
-				{
-						$msg="";
-						if(data.message){$msg+="</br>";$x=data.message;$msg+=$x;}
-				}
-				
-					$("#dialog1").html($msg);$("#modal").show();
-
-				});
-			filterDataRequest.fail(function(jqXHR, textStatus)
-			{
-				
-     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
-    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
-				else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
-				else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
-				else if (textStatus === "timeout"){alert("Time out error.");}
-				else if (textStatus === "abort"){alert("Ajax request aborted.");}
-				else{alert("Uncaught Error.n" + jqXHR.responseText);}
-			});
-		}
-	});
-   
-	$("#login").validate({
-		rules:
-		{
-													
-			"id": {required: true},
-			"mdp": {required: true}
-		},
-		messages:
-		{
-        	"id":
-          	{
-            	required: "Vous devez saisir un identifiant valide"
-          	},
-			"mdp":
-          	{
-            	required: "Vous devez saisir un mot de passe valide"
-          	}
-		},
-		errorPlacement: function (error, element) {
-			$(element).tooltipster("update", $(error).text());
-			$(element).tooltipster("show");
-		},
-		success: function (label, element)
-		{
-			$(element).tooltipster("hide");
-		}
-   	});
-	</script>					
+        $("#modal").hide();
+        var $url = "ajax/valide_connect.php";
+        if($("#login").valid())
+        {
+            var formData = { 
+                "id" : $("#username").val(),
+                "mdp" : $("#password").val()
+            };
+            var filterDataRequest = $.ajax(
+                    {
+                        type: "POST",
+                        url: $url,
+                        dataType: "json",
+                        encode : true,
+                        data: formData
+                    }
+            );
+            filterDataRequest.done(
+                    function(data){
+                        if(! data.success)
+                        {
+                            var $msg="Erreur : </br><ul style=&#34;list-style-type : decimal; padding:0 5%;&#34;>";
+                            if(data.errors.message) {
+                                $x=data.errors.message;
+                                $msg+="<li>";
+                                $msg+=$x;
+                                $msg+="</li>";
+                            }
+                            if(data.errors.requete)
+                            {
+                                $x=data.errors.requete;
+                                $msg+="<li>";
+                                $msg+=$x;
+                                $msg+="</li>";
+                            }
+                            $msg+="</ul>";
+                            $("#dialog1").html($msg);
+                        	$("#maModale2").modal({backdrop:true});
+                        }
+                        else
+                        {
+                            home();
+                        }
+                        
+                    }
+            );
+            filterDataRequest.fail(function(jqXHR, textStatus)
+            {
+                if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+                else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+                else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+                else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+                else if (textStatus === "timeout"){alert("Time out error.");}
+                else if (textStatus === "abort"){alert("Ajax request aborted.");}
+                else{alert("Uncaught Error.n" + jqXHR.responseText);}
+            });
+            
+        }
+    });
+    
+    $("#login").validate({
+        rules :
+        {
+            "username": {required: true},
+            "password": {required: true}
+        },
+        messages:
+        {
+            "username":
+            {
+                required : "Vous devez saisir un identifiant"
+            },
+            "password":
+            {
+                required : "Vous devez saisir un mot de passe"
+            }
+        },
+        errorPlacement: function (error, element) {
+            $(element).tooltipster("update", $(error).text());
+            $(element).tooltipster("show");
+        },
+        success: function (label, element)
+        {
+            $(element).tooltipster("hide");
+        }
+    });
+    
+</script>
 		
 		';
 	
@@ -200,8 +225,10 @@ class controleur {
 	//Affiche l'équipe de Kaliémie
 	public function returnPageEquipe(){
 		return '
-				<div class="equipe_apercu">
-					<div class="content_equipe">
+				
+				<div class="space"></div>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar2.jpg">
 							<div class="lib">
@@ -211,6 +238,10 @@ class controleur {
 								</p>
 							</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar1.jpg">
 								<div class="lib">
@@ -220,6 +251,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar3.jpg">
 								<div class="lib">
@@ -229,6 +264,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar4.jpg">
 								<div class="lib">
@@ -238,6 +277,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar5.jpg">
 								<div class="lib">
@@ -248,7 +291,9 @@ class controleur {
 								</div>
 						</div>
 					</div>
-					<div class="content_equipe">
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar6.jpg">
 								<div class="lib">
@@ -258,6 +303,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar7.jpg">
 								<div class="lib">
@@ -267,6 +316,10 @@ class controleur {
 									</p>
 								</div>
 						</div>
+					</div>
+				</center>
+				<center>
+					<div class="col-md-3">	
 						<div class="apercu_equipe">
 							<img src="../almapacasa/images/avatar8.jpg">
 								<div class="lib">
@@ -276,17 +329,8 @@ class controleur {
 									</p>
 								</div>
 						</div>
-						<div class="apercu_equipe">
-							<img src="../almapacasa/images/avatar9.jpg">
-								<div class="lib">
-									<p>
-										Simone Coulomb<br>
-										Infirmière
-									</p>
-								</div>
-						</div>
 					</div>
-				</div>
+				</center>
 				';
 	}
 	
@@ -309,7 +353,7 @@ class controleur {
 								<a href="gestPersonneC.php">Gestion des personnes de confiance</a>
 							</li>
 							<li>
-								<a href="#">Validation des commentaires</a>
+								<a href="upCommentaire.php">Validation des commentaires</a>
 							</li>
 							<li>
 								<a href="upTemoignage.php">Validation des témoignages</a>
@@ -341,6 +385,23 @@ class controleur {
 	public function selectTem(){
 		$tab = $this->mypdo->selectTem();
 		$return = '<form id="selectTemoignage" method ="post"><label>Veuillez choisir le témoignage à ajouter :</label><br><select name="id" id="id">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['id'].'</option>';
+			}
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
+		}
+		return $return;
+	}
+	
+	//SELECT des commentaires non validées
+	public function selectCom(){
+		$tab = $this->mypdo->selectCom();
+		$return = '<form id="selectCommentaire" method ="post"><label>Veuillez choisir le commentaire à valider :</label><br><select name="id" id="id">';
 		if($tab && $tab != null)
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
@@ -413,23 +474,16 @@ class controleur {
 		return '
 				<div class="top-acc">
     				<div class="col-xs-2">
-    					<h1>
-							<img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/>
-							
-						</h1>
+    					<img class="img-responsive" id="logo" src="./images/logo.png" alt="logo"/>
 					</div>
-					<div class="col-xs-4">
-						<h1>
-							Kaliémie
-						</h1>
-					</div>
-    				<div class="col-xs-6">
-						<p>
+					
+    				<div class="col-xs-10">
+						<h3>
 							Bienvenue sur le site de Kaliémie.<br>
 							Ici sont présentés les actualités et les témoignages des patients sur leurs rendez-vous et 
 							la qualité de ceux-ci.<br>
 							Sur le site vous sera aussi présenté toutes les personnes faisant parties de notre équipe.
-						</p>
+						</h3>
  					</div>
 				</div>
 				';
@@ -1811,6 +1865,36 @@ class controleur {
 		return $return;
 	}
 	
+	//Liste déroulante des patients pour RDV
+	public function formPatientRDV(){
+		$tab = $this->mypdo->modifPatientRecupDB();
+		$return = '<select name="idPatient" id="idPatient">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>
+					';
+		}
+		return $return;
+	}
+	
+	//Liste déroulante des infirmieres pour RDV
+	public function formInfirmiereRDV(){
+		$tab = $this->mypdo->modifInfirmiereRecupDB();
+		$return = '<select name="idInfirmiere" id="idInfirmiere">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['nom']." ".$var['prenom'].'</option>';
+			}
+			$return = $return.'</select>
+					';
+		}
+		return $return;
+	}
+	
 	//Ajout/modif/suppression d'un rendez-vous
 	public function retourne_formulaire_RDV($type, $id = ''){
 		$idPatient = '';
@@ -1856,10 +1940,19 @@ class controleur {
 		
 		$form = ' <form class="formulaireRDV" id="formulaireRDV" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
 		
+		if($type == 'ajout')
+		{
+			$form = $form.'<label>Identifiant du patient : </label>'.$this->formPatientRDV().'<br>
+					<label>Identifiant de l\'infirmiere : </label>'.$this->formInfirmiereRDV().'</br>';
+		}
+		elseif($type == 'suppr' || $type == 'modif')
+		{
+			$form = $form.'<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" value="'.$idPatient.'"/><br>
+					<label>Identifiant de l\'infirmiere : </label><input type="text" name="idInfirmiere" id="idInfirmiere" value="'.$idInfirmiere.'"/></br>';
+		}	
 		$form = $form.'
 					</br><h4><u>Rendez-vous</u></h4>
-					<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" placeholder="id patient" value="'.$idPatient.'" required /><br>
-					<label>Identifiant de l\'infirmiere : </label><input type="text" name="idInfirmiere" id="idInfirmiere" placeholder="id infirmiere" value="'.$idInfirmiere.'" required /></br>
+					
 					<label>Date de la visite :</label><input type="date" name="dateVisite" id="dateVisite" value="'.$dateVisite.'" required /></br>
 					<label>Heure de début :</label><input type="time" name="heureDeb" id="heureDeb"  value="'.$heureDeb.'" required /></br>
 					<label>Heure de fin :</label><input type="time" name="heureFin" id="heureFin"  value="'.$heureFin.'" required /></br>
@@ -1868,7 +1961,7 @@ class controleur {
 					<script>function hd(){ $(\'#modal\').hide();}</script>
 					<script>function reload(){window.location.reload();}</script>
 					<div id="modal">
-							<form id="formModale">
+							<form id="modal">
 							<h1>Informations !</h1>
 							<div id="dialog"></div>
 							<input type="text" name="id" value="" style="display:none;"/>
@@ -2170,7 +2263,180 @@ class controleur {
 						';
 		return $form;
 	
-	}
-
 	}}
+	
+	//Validation d'un commentaire
+	public function retourne_formulaire_commentaire($id = ''){
+		$idVisite = '';
+		$idInfirmiere = '';
+		$idPatient = '';
+		$idAdmin = '';
+		$libelle = '';
+		$titreForm = 'Validation d\'un commentaire';
+		$lblBouton = 'Ajouter';
+	
+		$result = $this->mypdo->trouveCommentaire($id);
+		
+		if($result != null){
+			$id = $result['id'];
+			$idVisite = $result['idVisite'];
+			$idInfirmiere = $result['idInfirmiere'];
+			$idPatient = $result['idPatient'];
+			$idAdmin = $result['idAdmin'];
+			$libelle = $result['libelle'];
+	
+				
+			$form = ' <form class="formulaireCom" id="formulaireCom" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+			$form = $form.'
+					</br><h4><u>Validation du commentaire</u></h4>
+					<label>Identifiant de la visite : </label><input type="text" name="idVisite" id="idVisite" placeholder="id Visite" value="'.$idVisite.'" required /><br>
+					<label>Identifiant de l\'infirmiere : </label><input type="text" name="idInfirmiere" id="idInfirmiere" placeholder="id Infirmiere patient" value="'.$idInfirmiere.'" required /><br>
+					<label>Identifiant du patient : </label><input type="text" name="idPatient" id="idPatient" placeholder="id patient" value="'.$idPatient.'" required /><br>
+					<label>Identifiant de l\'administrateur : </label><input type="text" name="idAdmin" id="idAdmin" placeholder="id admin" style="background-color:darkgray;" value="1" required /></br>
+					<label>Libelle :</label><textarea name="libelle" id="libelle" rows="10" cols="22" required />'.$libelle.'</textarea></br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formulaireCom :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+	
+						$(\'#formulaireCom\').submit(function(e){
+	
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_com.php";
+				
+	
+							if($("#formulaireCom").valid())
+							{
+								var formData = {
+									"idVisite" : $("#idVisite").val(),
+									"idInfirmiere" : $("#idInfirmiere").val(),
+									"idPatient" : $("#idPatient").val(),
+									"idAdmin" : $("#idAdmin").val(),
+									"libelle" : $("#libelle").val()
+								};
+	
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+	
+								filterDataRequest.done(function(data)
+								{
+	
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message){
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formulaireCom").validate({
+								rules:
+								{
+									"idVisite" :{required: true},
+									"idInfirmiere" :{required: true},
+									"idPatient" :{required: true},
+									"idAdmin" : {required: true},
+									"libelle" : {required: true}
+								},
+				
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+	
+						';
+			return $form;
+	
+		}
+	}
+	}
 ?>

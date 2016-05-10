@@ -11,7 +11,7 @@ $data['success'] = false;
 $tab = array();
 $mypdo = new mypdo();
 
-$tab['id'] = $_SESSION['id'];
+$tab['id'] = $_SESSION['idRDV'];
 $tab['idPatient'] = $_POST['idPatient'];
 $tab['idInfirmiere'] = $_POST['idInfirmiere'];
 $tab['dateVisite'] = $_POST['dateVisite'];

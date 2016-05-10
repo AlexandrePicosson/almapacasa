@@ -165,40 +165,6 @@ class page_base {
 
 	}
 
-		/****************************************** remplissage affichage colonne ***************************/
-	public function rempli_right_sidebar() {
-		return'
-
-			
-				<article>
-					<h3>Ptits-Bouts-De-Choux</h3>
-										<p>12 rue des gones</br>
-										49000 ANGERS</br>
-										Tel : 02.41.27.11.71</br>
-										Mail : pbdc49@gmai.com</p>
-										
-											<a  href="contact.php" class="button">Contact</a>
-                </article>
-				';
-							
-	}
-	
-	/****************************************** Affichage du pied de la page ***************************/
-	private function afficher_footer() {
-		echo '
-		<!-- Footer -->
-			<footer>
-				<div class="infos">
-					. ALMAPACASA©
-				</div>
-				<div class="mentions">
-					<a href="mentions_legales">Mentions légales</a>
-				</div>
-            </footer>
-		';
-	}
-
-
 	
 	/********************************************* Fonction permettant l'affichage de la page ****************/
 

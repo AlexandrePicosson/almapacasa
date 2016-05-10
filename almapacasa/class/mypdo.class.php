@@ -96,7 +96,8 @@ class mypdo extends PDO{
     			return ($reponse);
     		}
     	}
-    	return null;
+
+		return null;
     }
 
 ///////////// ANDROID - IMPORT - EXPORT ////////////////
@@ -199,9 +200,73 @@ class mypdo extends PDO{
     	}
     	return null;
     }
-
+///////////// COMMENTAIRE ////////////////
+    //Liste des commentaires
+    public function selectCom(){
+    	$requete = 'select id from commentaire WHERE idAdmin IS NULL;';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+    }
+    
+    //Trouve les commentaires
+    public function trouveCommentaire($id)
+    {
+    	$requete = 'SELECT * from commentaire where id ='.$id.';';
+    		
+    	$result = $this->connexion->query($requete);
+    		
+    	if($result)
+    	{
+    		if($result->rowCount() == 1)
+    		{
+    			$retour = $result->fetch(PDO::FETCH_ASSOC);
+    			return $retour;
+    		}
+    	}
+    	return null;
+    }
+    
+    //Valide le commentaire
+    public function valide_com($tab){
+    	$requete = 'UPDATE commentaire
+    			SET idPatient = "'.$tab['idPatient'].'",
+    			idVisite = "'.$tab['idVisite'].'",
+    			idInfirmiere = "'.$tab['idInfirmiere'].'",
+    			idAdmin = "'.$tab['idAdmin'].'",
+    			libelle = "'.$tab['libelle'].'"
+    			WHERE id = "'.$tab['id'].'";';
+    		
+    	$nblignes=$this->connexion -> exec($requete);
+    
+    	$data = array();
+    	$errors = array();
+    
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+    	}
+    
+    	if (count($errors) > 0) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    		$data['message'] = "des erreurs sont présentes";
+    	} else {
+    		$data['success'] = true;
+    		$data['message'] = "Votre ajout a bien été effectué.";
+    	}
+    	return $data;
+    }
+    
   
-///////////// TEMOIGNAGE ////////////////    
+///////////// TEMOIGNAGE ////////////////  
+	//Liste des témoignages non validés
 	public function afficheTemoignageDB(){
 		$requete = 'select * from temoignage where idAdmin IS NOT NULL;';
 		$reponse = $this->connexion->query($requete);
@@ -229,7 +294,7 @@ class mypdo extends PDO{
 		return null;
 	}
 	
-	//Trouve les patients
+	//Trouve les temoignages
 	public function trouveTemoignage($id)
 	{
 		$requete = 'SELECT * from temoignage where id ='.$id.';';

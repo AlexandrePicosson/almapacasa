@@ -30,7 +30,7 @@ if(isset($resultat))
 }
 else
 {
-	$errors['message']="erreur";
+	$errors['message']="Mauvais Identifiants";
 }
 
 if( ! empty($errors))
