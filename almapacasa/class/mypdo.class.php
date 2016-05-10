@@ -312,6 +312,7 @@ class mypdo extends PDO{
 		return null;
 	}
 	
+	//Valide un temoignage (admin)
 	public function valide_tem($tab){
 		$requete = 'UPDATE temoignage
     			SET idPatient = "'.$tab['idPatient'].'",
@@ -338,6 +339,31 @@ class mypdo extends PDO{
     		$data['message'] = "Votre ajout a bien été effectué.";
     	}
     		return $data;
+	}
+	
+	//Ajoute un nouveau témoignage (patient)
+	public function valide_ajout_tem($tab){
+		$requete = 'INSERT INTO `temoignage` (`id`, `idPatient` , `idAdmin`, `libelle`) VALUES (NULL, "'.$tab['id'].'",NULL,"'.$tab['libelleTem'].'");';
+		
+		$nblignes=$this->connexion -> exec($requete);
+		 
+		$data = array();
+		$errors = array();
+		 
+		if ($nblignes !=1)
+		{
+			$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+		}
+		 
+		if (count($errors) > 0) {
+			$data['success'] = false;
+			$data['errors']  = $errors;
+			$data['message'] = "des erreurs sont présentes";
+		} else {
+			$data['success'] = true;
+			$data['message'] = "Votre ajout a bien été effectué.";
+		}
+		return $data;
 	}
 	
     

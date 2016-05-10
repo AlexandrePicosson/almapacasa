@@ -2453,5 +2453,154 @@ class controleur {
 	
 		}
 	}
-	}
+	//Validation d'un temoignage
+	public function retourne_formulaire_ajoutTemoignage($id = ''){
+		$libelleTem = '';
+		$libelle = '';
+		$titreForm = 'Ajout d\'un témoignage';
+		$lblBouton = 'Ajouter';
+
+	
+			$form = ' <form class="formulaireAddTemoignage" id="formulaireAddTemoignage" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+	
+			$form = $form.'
+					</br><h4><u>Ajout d\'un témoignage</u></h4>
+					<label>Votre témoignage :</label><textarea name="libelleTem" id="libelleTem"  required />'.$libelleTem.'</textarea></br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="formModale">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+							
+						$(\'#modal\').hide();
+						$("#formulaireAddTemoignage :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+						
+						$(\'#formulaireAddTemoignage\').submit(function(e){
+	
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_nouveau_tem.php";
+	
+	
+							if($("#formulaireAddTemoignage").valid())
+							{
+								var formData = {
+									"libelleTem" : $("#libelleTem").val()
+								};
+	
+	
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+	
+								filterDataRequest.done(function(data)
+								{
+	
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message){
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+	
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
+									}
+	
+										$("#dialog").html($msg);$("#modal").show();
+								});
+	
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+	
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formulaireAddTemoignage").validate({
+								rules:
+								{
+									"libelleTem" : {required: true}
+								},
+	
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+	
+						';
+			return $form;
+	
+		}
+}
+
 ?>
