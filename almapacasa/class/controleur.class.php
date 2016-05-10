@@ -415,6 +415,24 @@ class controleur {
 		return $return;
 	}
 	
+	//Menu des options de l'infirmière
+	public function optionInfirmiere(){
+		return '
+					<div class="optionAdmin">
+						<ul>
+							<li>
+								<a href="modifsInfosInfirm.php">Modifier mes informations</a>
+							</li>
+							<li>
+								<a href="#">Planning des visites</a>
+							</li>
+							<li>
+								<a href="#">Ajouter un commentaire</a>
+							</li>
+					</div>
+				';
+	}
+	
 	//Menu des options de la personne de confiance
 	public function optionPersonneC(){
 		return '
