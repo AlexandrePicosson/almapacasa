@@ -264,7 +264,147 @@ class mypdo extends PDO{
     	return $data;
     }
     
-  
+///////////// SOIN //////////////// 
+	//Affiche la liste des soins
+	public function trouveSoinRDV($tab){
+		$requete = 'SELECT * from comprendre;';
+		 
+		$result = $this->connexion->query($requete);
+		 
+		if($result)
+		{
+			if($result->rowCount() == 1)
+			{
+				$retour = $result->fetch(PDO::FETCH_ASSOC);
+				return $retour;
+			}
+		}
+		return null;
+	}
+	
+	//Insertion d'un soin pour une visite
+	public function insert_soinRDV($tab){
+		$requete = 'INSERT INTO `comprendre` (`idVisite`, `idSoin`) VALUES ("'.$tab['idVisite'].'", "'.$tab['idSoin'].'");';
+		 
+		$nblignes=$this->connexion -> exec($requete);
+		
+		$data = array();
+		$errors = array();
+		
+		if ($nblignes !=1)
+		{
+			$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+		}
+		
+		if (count($errors) > 0) {
+			$data['success'] = false;
+			$data['errors']  = $errors;
+			$data['message'] = "des erreurs sont présentes";
+		} else {
+			$data['success'] = true;
+			$data['message'] = "Votre ajout a bien été effectué.";
+		}
+		return $data;
+	}
+	
+	//Modification d'un soin pour une visite
+	public function update_soinRDV($tab){
+		$requete = 'UPDATE comprendre
+    			SET idVisite = "'.$tab['idVisite'].'",
+    			idSoin = "'.$tab['idSoin'].'"
+    			WHERE idVisite = "'.$tab['idVisiteSoin'].'";';
+			
+		$nblignes=$this->connexion -> exec($requete);
+		
+		$data = array();
+		$errors = array();
+		
+		if ($nblignes !=1)
+		{
+			$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+		}
+		
+		if (count($errors) > 0) {
+			$data['success'] = false;
+			$data['errors']  = $errors;
+			$data['message'] = "des erreurs sont présentes";
+		} else {
+			$data['success'] = true;
+			$data['message'] = "Votre ajout a bien été effectué.";
+		}
+		return $data;
+	}
+	
+	//Suppression d'un soin à une visite
+	public function suppr_soinRDV($tab){
+		$requete = 'DELETE FROM comprendre
+				WHERE idVisite = '.$tab['idVisiteSoin'].'';
+		
+		$nblignes=$this->connexion -> exec($requete);
+		
+		$data = array();
+		$errors = array();
+		 
+		if ($nblignes !=1)
+		{
+			$errors['requete']='Pas de modifications d\'information :'.$requete.' nblignes:'.$nblignes;
+		}
+		
+		if (count($errors) > 0) {
+			$data['success'] = false;
+			$data['errors']  = $errors;
+			$data['message'] = "Des erreurs sont présentes.";
+		} else {
+			$data['success'] = true;
+			$data['message'] = "Votre suppression a bien été effectué.";
+		}
+		
+		return $data;
+	}
+	
+	//Affiche la liste des id des visites
+	public function recupListeVisite(){
+		$requete = 'SELECT id from visite;';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+	}
+	
+	//Affiche la liste des soins
+	public function recupListeSoin(){
+		$requete = 'SELECT * from soin;';
+    	$reponse = $this->connexion->query($requete);// Requête SQL
+    	if($reponse)
+    	{
+    		if($reponse->rowCount() >= 1)
+    		{
+    			return ($reponse);
+    		}
+    	}
+    	return null;
+	}
+	
+	//Affiche les soins affectés
+	public function selectsoinRDV(){
+		$requete = 'select idVisite from comprendre;';
+		$reponse = $this->connexion->query($requete);// Requête SQL
+		if($reponse)
+		{
+			if($reponse->rowCount() >= 1)
+			{
+				return ($reponse);
+			}
+		}
+		return null;
+	}
+    
+    
 ///////////// TEMOIGNAGE ////////////////  
 	//Liste des témoignages non validés
 	public function afficheTemoignageDB(){

@@ -1850,13 +1850,13 @@ class controleur {
 							</li>
 							<br><br>
 							<li>
-								<a href="#">Affecter un soin à un rendez-vous</a>
+								<a href="ajoutSoinRDVA.php">Affecter un soin à un rendez-vous</a>
 							</li>
 							<li>
-								<a href="#">Modifier un soin lors d\'un rendez-vous</a>
+								<a href="modifSoinRDVA.php">Modifier un soin lors d\'un rendez-vous</a>
 							</li>
 							<li>
-								<a href="#">Supprimer un soin lors d\'un rendez-vous</a>
+								<a href="deleteSoinRDVA.php">Supprimer un soin lors d\'un rendez-vous</a>
 							</li>
 					</div>
 				</div>';
@@ -1871,6 +1871,23 @@ class controleur {
 		{
 			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
 				$return = $return.'<option value = "'.$var['id'].'">'.$var['id'].'</option>';
+			}
+			$return = $return.'</select>
+					<input id="submit" type="submit" name="send" class="button" value="Valider" />
+					</form>
+					';
+		}
+		return $return;
+	}
+	
+	//Affiche la liste des id des visites de "comprendre"
+	public function formsoin2RDV(){
+		$tab = $this->mypdo->selectsoinRDV();
+		$return = '<form id="selectRDV" method ="post"><label>Veuillez choisir l\'id de la visite à modifier : </label><br><select name="id" id="id">';
+		if($tab && $tab != null)
+		{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['idVisite'].'">'.$var['idVisite'].'</option>';
 			}
 			$return = $return.'</select>
 					<input id="submit" type="submit" name="send" class="button" value="Valider" />
@@ -2453,6 +2470,7 @@ class controleur {
 	
 		}
 	}
+	
 	//Validation d'un temoignage
 	public function retourne_formulaire_ajoutTemoignage($id = ''){
 		$libelleTem = '';
@@ -2600,6 +2618,223 @@ class controleur {
 						';
 			return $form;
 	
+		}
+		
+		//Affiche la liste des visites
+		public function formVisiteSoinRDV(){
+			$tab = $this->mypdo->recupListeVisite();
+			$return = '<select name="idVisite" id="idVisite">';
+			if($tab && $tab != null)
+			{
+			while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+				$return = $return.'<option value = "'.$var['id'].'">'.$var['id'].'</option>';
+			}
+			$return = $return.'</select>
+					';
+		}
+		return $return;
+		}
+		
+		//Affiche la liste des soins 
+		public function formSoinRDV(){
+			$tab = $this->mypdo->recupListeSoin();
+			$return = '<select name="idSoin" id="idSoin">';
+			if($tab && $tab != null)
+			{
+				while ($var = $tab->fetch(PDO::FETCH_ASSOC)){
+					$return = $return.'<option value = "'.$var['id'].'">'.$var['libelle'].'</option>';
+				}
+				$return = $return.'</select>
+					';
+			}
+			return $return;
+		}
+		
+		//Ajout/modif/suppression d'un soin pour un rendez-vous
+		public function retourne_formulaire_soinRDV($type, $id = ''){
+			$idVisite = '';
+			$idSoin = '';
+		
+			if($type == 'ajout')
+			{
+				$titreForm = "Ajout d'un soin pour rendez-vous :";
+				$lblBouton = "Ajouter";
+			}
+		
+			if($type == 'modif')
+			{
+				$titreForm = "Modification d'un soin pour rendez-vous :";
+				$lblBouton = "Modifier";
+			}
+		
+			if($type == 'suppr')
+			{
+				$titreForm = "Suppression d'un soin pour rendez-vous :";
+				$lblBouton = "Supprimer";
+			}
+		
+			if($type == 'suppr' || $type == 'modif')
+			{
+					
+				$result = $this->mypdo->trouveSoinRDV($id);
+				if($result != null){
+					$idVisite = $result['idVisite'];
+					$idSoin = $result['idSoin'];
+				}
+			}
+		
+			$form = ' <form class="formulaireSoinRDV" id="formulaireSoinRDV" method ="post"><article> <h3><u>'.$titreForm.'</u></h3>';
+		
+			if($type == 'ajout')
+			{
+				$form = $form.'/!\Possiblité d\'ajouter uniquement un soin par visite /!\<br><label>Identifiant de la visite : </label>'.$this->formVisiteSoinRDV().'<br>
+					<label>Liste des soins : </label>'.$this->formSoinRDV().'</br>';
+			}
+			elseif($type == 'suppr' || $type == 'modif')
+			{
+				$form = $form.'<label>Identifiant de la visite : </label><input type="text" name="idVisite" id="idVisite" value="'.$idVisite.'"/><br>
+					<label>Identifiant du soin : </label><input type="text" name="idSoin" id="idSoin" value="'.$idSoin.'"/></br>';
+			}
+			$form = $form.'
+					</br>
+					<input id="submit1" type="submit" onclick="" name="send" class="button" value="' . $lblBouton . '" />
+					</form>
+					<script>function hd(){ $(\'#modal\').hide();}</script>
+					<script>function reload(){window.location.reload();}</script>
+					<div id="modal">
+							<form id="modal">
+							<h1>Informations !</h1>
+							<div id="dialog"></div>
+							<input type="text" name="id" value="" style="display:none;"/>
+							<input type="submit" value="Ok"/>
+							</form>
+					</div>
+					</article>
+					<script>
+						$(\'#modal\').hide();
+						$("#formulaireSoinRDV :input").tooltipster({
+													trigger:"custom",
+													onlyOne: false,
+													position:"bottom",
+													multiple:true,
+													autoClose:false});
+						jQuery.validator.addMethod(
+			  					"regex",
+			   					function(value, element, regexp) {
+			       					if (regexp.constructor != RegExp)
+			         					 regexp = new RegExp(regexp);
+			       					else if (regexp.global)
+			          					regexp.lastIndex = 0;
+			          				return this.optional(element) || regexp.test(value);
+			   					},"erreur champs non valide"
+						);
+		
+						$(\'#formulaireSoinRDV\').submit(function(e){
+				
+							e.preventDefault();
+							$(\'#modal\').hide();
+							var $url ="ajax/valide_ajout_soinRDV.php";
+							if($(\'#submit1\').prop("value")=="Modifier"){$url="ajax/valide_modif_soinRDV.php";}
+							if($(\'#submit1\').prop("value")=="Supprimer"){$url="ajax/valide_suppr_soinRDV.php";}
+				
+							if($("#formulaireSoinRDV").valid())
+							{
+								var formData = {
+					
+									"idVisite" : $("#idVisite").val(),
+									"idSoin" : $("#idSoin").val(),
+								};
+				
+		
+								var filterDataRequest = $.ajax(
+								{
+									type: "POST",
+        							url: $url,
+        							dataType: "json",
+									encode : true,
+        							data: formData
+								});
+				
+								filterDataRequest.done(function(data)
+								{
+				
+									if ( ! data.success)
+									{
+											var $msg="erreur-></br><ul style=\"list-style-type :decimal;padding:0 5%;\">";
+											if (data.errors.message) {
+												$x=data.errors.message;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+											if (data.errors.requete) {
+												$x=data.errors.requete;
+												$msg+="<li>";
+												$msg+=$x;
+												$msg+="</li>";
+												}
+		
+											$msg+="</ul>";
+									}
+									else
+									{
+											$msg="";
+											if(data.message){$msg;$x=data.message;$msg+=$x;}
+									}
+		
+										$("#dialog").html($msg);$("#modal").show();
+								});
+		
+								filterDataRequest.fail(function(jqXHR, textStatus)
+								{
+		
+					     			if (jqXHR.status === 0){alert("Not connect.n Verify Network.");}
+					    			else if (jqXHR.status == 404){alert("Requested page not found. [404]");}
+									else if (jqXHR.status == 500){alert("Internal Server Error [500].");}
+									else if (textStatus === "parsererror"){alert("Requested JSON parse failed.");}
+									else if (textStatus === "timeout"){alert("Time out error.");}
+									else if (textStatus === "abort"){alert("Ajax request aborted.");}
+									else{alert("Uncaught Error.n" + jqXHR.responseText);}
+								});
+							}
+							});
+							$("#formulaireSoinRDV").validate({
+								rules:
+								{
+							
+									"idVisite": {required: true},
+									"idSoin": {required: true}
+					
+								},
+								messages:
+								{
+						        	"nom":
+						          	{
+						            	required: "Vous devez saisir un nom valide"
+						          	},
+									"prenom":
+						          	{
+						            	required: "Vous devez saisir un prenom valide"
+						          	},
+									"rue":
+									{
+						            	required: "Vous devez saisir une adresse valide"
+						          	}
+								},
+								errorPlacement: function (error, element) {
+									$(element).tooltipster("update", $(error).text());
+									$(element).tooltipster("show");
+								},
+								success: function (label, element)
+								{
+									$(element).tooltipster("hide");
+								}
+						   	});
+							</script>
+				
+						';
+			return $form;
+		
 		}
 }
 
