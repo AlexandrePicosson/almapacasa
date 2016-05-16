@@ -92,7 +92,6 @@ class ControleurAndroid{
 				$data[] = $finalObject;
 			}
 		}
-		//TODO Ecrire les requetes SQL
 		$result = $this->mypdo->importSoin();
 		
 		if($result && $result != null)

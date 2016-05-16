@@ -118,7 +118,7 @@ class mypdo extends PDO{
     
     public function loginAndroid($identifiant, $mdp)
     {
-    	$requete = 'select * from infirmiere where login="'.$identifiant.'" and mdp="'.$mdp.'";';
+    	$requete = 'select * from infirmiere where login="'.$identifiant.'" and mdp=MD5("'.$mdp.'");';
     	$result = $this->connexion->query($requete);
     	if($result)
     	{
@@ -171,7 +171,8 @@ class mypdo extends PDO{
 		inner join patient p on v.idPatient = p.id
 		left join commentaire c on v.id = c.idVisite
 		where isNull(c.idPatient)
-		and v.dateV > CURDATE(); ';
+		and v.dateV > CURDATE()
+		and v.dateV > CURDATE()+7; ';
     	 
     	$reponse = $this->connexion->query($requete);
     	if($reponse)
@@ -1096,5 +1097,50 @@ class mypdo extends PDO{
    		
    		return $data;
    	}
+	
+	public function update_rdv_android($tab){
+		$requete = 'update visite
+					set heureDebut= "'.$tab['heureD'].'",
+					heureFin = "'.$tab['heureF'].'"
+					where id="'.$tab['id'].'"';
+		$nblignes=$this->connexion -> exec($requete);
+		
+		if($nblignes != 1 ){
+			return false;
+		}
+		
+		return true;
+	}
+
+	public function update_soins_android($id, $var){
+		$requete = 'insert into effectue values('.$id.','.$var.')';
+		$nblignes=$this->connexion -> exec($requete);
+		if($nblignes != 1 ){
+			return false;
+		}
+		return true;
+	}
+
+	public function add_commentaire_android($idVisite, $idInfi, $content){
+		$requete = 'select * from commentaire where idVisite ="'.$idVisite.'" and idInfirmiere ="'.$idInfi.'";';
+		$reponse = $this->connexion->query($requete);
+
+		if($reponse)
+		{
+			if($reponse->rowCount() != 1)
+			{
+				$requete = 'insert into commentaire (idVisite, idInfirmiere, libelle) values('.$idVisite.','.$idInfi.','.$content.');';
+				$nblignes=$this->connexion->exec($requete);
+			}
+			else
+			{
+				$requete = 'update commentaire
+							set libelle ="'.$content.'"
+							where idVisite ="'.$idVisite.'"
+							and idInfirmiere ="'.$idInfi.'";';
+				$nblignes=$this->connexion->exec($requete);
+			}
+		}
+	}
 }
 ?>
